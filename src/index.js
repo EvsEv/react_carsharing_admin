@@ -8,18 +8,7 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import thunk from "redux-thunk";
 
-const ReactReduxDevTools =
-    process.env.NODE_ENV === "development"
-        ? window.__REDUX_DEVTOOLS_EXTENSION__ &&
-          window.__REDUX_DEVTOOLS_EXTENSION__()
-        : null;
-
-const store = createStore(
-    rootReducer,
-    compose(applyMiddleware(thunk), ReactReduxDevTools)
-);
-
-console.log(process.env.REACT_APP_SECRET_KEY);
+const store = createStore(rootReducer, compose(applyMiddleware(thunk)));
 
 ReactDOM.render(
     <Provider store={store}>
