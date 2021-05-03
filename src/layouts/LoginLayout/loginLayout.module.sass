@@ -1,0 +1,92 @@
+@import ../../styles/variables
+@import ../../styles/media
+
+$margin: 15px
+
+.wrapper
+  width: 100%
+  min-height: 100vh
+  padding: 10px 0
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  background-color: $ligthGrey
+  box-sizing: border-box
+
+.logo
+  display: flex
+  align-items: center
+
+.name
+  font-size: 24px
+  margin-left: 11.5px
+
+.form
+  min-width: 375px
+  padding: 20px 18px
+  margin-top: 16.5px
+  background-color: $white
+  box-sizing: border-box
+  box-shadow: 0px 1px 0px rgba(90, 97, 105, 0.11), 0px 2px 4px rgba(90, 97, 105, 0.12), 0px 5px 5px rgba(90, 97, 105, 0.06), 0px 3.5px 35px rgba(90, 97, 105, 0.1)
+  border-radius: 9px
+
+.title
+  font-size: 17.5px
+  font-weight: normal
+  line-height: 20px
+  letter-spacing: -0.4375px
+  text-align: center
+
+.field
+  margin-top: $margin
+  display: flex
+  flex-direction: column
+  &:first-of-type
+    margin-top: 2.37 * $margin
+
+.label
+  font-size: 10.5px
+  line-height: 12px
+  letter-spacing: -0.18421px
+
+.input
+  font-size: 11px
+  line-height: 12.65px
+  letter-spacing: -0.19px
+  margin-top: $margin / 2
+  padding: 8px 11.5px 8.5px
+  border: 1px solid $softhGrey
+  border-radius: 3px
+  transition: all $short ease
+  &:focus
+    outline: none
+    border-color: $darkBlue
+  &:not(:placeholder-shown)
+    &:invalid
+      border-color: red
+
+.access
+  margin-top: $margin
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+.request
+  font-size: 10.5px
+  line-height: 12px
+  letter-spacing: -0.18px
+  text-decoration: none
+  color: $brightBlue
+
+@include mobileDevice
+  .form
+    min-width: 100%
+  .field
+    &:first-of-type
+      margin-top: $margin
+@include mobileMinDevice
+  .label
+    display: none
+  .input
+    padding: 4px 11.5px 4px

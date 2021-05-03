@@ -1,5 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import AdminLayout from "../../layouts/AdminLayout";
+import LoginLayout from "../../layouts/LoginLayout";
 
 export const App = () => {
-    return <div>App test</div>;
+    const { isAuth } = useSelector((state) => state.auth);
+
+    if (!isAuth) {
+        return <LoginLayout />;
+    }
+
+    return <AdminLayout />;
 };

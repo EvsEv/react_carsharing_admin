@@ -1,0 +1,29 @@
+@import ./variables
+
+@mixin desktopMinDevice
+  @media screen and (max-width: $desktop)
+    @content
+
+@mixin mobileDevice
+  @media screen and (max-width: $tablet) and (max-height: $tablet)
+    @content
+  @media screen and (max-width: $desktopMin) and (max-height: $tablet)
+    @content
+  @media screen and (max-width: $tablet) and (max-height: $desktopMin)
+    @content
+
+@mixin mobileDeviceVertical
+  @media screen and (max-width: $tablet) and (max-height: $tablet) and (orientation: portrait)
+    @content
+  @media screen and (max-width: $desktopMin) and (max-height: $tablet) and (orientation: portrait)
+    @content
+  @media screen and (max-width: $tablet) and (max-height: $desktopMin) and (orientation: portrait)
+    @content
+
+@mixin tabletDevice
+  @media screen and ( max-width:  $desktopMin)
+    @content
+
+@mixin mobileMinDevice
+  @media screen and (max-width: $tablet) and (max-height: 319px)
+    @content
