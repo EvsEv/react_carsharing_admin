@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "../../components/UIKit/Button/Button";
 
 import styles from "./loginLayout.module.sass";
 
@@ -36,7 +37,7 @@ export const LoginLayout = () => {
                     <a href="#" className={styles.request}>
                         Запросить доступ
                     </a>
-                    <button type="submit"> Войти</button>
+                    <Button type="submit" text="Войти" />
                 </div>
             </form>
         </div>
