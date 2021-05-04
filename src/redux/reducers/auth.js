@@ -2,7 +2,8 @@ import { AUTH, REMEMBER_MAIL } from "../types";
 
 const initialState = {
     mail: "admin@ss.com",
-    isAuth: false,
+    userName: "Admin",
+    isAuth: true,
 };
 
 export const auth = (state = initialState, action) => {
