@@ -45,6 +45,7 @@
   height: 100%
   display: flex
   align-items: center
+  position: relative
 
 .notification
   height: 25px
@@ -80,14 +81,17 @@
   justify-content: center
 
 .profile
+  padding-left: $padding
+  border-left: 1px solid $lightBlue
+  position: relative
+
+.more
   max-height: 42px
   padding: 0
-  padding-left: $padding
   display: flex
   align-items: center
   background-color: transparent
   border: none
-  border-left: 1px solid $lightBlue
   outline: none
   cursor: pointer
   &:hover
@@ -97,6 +101,14 @@
       color: $brightBlue
       &::after
         border-top-color: $brightBlue
+
+.active
+  img
+    transform: scale(1.05)
+  .name
+    color: $brightBlue
+    &::after
+      border-top-color: $brightBlue
 
 .avatar
   width: 42px
@@ -128,3 +140,26 @@
     border-bottom: none
     transform: translateY(-50%)
     transition: all $short ease
+
+.profileDropdown
+  width: calc(100% - 25px)
+  padding-top: 14px
+  position: absolute
+  top: 100%
+  right: 0
+  box-shadow: 0px 10.5px 8.5px rgba(90, 97, 105, 0.12)
+
+.item
+  text-align: right
+  width: 100%
+  padding: 5px
+  background-color: $white
+  display: block
+  outline: none
+  border: none
+  cursor: pointer
+  transition: all $short ease
+  &:hover
+    background-color: $ligthGrey
+  &:active
+    background-color: $ultraLightGrey
