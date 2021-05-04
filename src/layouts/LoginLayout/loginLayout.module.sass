@@ -1,5 +1,6 @@
 @import ../../styles/variables
 @import ../../styles/media
+@import ../../styles/mixins
 
 $margin: 15px
 
@@ -73,11 +74,7 @@ $margin: 15px
   align-items: center
 
 .request
-  font-size: 10.5px
-  line-height: 12px
-  letter-spacing: -0.18px
-  text-decoration: none
-  color: $brightBlue
+  @include basicLink(10.5px, 12px, -0.18px)
 
 @include mobileDevice
   .form

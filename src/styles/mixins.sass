@@ -1,0 +1,11 @@
+@import ./variables
+
+@mixin basicLink($size, $height, $ls)
+  font-size: $size
+  line-height: $height
+  letter-spacing: $ls
+  text-decoration: none
+  color: $brightBlue
+  cursor: pointer
+  &:active
+    color: $darkBlue
