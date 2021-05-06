@@ -1,9 +1,9 @@
-import { AUTH, REMEMBER_MAIL } from "../types";
+import { AUTH, REMEMBER_MAIL } from '../types';
 
 const initialState = {
-    mail: "admin@ss.com",
-    userName: "Admin",
-    isAuth: true,
+    mail: 'admin@ss.com',
+    userName: 'Admin',
+    isAuth: false,
 };
 
 export const auth = (state = initialState, action) => {
