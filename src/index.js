@@ -19,8 +19,6 @@ const store = createStore(
     compose(applyMiddleware(thunk), ReactReduxDevTools)
 );
 
-console.log(process.env.REACT_APP_SECRET_KEY);
-
 ReactDOM.render(
     <Provider store={store}>
         <App />
