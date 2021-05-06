@@ -1,5 +1,6 @@
 body,
-input {
+input,
+a {
     font-family: "RobotoReg";
     color: #3d5170;
 }
