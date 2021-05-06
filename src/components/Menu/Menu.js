@@ -12,11 +12,19 @@ import { ReactComponent as ShapeIcon } from "../../assets/icons/menu/shape.svg";
 
 import styles from "./menu.module.sass";
 
-export const Menu = () => {
+export const Menu = React.forwardRef((props, ref) => {
+    const classesForMenu = [styles.menu];
+    if (props.showMenu) {
+        classesForMenu.push(styles.showMenu);
+        console.log(props.showMenu);
+    }
+
+    const onClickLink = () => props.setShowMenu(false);
+
     return (
-        <aside className={styles.menu}>
+        <aside className={classesForMenu.join(" ")} ref={ref}>
             <div className={styles.logo}>
-                <Link to="/" className={styles.link}>
+                <Link to="/" className={styles.link} onClick={onClickLink}>
                     <Logo className={styles.logotype} />
                     <h2 className={styles.name}>Need for car</h2>
                 </Link>
@@ -28,6 +36,7 @@ export const Menu = () => {
                             to="/car-setting"
                             activeClassName={styles.active}
                             className={styles.link}
+                            onClick={onClickLink}
                         >
                             <EditIcon />
                             Карточка автомобиля
@@ -38,6 +47,7 @@ export const Menu = () => {
                             to="/cars-table"
                             activeClassName={styles.active}
                             className={styles.link}
+                            onClick={onClickLink}
                         >
                             <ListIcon />
                             Список авто
@@ -49,6 +59,7 @@ export const Menu = () => {
                             to="/"
                             activeClassName={styles.active}
                             className={styles.link}
+                            onClick={onClickLink}
                         >
                             <NewIcon />
                             Заказы
@@ -82,4 +93,4 @@ export const Menu = () => {
             </nav>
         </aside>
     );
-};
+});

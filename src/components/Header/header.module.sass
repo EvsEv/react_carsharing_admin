@@ -1,12 +1,18 @@
 @import ../../styles/variables
+@import ../../styles/mixins
+@import ../../styles/media
 
 .header
+  @include basicPaddingSide(padding-right)
   min-height: 71.5px
   display: flex
   align-items: center
-  padding-right: $paddingSide
   background-color: $white
   box-shadow: 0px 2.5px 9.5px rgba(90, 97, 105, 0.12)
+  position: relative
+
+.showMenu
+  display: none
 
 .searchbar
   height: 100%
@@ -22,12 +28,15 @@
       transition: all $short ease
 
 .input
+  @include basicPadding(padding-top)
+  @include basicPadding(padding-bottom)
+  @include basicPaddingSide(padding-left, 2)
+  @include basicPaddingSide(padding-right, 2)
   font-size: 13px
   line-height: 15px
   letter-spacing: -0.0928572px
   width: 100%
   height: 100%
-  padding: $padding $padding * 2
   box-sizing: border-box
   border: none
   background-color: transparent
@@ -50,19 +59,23 @@
   align-items: center
   position: relative
 
-.notification
-  height: 25px
-  padding: 15px 10px
-  margin: auto $padding
+.showBtn
+  height: 100%
+  width: 71.5px
+  padding: 0
   display: flex
-  align-items: center
   justify-content: center
-  background-color: transparent
+  align-items: center
+  background: none
   border: none
+  border-right: 1px solid $lightBlue
   position: relative
   cursor: pointer
+  flex-shrink: 0
   svg
     transition: all $short ease
+    path
+      fill: rgb(129, 142, 163)
   &:hover
     svg
       transform: scale(1.1)
@@ -77,20 +90,26 @@
   border-radius: 50%
   background-color: $crimson
   position: absolute
-  bottom: 0
-  right: 0
+  top: 50%
+  left: 50%
   display: flex
   align-items: center
   justify-content: center
 
+.mobileOnly, .tabletIncluded
+  display: none
+
 .profile
-  padding-left: $padding
-  border-left: 1px solid $lightBlue
+  @include basicPadding(padding-left)
+  height: 100%
   position: relative
+  display: flex
+  align-items: center
 
 .more
-  max-height: 42px
   padding: 0
+  @include basicPadding(padding-top)
+  @include basicPadding(padding-bottom)
   display: flex
   align-items: center
   background-color: transparent
@@ -110,6 +129,7 @@
     color: $brightBlue
     &::after
       border-top-color: $brightBlue
+      transform: rotate(-180deg)
 
 .avatar
   width: 42px
@@ -118,6 +138,7 @@
   border-radius: 50%
   display: block
   overflow: hidden
+  flex-shrink: 0
   img
     width: 100%
     height: 100%
@@ -126,7 +147,7 @@
     transition: all $short ease
 
 .name
-  padding-right: $padding * 2
+  @include basicPaddingSide(padding-right, $factor: 2)
   position: relative
   transition: all $short ease
   &::after
@@ -144,7 +165,6 @@
 
 .profileDropdown
   width: calc(100% - 25px)
-  padding-top: 14px
   position: absolute
   top: 100%
   right: 0
@@ -164,3 +184,72 @@
     background-color: $ligthGrey
   &:active
     background-color: $ultraLightGrey
+
+.burger
+  width: 20px
+  height: 2px
+  border-radius: 2px
+  background-color: $darkBlue
+  display: block
+  position: relative
+  &::before, &::after
+    content: ""
+    width: 100%
+    height: 100%
+    position: absolute
+    top: -5px
+    left: 0
+    background-color: inherit
+  &::after
+    top: auto
+    bottom: -6px
+
+@include tabletDevice
+  .tabletIncluded
+    display: flex
+
+
+@include mobileDevice
+  .header
+    min-height: auto
+  .searchbar
+    svg
+      display: none
+  .input
+    border-right: none
+  .showBtn
+    height: 57px
+    width: 57px
+    border-right: none
+  .user
+    margin-left: auto
+
+@include mobileSmallWidth
+  .searchbar
+    position: absolute
+    bottom: 0
+    left: 0
+    width: 100%
+    border-top: 1px solid $lightBlue
+    background: $white
+    box-shadow: 0px 10px 9.5px rgba(105, 148, 197, 0.12)
+    z-index: -1
+    transition: all $short linear
+  .movingFromTop
+    z-index: 0
+    transform: translateY(100%)
+  .mobileOnly
+    display: block
+
+@include galaxyFold
+  .profile
+    padding-left: 0
+  .more
+    display: block
+  .profileDropdown
+    width: auto
+  .avatar
+    width: 30px
+    height: 30px
+    margin-right: 0
+    margin-left: auto

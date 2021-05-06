@@ -27,3 +27,11 @@
 @mixin mobileMinDevice
   @media screen and (max-width: $tablet) and (max-height: 319px)
     @content
+
+@mixin mobileSmallWidth
+  @media screen and ( max-width:  400px)
+    @content
+
+@mixin galaxyFold
+  @media screen and ( width:  280px) and (height: 653px)
+    @content
