@@ -10,12 +10,12 @@ $margin: 15px
   padding: 10px 0
   display: flex
   flex-direction: column
-  justify-content: center
   align-items: center
   background-color: $ligthGrey
   box-sizing: border-box
 
 .logo
+  padding-top: 11.5%
   display: flex
   align-items: center
 
@@ -43,6 +43,7 @@ $margin: 15px
   margin-top: $margin
   display: flex
   flex-direction: column
+  position: relative
   &:first-of-type
     margin-top: 2.37 * $margin
 
@@ -60,12 +61,22 @@ $margin: 15px
   border: 1px solid $softhGrey
   border-radius: 3px
   transition: all $short ease
+  + span
+    font-size: 10px
+    line-height: 11px
+    position: absolute
+    bottom: -12px
+    left: 11.5px
+    display: none
   &:focus
     outline: none
     border-color: $darkBlue
   &:not(:placeholder-shown)
     &:invalid
-      border-color: red
+      border: 0.5px solid $crimson
+      box-shadow: 0px 2.5px 5.5px rgba(196, 24, 60, 0.1)
+      + span
+        display: block
 
 .access
   margin-top: $margin
@@ -77,6 +88,10 @@ $margin: 15px
   @include basicLink(10.5px, 12px, -0.18px)
 
 @include mobileDevice
+  .wrapper
+    justify-content: center
+  .logo
+    padding-top: 0
   .form
     min-width: 100%
   .field

@@ -9,7 +9,10 @@ import { loginUser } from "../../redux/thunks/auth";
 
 export const LoginLayout = () => {
     const dispatch = useDispatch();
-    const onSubmit = (event) => dispatch(loginUser());
+    const onSubmit = (event) => {
+        event.preventDefault();
+        dispatch(loginUser());
+    };
 
     return (
         <div className={styles.wrapper}>
@@ -31,6 +34,7 @@ export const LoginLayout = () => {
                         required
                         placeholder='Введите почту'
                     />
+                    <span>Некорректный формат электронной почты</span>
                 </div>
                 <div className={styles.field}>
                     <label htmlFor='password' className={styles.label}>

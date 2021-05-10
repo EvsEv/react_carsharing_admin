@@ -10,7 +10,7 @@ import { logoutUser } from "../../redux/thunks/auth";
 import styles from "./header.module.sass";
 
 export const Header = ({ setShowMenu }) => {
-    const { userName } = useSelector((state) => state.auth);
+    const { username } = useSelector((state) => state.auth);
     const profileDropdown = useRef();
     const searchbar = useRef();
     const dispatch = useDispatch();
@@ -77,7 +77,7 @@ export const Header = ({ setShowMenu }) => {
                         <picture className={styles.avatar}>
                             <img src={avatar} />
                         </picture>
-                        <p className={styles.name}>{userName}</p>
+                        <p className={styles.name}>{username}</p>
                     </button>
                     {showProfileDropdown && (
                         <div

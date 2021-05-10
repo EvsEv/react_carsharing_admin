@@ -24,7 +24,7 @@ export const login = async () => {
         );
 
         const bearer = await login.json();
-
+        bearer.username = "Admin";
         return bearer;
     } catch (e) {
         console.log(e);
@@ -43,7 +43,7 @@ export const logout = async () => {
             "X-Api-Factory-Application-Id": appId,
             Authorization: "Basic " + authKey,
         };
-        const login = await fetch(
+        const logout = await fetch(
             "https://api-factory.simbirsoft1.com/api/auth/logout",
             {
                 method: "POST",
@@ -51,7 +51,7 @@ export const logout = async () => {
             }
         );
 
-        const bearer = await login.json();
+        const bearer = await logout.json();
 
         return bearer;
     } catch (e) {
