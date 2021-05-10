@@ -1,11 +1,17 @@
-import { authUser } from "../../api/fetch";
+import { login, logout } from "../../api/fetch";
 import { isAuthUser } from "../actionCreators/auth";
-import { addMailToStore } from "../actionCreators/auth";
 
-export const authorizeUser = (mail) => {
-    return (dispatch) => {
-        authUser();
-        dispatch(isAuthUser(true));
-        dispatch(addMailToStore(mail));
-    };
+export const isAuthorizeUser = () => (dispatch) =>
+    dispatch(isAuthUser(Boolean(Number(localStorage.isAuth))));
+
+export const loginUser = () => {
+    login();
+    localStorage.setItem("isAuth", 1);
+    return isAuthorizeUser();
+};
+
+export const logoutUser = () => {
+    logout();
+    localStorage.setItem("isAuth", 0);
+    return isAuthorizeUser();
 };

@@ -1,13 +1,13 @@
-import React, { useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { ReactComponent as NotificationIcon } from '../../assets/icons/notification.svg';
-import { ReactComponent as SearchIcon } from '../../assets/icons/search.svg';
-import avatar from '../../assets/images/avatar.jpg';
-import useClickNotOnElement from '../../hooks/useClickNotOnElement';
-import { isAuthUser } from '../../redux/actionCreators/auth';
+import { ReactComponent as NotificationIcon } from "../../assets/icons/notification.svg";
+import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
+import avatar from "../../assets/images/avatar.jpg";
+import useClickNotOnElement from "../../hooks/useClickNotOnElement";
+import { logoutUser } from "../../redux/thunks/auth";
 
-import styles from './header.module.sass';
+import styles from "./header.module.sass";
 
 export const Header = ({ setShowMenu }) => {
     const { userName } = useSelector((state) => state.auth);
@@ -40,7 +40,7 @@ export const Header = ({ setShowMenu }) => {
 
     const onClickSearchButton = () => setShowSearch(!showSearch);
 
-    const logOut = () => dispatch(isAuthUser(false));
+    const logOut = () => dispatch(logoutUser());
 
     return (
         <header className={styles.header}>
@@ -56,7 +56,7 @@ export const Header = ({ setShowMenu }) => {
             >
                 <SearchIcon />
             </button>
-            <div className={classesForSearchbar.join(' ')} ref={searchbar}>
+            <div className={classesForSearchbar.join(" ")} ref={searchbar}>
                 <input
                     className={styles.input}
                     type='text'
@@ -71,7 +71,7 @@ export const Header = ({ setShowMenu }) => {
                 </button>
                 <div className={styles.profile}>
                     <button
-                        className={classesForMoreBtn.join(' ')}
+                        className={classesForMoreBtn.join(" ")}
                         onClick={onProfileClick}
                     >
                         <picture className={styles.avatar}>
