@@ -7,6 +7,7 @@ import styles from "./adminLayout.module.sass";
 import useClickNotOnElement from "../../hooks/useClickNotOnElement";
 import TextInput from "../../components/UIKit/TextInput";
 import SearchDropdown from "../../components/UIKit/SearchDropdown";
+import Filters from "../../components/UIKit/Filters";
 
 export const AdminLayout = () => {
     const menu = useRef();
@@ -25,10 +26,11 @@ export const AdminLayout = () => {
                         title='Модель автомобиля'
                         placeholder='Введите название модели'
                     /> */}
-                    <SearchDropdown
+                    {/* <SearchDropdown
                         label='Тип автомобиля'
                         placeholder='Введите категорию'
-                    />
+                    /> */}
+                    <Filters />
                 </main>
                 <Footer />
             </div>

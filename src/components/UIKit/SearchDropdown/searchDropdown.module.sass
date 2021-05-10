@@ -6,6 +6,7 @@
 .label
   font-size: 10.5px
   line-height: 12px
+  margin-bottom: 5px
 
 .inputField
   position: relative
@@ -16,7 +17,6 @@
   color: $mainBlack
   width: 100%
   padding: 8px 10.5px 9px
-  margin-top: 5px
   border: 1px solid $softhGrey
   box-sizing: border-box
   border-radius: 4px
@@ -28,6 +28,12 @@
     border-color: $crimson
     box-shadow: 0px 2.5px 5.5px rgba(196, 24, 60, 0.1)
 
+.small
+  max-width: 110.5px
+  .input
+    padding: 8px 14px
+
+
 .errorType
   font-size: 10px
   line-height: 11px
@@ -38,20 +44,21 @@
 
 .suggestion
   width: 100%
-  max-height: 200px
+  max-height: 100px
   overflow-y: scroll
   padding: 0
   margin: 0
   position: absolute
   top: 100%
   left: 0
+  z-index: 50
   background: $darkWhite
   border-radius: 4px
 
 .item
   font-size: 11px
   line-height: 13px
-  padding: 4px 10.5px
+  padding: 6px 10.5px
   cursor: pointer
   transition: all $short ease
   &:hover

@@ -3,38 +3,40 @@ import useClickNotOnElement from "../../../hooks/useClickNotOnElement";
 
 import styles from "./searchDropdown.module.sass";
 
-// Temporary array of dropdown variants
-const variants = [
-    { name: "Первый вариант" },
-    { name: "Второй вариант" },
-    { name: "Третий вариант" },
-    { name: "Четвертый вариант" },
-    { name: "6 вариант" },
-    { name: "7 вариант" },
-    { name: "8 вариант" },
-    { name: "9 вариант" },
-    { name: "Test" },
-    { name: "Testing" },
-    { name: "Varios test suggestion" },
-    { name: "77 вариант тестовый" },
-];
-
-export const SearchDropdown = ({ label, placeholder }) => {
-    const [value, setValue] = useState("");
-    const [isErrorExists, setIsErrorExists] = useState(false);
+export const SearchDropdown = ({
+    variants,
+    label,
+    placeholder,
+    selectedValue,
+    changeValue,
+    parameter,
+    type,
+}) => {
+    const [value, setValue] = useState(selectedValue);
+    const [error, setError] = useState(false);
     const [suggestions, setSuggestions] = useState([]);
     const dropdown = useRef();
     const [showDropdown, setShowDropdown] = useClickNotOnElement(dropdown);
 
     const inputClasses = [styles.input];
 
-    if (isErrorExists) {
+    const searchDropdownClasses = [styles.searchDropdown];
+
+    if (type) {
+        searchDropdownClasses.push(styles[type]);
+    }
+
+    if (error) {
         inputClasses.push(styles.error);
     }
 
     useEffect(() => {
         setSuggestions(variants);
     }, []);
+
+    useEffect(() => {
+        selectedValue && setValue(selectedValue);
+    }, [selectedValue]);
 
     const onType = (event) => {
         setShowDropdown(true);
@@ -45,21 +47,44 @@ export const SearchDropdown = ({ label, placeholder }) => {
                     .toLowerCase()
                     .search(event.target.value.toLowerCase()) !== -1
         );
-        updatedSuggestions.length
-            ? setIsErrorExists(false)
-            : setIsErrorExists(true);
+        if (
+            updatedSuggestions.find(
+                (suggestion) => suggestion.name === event.target.value
+            )
+        ) {
+            setError(false);
+            changeValue(event.target.value);
+            setSuggestions(variants);
+            setShowDropdown(false);
+        } else {
+            changeValue("");
+            setError("Неверное значение");
+        }
+
+        if (!event.target.value) {
+            changeValue("");
+            setError("Выберите значение");
+        }
         setSuggestions(updatedSuggestions);
     };
 
-    const onInputClick = () => setShowDropdown(true);
+    const onInputClick = () => {
+        if (selectedValue) {
+            setSuggestions(variants);
+        }
+        setShowDropdown(true);
+    };
 
     const onSuggestionClick = (suggestion) => {
+        changeValue(suggestion);
         setValue(suggestion);
+        setError(false);
+        setSuggestions(variants);
         setShowDropdown(false);
     };
 
     return (
-        <div className={styles.searchDropdown}>
+        <div className={searchDropdownClasses.join(" ")}>
             <label htmlFor={label} className={styles.label}>
                 {label}
             </label>
@@ -70,12 +95,9 @@ export const SearchDropdown = ({ label, placeholder }) => {
                     value={value}
                     onClick={onInputClick}
                     placeholder={placeholder}
+                    name={parameter}
                 />
-                {isErrorExists && (
-                    <span className={styles.errorType}>
-                        Нет подходящих вариантов
-                    </span>
-                )}
+                {error && <span className={styles.errorType}>{error}</span>}
                 {showDropdown && (
                     <ul className={styles.suggestion} ref={dropdown}>
                         {suggestions.map((suggestion) => (
