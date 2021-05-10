@@ -6,14 +6,13 @@
   background-color: $white
   box-shadow: 0px 1px 75px rgba(90, 97, 105, 0.11), 0px 2px 4px rgba(90, 97, 105, 0.12), 0px 7.5px 11px rgba(90, 97, 105, 0.1), 0px 3.5px 17.5px rgba(165, 182, 201, 0.1)
   position: relative
+  z-index: 1
   flex-shrink: 0
   display: flex
   flex-direction: column
 
 .logo
   padding: $padding $padding * 2
-  .link
-    // display: inline-flex
 
 .navigation
   flex-grow: 1
@@ -98,9 +97,6 @@
     path
       fill: $brightBlue
 
-
-
-
 @include desktopMinDevice
   .menu
     width: 252px
@@ -116,4 +112,9 @@
   .showMenu
     box-shadow: 0px 1px 75px rgba(90, 97, 105, 0.11), 0px 2px 4px rgba(90, 97, 105, 0.12), 0px 7.5px 11px rgba(90, 97, 105, 0.1), 0px 3.5px 17.5px rgba(165, 182, 201, 0.1)
     transform: translateX(0)
+
+@include mobileDevice
+  .logo
+    max-height: 67px
+    box-sizing: border-box
 
