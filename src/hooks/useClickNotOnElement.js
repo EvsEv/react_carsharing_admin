@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const useClickNotOnElement = (element) => {
     const [showElement, setShowElement] = useState(false);
@@ -7,14 +7,12 @@ const useClickNotOnElement = (element) => {
         const handleClick = (event) => {
             if (element.current && !element.current.contains(event.target)) {
                 setShowElement(false);
-
-                console.log(event.target);
             }
         };
 
-        window.addEventListener('click', handleClick);
+        window.addEventListener("click", handleClick);
         return () => {
-            window.removeEventListener('click', handleClick);
+            window.removeEventListener("click", handleClick);
         };
     }, [element, showElement]);
 

@@ -1,0 +1,62 @@
+@import ../../../styles/variables
+
+.searchDropdown
+  width: 50%
+
+.label
+  font-size: 10.5px
+  line-height: 12px
+
+.inputField
+  position: relative
+
+.input
+  font-size: 11px
+  line-height: 13px
+  color: $mainBlack
+  width: 100%
+  padding: 8px 10.5px 9px
+  margin-top: 5px
+  border: 1px solid $softhGrey
+  box-sizing: border-box
+  border-radius: 4px
+  transition: all $short ease
+  &:focus
+    outline: none
+    border-color: $darkBlue
+  &.error
+    border-color: $crimson
+    box-shadow: 0px 2.5px 5.5px rgba(196, 24, 60, 0.1)
+
+.errorType
+  font-size: 10px
+  line-height: 11px
+  color: $crimson
+  position: absolute
+  bottom: -15px
+  left: 10.5px
+
+.suggestion
+  width: 100%
+  max-height: 200px
+  overflow-y: scroll
+  padding: 0
+  margin: 0
+  position: absolute
+  top: 100%
+  left: 0
+  background: $darkWhite
+  border-radius: 4px
+
+.item
+  font-size: 11px
+  line-height: 13px
+  padding: 4px 10.5px
+  cursor: pointer
+  transition: all $short ease
+  &:hover
+    background: $ligthGrey
+
+
+
+
