@@ -1,2 +1,2 @@
 export const AUTH = "AUTH";
-export const REMEMBER_MAIL = "REMEMBER_MAIL";
+export const SET_USER_INFO = "SET_USER_INFO";
