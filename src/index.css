@@ -1,13 +1,63 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body,
+input,
+a {
+    font-family: "RobotoReg";
+    color: #3d5170;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body,
+h1,
+h2,
+h3,
+h4,
+p {
+    margin: 0;
+}
+
+button {
+    outline: none;
+}
+
+@font-face {
+    font-family: "RobotoReg";
+    font-weight: normal;
+    font-style: normal;
+    src: url("./assets/fonts/Roboto-Regular.eot");
+    src: url("./assets/fonts/Roboto-Regular.ttf") format("truetype"),
+        url("./assets/fonts/Roboto-Regular.svg") format("svg"),
+        url("./assets/fonts/Roboto-Regular.otf") format("opentype"),
+        url("./assets//fonts/Roboto-Regular.woff") format("woff");
+}
+@font-face {
+    font-family: "RobotoMed";
+    font-weight: normal;
+    font-style: normal;
+    src: url("./assets/fonts/Roboto-Medium.eot");
+    src: url("./assets/fonts/Roboto-Medium.ttf") format("truetype"),
+        url("./assets/fonts/Roboto-Medium.svg") format("svg"),
+        url("./assets/fonts/Roboto-Medium.otf") format("opentype"),
+        url("./assets//fonts/Roboto-Medium.woff") format("woff");
+}
+@font-face {
+    font-family: "RobotoLgt";
+    font-weight: 300;
+    font-style: normal;
+    src: url("./assets/fonts/Roboto-Light.eot");
+    src: url("./assets/fonts/Roboto-Light.ttf") format("truetype"),
+        url("./assets/fonts/Roboto-Light.svg") format("svg"),
+        url("./assets/fonts/Roboto-Light.otf") format("opentype"),
+        url("./assets//fonts/Roboto-Light.woff") format("woff");
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #3d5170;
 }

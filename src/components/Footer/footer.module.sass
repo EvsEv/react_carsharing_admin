@@ -1,0 +1,32 @@
+@import ../../styles/variables
+@import ../../styles/mixins
+@import ../../styles/media
+
+.footer
+  @include wrapperPaddings()
+  background-color: $white
+  box-shadow: 0px -0.5px 0px #D7DAE3
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+.link
+  @include basicLink(14px, 16px, 1)
+  margin-right: 16px
+  &:last-of-type
+    margin-right: 0
+
+.linksBlock
+  display: flex
+
+.copyright
+  font-size: 14px
+  line-height: 16px
+  color: $greyBlue
+
+@include mobileDevice
+  .linksBlock
+    flex-direction: column
+    flex-shrink: 0
+  .copyright
+    text-align: end
