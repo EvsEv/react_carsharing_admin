@@ -36,6 +36,7 @@ export const SearchDropdown = ({
 
     useEffect(() => {
         selectedValue && setValue(selectedValue);
+        setError(false);
     }, [selectedValue]);
 
     const onType = (event) => {
@@ -85,9 +86,11 @@ export const SearchDropdown = ({
 
     return (
         <div className={searchDropdownClasses.join(" ")}>
-            <label htmlFor={label} className={styles.label}>
-                {label}
-            </label>
+            {label && (
+                <label htmlFor={label} className={styles.label}>
+                    {label}
+                </label>
+            )}
             <div className={styles.inputField}>
                 <input
                     className={inputClasses.join(" ")}
