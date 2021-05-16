@@ -1,84 +1,47 @@
 import React, { useEffect, useState } from "react";
+import Button from "../Button";
 import SearchDropdown from "../SearchDropdown";
+import { fetchData, fetchDataWithComplexParamters } from "../../../api/fetch";
 
 import styles from "./filters.module.sass";
+import { useDispatch } from "react-redux";
+import { getOrderList } from "../../../redux/thunks/orderList";
 
-const variantsModel = [
-    { name: "Первый вариант" },
-    { name: "Второй вариант" },
-    { name: "Третий вариант" },
-    { name: "Четвертый вариант" },
-    { name: "6 вариант" },
-    { name: "7 вариант" },
-    { name: "8 вариант" },
-    { name: "9 вариант" },
-    { name: "Test" },
-    { name: "Testing" },
-    { name: "Varios test suggestion" },
-    { name: "77 вариант тестовый" },
-];
-
-const variantsCity = [
-    { name: "Ульяновск" },
-    { name: "Димитровград" },
-    { name: "Саранск" },
-    { name: "Владивосток" },
-    { name: "Санкт-Петербург" },
-    { name: "Казань" },
-    { name: "8 вариант" },
-    { name: "9 вариант" },
-    { name: "Test" },
-    { name: "Testing" },
-    { name: "Varios test suggestion" },
-    { name: "77 вариант тестовый" },
-];
-
-export const Filters = () => {
-    const [carList, setCarList] = useState([{ name: "Неважно" }]);
-    const [cityList, setCityList] = useState([{ name: "Неважно" }]);
-    const [selectedModel, setSelectedModel] = useState(carList[0].name);
-    const [selectedCity, setSelectedCity] = useState(cityList[0].name);
-
-    useEffect(() => {
-        setCarList(carList.concat(variantsModel));
-        setCityList(cityList.concat(variantsCity));
-    }, []);
+export const Filters = ({ filters }) => {
+    const dispatch = useDispatch();
 
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log(event);
+        dispatch(getOrderList());
     };
-
     const onReset = (event) => {
         event.preventDefault();
-        setSelectedModel(carList[0].name);
-        setSelectedCity(cityList[0].name);
+        console.log("тыщ");
     };
 
+    useEffect(() => {
+        dispatch(getOrderList());
+    }, []);
+
     return (
-        <form className={styles.form} onSubmit={onSubmit}>
+        <form className={styles.form} onSubmit={onSubmit} onReset={onReset}>
             <div className={styles.parameters}>
-                <SearchDropdown
-                    type='small'
-                    variants={carList}
-                    placeholder='Модель'
-                    selectedValue={selectedModel}
-                    changeValue={setSelectedModel}
-                    parameter='model'
-                />
-                <SearchDropdown
-                    type='small'
-                    variants={cityList}
-                    placeholder='Город'
-                    selectedValue={selectedCity}
-                    changeValue={setSelectedCity}
-                    parameter='city'
-                />
+                {filters.map((filter, index) => (
+                    <SearchDropdown
+                        key={index}
+                        label={filter?.label}
+                        variants={filter.variants}
+                        placeholder={filter.placeholder}
+                        selectedValue={filter?.selectedValue}
+                        changeValue={filter.changeValue}
+                        type="small"
+                    />
+                ))}
             </div>
-            <button type='reset' onClick={onReset}>
-                reset
-            </button>
-            <button type='submit'>twrwt</button>
+            <div className={styles.control}>
+                <Button text="Сбросить" type="reset" />
+                <Button text="Применить" type="submit" />
+            </div>
         </form>
     );
 };

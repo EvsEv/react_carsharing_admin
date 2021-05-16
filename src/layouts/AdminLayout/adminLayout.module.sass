@@ -1,4 +1,5 @@
 @import ../../styles/variables
+@import ../../styles/mixins
 
 .body
   height: 100vh
@@ -13,6 +14,7 @@
   flex-direction: column
   justify-content: space-between
 
-.content
+.main
+  @include wrapperPaddings()
   flex-grow: 1
   overflow-y: auto

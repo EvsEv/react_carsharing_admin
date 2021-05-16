@@ -1,23 +1,106 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Filters from "../../components/UIKit/Filters";
-import TextInput from "../../components/UIKit/TextInput";
-import SearchDropdown from "../../components/UIKit/SearchDropdown";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    getCityList,
+    getModelList,
+    getStatusList,
+    setSelectedCity,
+    setSelectedModel,
+    setSelectedPeriod,
+    setSelectedStatus,
+} from "../../redux/thunks/orderList";
 
 import styles from "./orderList.module.sass";
+import PaginatedList from "../../components/UIKit/PaginatedList";
 
 export const OrderList = () => {
+    // const [periodFilter, setPeriodFilter] = useState({});
+    const [modelFilter, setModelFilter] = useState({});
+    const [cityFilter, setCityFilter] = useState({});
+    const [statusFilter, setStatusFilter] = useState({});
+    const dispatch = useDispatch();
+    const {
+        periodList,
+        modelList,
+        cityList,
+        statusList,
+        selectedPeriod,
+        selectedModel,
+        selectedCity,
+        selectedStatus,
+        orderList,
+    } = useSelector((state) => state.orderList);
+
+    const changeSelectedPeriod = (selectedPeriod) =>
+        dispatch(setSelectedPeriod(selectedPeriod));
+
+    const changeSelectedModel = (selectedModel) =>
+        dispatch(setSelectedModel(selectedModel));
+
+    const changeSelectedCity = (selectedCity) =>
+        dispatch(setSelectedCity(selectedCity));
+
+    const changeSelectedStatus = (selectedStatus) =>
+        dispatch(setSelectedStatus(selectedStatus));
+
+    const periodFilter = {
+        variants: periodList,
+        selectedValue: selectedPeriod?.name,
+        changeValue: changeSelectedPeriod,
+        placeholder: "Период",
+    };
+
+    useEffect(() => {
+        dispatch(getModelList());
+        dispatch(getCityList());
+        dispatch(getStatusList());
+    }, []);
+
+    useEffect(() => {
+        setModelFilter({
+            variants: modelList,
+            selectedValue: selectedModel?.name,
+            changeValue: changeSelectedModel,
+            // label: "Тип автомобиля",
+            placeholder: "Модель",
+        });
+    }, [modelList]);
+
+    useEffect(() => {
+        setCityFilter({
+            variants: cityList,
+            selectedValue: selectedCity?.name,
+            changeValue: changeSelectedCity,
+            // label: "Выбранный город",
+            placeholder: "Город",
+        });
+    }, [cityList]);
+
+    useEffect(() => {
+        setStatusFilter({
+            variants: statusList,
+            selectedValue: selectedStatus?.name,
+            changeValue: changeSelectedStatus,
+            // label: "Выбранный город",
+            placeholder: "Статус",
+        });
+    }, [statusList]);
+
     return (
-        <div>
-            <TextInput
-                title='Модель автомобиля'
-                placeholder='Введите название модели'
-            />
-            {/* <SearchDropdown
-                label='Тип автомобиля'
-                variants={variantsCategory}
-                placeholder='Введите категорию'
-            /> */}
-            <Filters />
-        </div>
+        <>
+            <h1 className={styles.title}>Заказы</h1>
+            <div className={styles.content}>
+                <Filters
+                    filters={[
+                        periodFilter,
+                        modelFilter,
+                        cityFilter,
+                        statusFilter,
+                    ]}
+                />
+                <PaginatedList elements={orderList} />
+            </div>
+        </>
     );
 };
