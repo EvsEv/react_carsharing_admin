@@ -15,10 +15,10 @@ import styles from "./orderList.module.sass";
 import PaginatedList from "../../components/UIKit/PaginatedList";
 
 export const OrderList = () => {
-    // const [periodFilter, setPeriodFilter] = useState({});
     const [modelFilter, setModelFilter] = useState({});
     const [cityFilter, setCityFilter] = useState({});
     const [statusFilter, setStatusFilter] = useState({});
+    const [orderListByParams, setOrderListByParams] = useState();
     const dispatch = useDispatch();
     const {
         periodList,
