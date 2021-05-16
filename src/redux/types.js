@@ -1,2 +1,10 @@
 export const AUTH = "AUTH";
 export const SET_USER_INFO = "SET_USER_INFO";
+
+export const GET_MODEL_LIST = "GET_MODEL_LIST";
+export const GET_CITY_LIST = "GET_CITY_LIST";
+export const GET_STATUS_LIST = "GET_STATUS_LIST";
+export const SET_PERIOD = "SET_PERIOD";
+export const SET_SELECTED_MODEL = "SET_SELECTED_MODEL";
+export const SET_SELECTED_CITY = "SET_SELECTED_CITY";
+export const SET_SELECTED_STATUS = "SET_SELECTED_STATUS";

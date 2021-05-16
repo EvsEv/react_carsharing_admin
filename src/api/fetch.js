@@ -58,3 +58,32 @@ export const logout = async () => {
         console.log(e);
     }
 };
+
+export const fetchData = async (
+    name,
+    parameter = "",
+    value = "",
+    limit = "",
+    page = 0
+) => {
+    const appId = process.env.REACT_APP_APPLICATION_ID;
+
+    const headers = {
+        "X-Api-Factory-Application-Id": appId,
+        "Content-Type": "application/json",
+    };
+
+    try {
+        const response = await fetch(
+            `https://api-factory.simbirsoft1.com/api/db/${name}?${parameter}=${value}&limit=${limit}&page=${page}`,
+            {
+                headers,
+            }
+        );
+        const json = await response.json();
+
+        return json.data;
+    } catch (e) {
+        console.log(e);
+    }
+};

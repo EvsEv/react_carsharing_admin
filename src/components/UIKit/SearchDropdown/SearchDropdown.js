@@ -19,7 +19,6 @@ export const SearchDropdown = ({
     const [showDropdown, setShowDropdown] = useClickNotOnElement(dropdown);
 
     const inputClasses = [styles.input];
-
     const searchDropdownClasses = [styles.searchDropdown];
 
     if (type) {
@@ -31,12 +30,20 @@ export const SearchDropdown = ({
     }
 
     useEffect(() => {
-        setSuggestions(variants);
-    }, []);
+        error && selectedValue?.name !== value && changeValue(null);
+    }, [error]);
 
     useEffect(() => {
-        selectedValue && setValue(selectedValue);
-        setError(false);
+        setSuggestions(variants);
+    }, [variants]);
+
+    useEffect(() => {
+        if (selectedValue) {
+            setValue(selectedValue);
+            setError(false);
+        } else {
+            setError("Неверное значение");
+        }
     }, [selectedValue]);
 
     const onType = (event) => {
@@ -48,22 +55,20 @@ export const SearchDropdown = ({
                     .toLowerCase()
                     .search(event.target.value.toLowerCase()) !== -1
         );
-        if (
-            updatedSuggestions.find(
-                (suggestion) => suggestion.name === event.target.value
-            )
-        ) {
+        const indexOfFoundSuggestion = updatedSuggestions.findIndex(
+            (suggestion) => suggestion.name === event.target.value
+        );
+        if (indexOfFoundSuggestion !== -1) {
             setError(false);
-            changeValue(event.target.value);
+            changeValue(updatedSuggestions[indexOfFoundSuggestion]);
             setSuggestions(variants);
             setShowDropdown(false);
         } else {
-            changeValue("");
             setError("Неверное значение");
         }
 
         if (!event.target.value) {
-            changeValue("");
+            changeValue(null);
             setError("Выберите значение");
         }
         setSuggestions(updatedSuggestions);
@@ -78,7 +83,7 @@ export const SearchDropdown = ({
 
     const onSuggestionClick = (suggestion) => {
         changeValue(suggestion);
-        setValue(suggestion);
+        setValue(suggestion.name);
         setError(false);
         setSuggestions(variants);
         setShowDropdown(false);
@@ -95,7 +100,7 @@ export const SearchDropdown = ({
                 <input
                     className={inputClasses.join(" ")}
                     onChange={onType}
-                    value={value}
+                    value={value || ""}
                     onClick={onInputClick}
                     placeholder={placeholder}
                     name={parameter}
@@ -103,13 +108,11 @@ export const SearchDropdown = ({
                 {error && <span className={styles.errorType}>{error}</span>}
                 {showDropdown && (
                     <ul className={styles.suggestion} ref={dropdown}>
-                        {suggestions.map((suggestion) => (
+                        {suggestions.map((suggestion, idx) => (
                             <li
                                 className={styles.item}
-                                key={suggestion.name}
-                                onClick={() =>
-                                    onSuggestionClick(suggestion.name)
-                                }
+                                key={idx}
+                                onClick={() => onSuggestionClick(suggestion)}
                             >
                                 {suggestion.name}
                             </li>
