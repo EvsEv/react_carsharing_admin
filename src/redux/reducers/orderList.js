@@ -1,6 +1,7 @@
 import {
     GET_CITY_LIST,
     GET_MODEL_LIST,
+    GET_ORDER_LIST,
     GET_STATUS_LIST,
     SET_PERIOD,
     SET_SELECTED_CITY,
@@ -11,6 +12,7 @@ import {
 const initialState = {
     periodList: [
         { name: "Неважно", id: "noMatter" },
+        { name: "За день", id: "day" },
         { name: "За неделю", id: "week" },
         { name: "За месяц", id: "month" },
         { name: "За полгода", id: "halfYear" },
@@ -23,6 +25,7 @@ const initialState = {
     selectedModel: { name: "Неважно", id: "noMatter" },
     selectedCity: { name: "Неважно", id: "noMatter" },
     selectedStatus: { name: "Неважно", id: "noMatter" },
+    orderList: null,
 };
 
 export const orderList = (state = initialState, action) => {
@@ -50,6 +53,8 @@ export const orderList = (state = initialState, action) => {
             return { ...state, selectedCity: action.payload };
         case SET_SELECTED_STATUS:
             return { ...state, selectedStatus: action.payload };
+        case GET_ORDER_LIST:
+            return { ...state, orderList: action.payload };
 
         default:
             return state;

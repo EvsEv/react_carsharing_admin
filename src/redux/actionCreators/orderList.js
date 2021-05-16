@@ -1,6 +1,7 @@
 import {
     GET_CITY_LIST,
     GET_MODEL_LIST,
+    GET_ORDER_LIST,
     GET_STATUS_LIST,
     SET_PERIOD,
     SET_SELECTED_CITY,
@@ -21,6 +22,11 @@ export const addCityListToStore = (cityList) => ({
 export const addStatusListToStore = (statusList) => ({
     type: GET_STATUS_LIST,
     payload: statusList,
+});
+
+export const addOrderListToStore = (orderList) => ({
+    type: GET_ORDER_LIST,
+    payload: orderList,
 });
 
 export const addSelectedPeriodToStore = (selectedPeriod) => ({

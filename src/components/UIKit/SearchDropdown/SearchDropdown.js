@@ -14,6 +14,7 @@ export const SearchDropdown = ({
 }) => {
     const [value, setValue] = useState(selectedValue);
     const [error, setError] = useState(false);
+    const [title, setTitle] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const dropdown = useRef();
     const [showDropdown, setShowDropdown] = useClickNotOnElement(dropdown);
@@ -23,6 +24,10 @@ export const SearchDropdown = ({
 
     if (type) {
         searchDropdownClasses.push(styles[type]);
+    }
+
+    if (showDropdown) {
+        searchDropdownClasses.push(styles.opened);
     }
 
     if (error) {
@@ -40,8 +45,10 @@ export const SearchDropdown = ({
     useEffect(() => {
         if (selectedValue) {
             setValue(selectedValue);
+            setTitle(selectedValue);
             setError(false);
         } else {
+            setTitle("Выберите значение");
             setError("Неверное значение");
         }
     }, [selectedValue]);
@@ -104,6 +111,7 @@ export const SearchDropdown = ({
                     onClick={onInputClick}
                     placeholder={placeholder}
                     name={parameter}
+                    title={title}
                 />
                 {error && <span className={styles.errorType}>{error}</span>}
                 {showDropdown && (

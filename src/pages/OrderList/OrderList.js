@@ -12,6 +12,7 @@ import {
 } from "../../redux/thunks/orderList";
 
 import styles from "./orderList.module.sass";
+import PaginatedList from "../../components/UIKit/PaginatedList";
 
 export const OrderList = () => {
     // const [periodFilter, setPeriodFilter] = useState({});
@@ -28,6 +29,7 @@ export const OrderList = () => {
         selectedModel,
         selectedCity,
         selectedStatus,
+        orderList,
     } = useSelector((state) => state.orderList);
 
     const changeSelectedPeriod = (selectedPeriod) =>
@@ -46,7 +48,7 @@ export const OrderList = () => {
         variants: periodList,
         selectedValue: selectedPeriod?.name,
         changeValue: changeSelectedPeriod,
-        placeholder: "Выберите период",
+        placeholder: "Период",
     };
 
     useEffect(() => {
@@ -61,7 +63,7 @@ export const OrderList = () => {
             selectedValue: selectedModel?.name,
             changeValue: changeSelectedModel,
             // label: "Тип автомобиля",
-            placeholder: "Выберите модель",
+            placeholder: "Модель",
         });
     }, [modelList]);
 
@@ -71,7 +73,7 @@ export const OrderList = () => {
             selectedValue: selectedCity?.name,
             changeValue: changeSelectedCity,
             // label: "Выбранный город",
-            placeholder: "Выберите город",
+            placeholder: "Город",
         });
     }, [cityList]);
 
@@ -81,15 +83,24 @@ export const OrderList = () => {
             selectedValue: selectedStatus?.name,
             changeValue: changeSelectedStatus,
             // label: "Выбранный город",
-            placeholder: "Выберите статус",
+            placeholder: "Статус",
         });
     }, [statusList]);
 
     return (
         <>
-            <Filters
-                filters={[periodFilter, modelFilter, cityFilter, statusFilter]}
-            />
+            <h1 className={styles.title}>Заказы</h1>
+            <div className={styles.content}>
+                <Filters
+                    filters={[
+                        periodFilter,
+                        modelFilter,
+                        cityFilter,
+                        statusFilter,
+                    ]}
+                />
+                <PaginatedList elements={orderList} />
+            </div>
         </>
     );
 };

@@ -67,15 +67,42 @@ export const fetchData = async (
     page = 0
 ) => {
     const appId = process.env.REACT_APP_APPLICATION_ID;
+    const bearer = await JSON.parse(localStorage.bearer);
 
     const headers = {
         "X-Api-Factory-Application-Id": appId,
         "Content-Type": "application/json",
+        Authorization: `Bearer ${bearer.access_token}`,
     };
 
     try {
         const response = await fetch(
             `https://api-factory.simbirsoft1.com/api/db/${name}?${parameter}=${value}&limit=${limit}&page=${page}`,
+            {
+                headers,
+            }
+        );
+        const json = await response.json();
+
+        return json.data;
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+export const fetchDataWithComplexParamters = async (name, parameters) => {
+    const appId = process.env.REACT_APP_APPLICATION_ID;
+    const bearer = await JSON.parse(localStorage.bearer);
+
+    const headers = {
+        "X-Api-Factory-Application-Id": appId,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${bearer.access_token}`,
+    };
+
+    try {
+        const response = await fetch(
+            `https://api-factory.simbirsoft1.com/api/db/${name}?${parameters}`,
             {
                 headers,
             }
