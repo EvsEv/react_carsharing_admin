@@ -8,6 +8,17 @@ export const OrderCard = ({ order }) => {
     const [isFullTank, setIsFullTank] = useState();
     const [isNeedChildChair, setIsNeedChildChair] = useState();
     const [isRightWheel, setIsRightWheel] = useState();
+    const [imageSrc, setImageSrc] = useState();
+
+    useEffect(() => {
+        if (order.carId?.thumbnail.path.indexOf("base64") != -1) {
+            setImageSrc(order.carId?.thumbnail.path);
+        } else {
+            setImageSrc(
+                `https://api-factory.simbirsoft1.com/${order.carId?.thumbnail.path}`
+            );
+        }
+    }, []);
 
     useEffect(() => {
         setIsFullTank(order?.isFullTank);
@@ -20,12 +31,10 @@ export const OrderCard = ({ order }) => {
     const toggleIsRightWheel = () => setIsRightWheel(!isRightWheel);
 
     return (
-        <div>
-            {/* <picture className={styles.picture}>
-                <img
-                    src={`https://api-factory.simbirsoft1.com${order?.carId?.thumbnail?.path}`}
-                />
-            </picture> */}
+        <div className={styles.card}>
+            <picture className={styles.picture}>
+                <img src={imageSrc} />
+            </picture>
             <div className={styles.information}>
                 <p className={styles.text}>
                     <span contentEditable={false}>{order?.carId?.name}</span> в
@@ -57,7 +66,7 @@ export const OrderCard = ({ order }) => {
                     Цвет: <span>{order?.color}</span>
                 </p>
             </div>
-            <form>
+            <form className={styles.addedInformation}>
                 <Checkbox
                     name="isFullTank"
                     value={isFullTank}
@@ -80,7 +89,11 @@ export const OrderCard = ({ order }) => {
                     label="Правый руль"
                 />
             </form>
-            <p className={styles.price}>{order?.price.toLocaleString()} ₽</p>
+            <p className={styles.price}>
+                {order?.price
+                    ? order.price.toLocaleString() + " ₽"
+                    : "Не указана"}
+            </p>
             <ControlEdit />
         </div>
     );
