@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Checkbox from "../UIKit/Checkbox";
+import ControlEdit from "../UIKit/ControlEdit";
 
 import styles from "./orderCard.module.sass";
 
 export const OrderCard = ({ order }) => {
+    const [isFullTank, setIsFullTank] = useState();
+    const [isNeedChildChair, setIsNeedChildChair] = useState();
+    const [isRightWheel, setIsRightWheel] = useState();
+
+    useEffect(() => {
+        setIsFullTank(order?.isFullTank);
+        setIsNeedChildChair(order?.isNeedChildChair);
+        setIsRightWheel(order?.isRightWheel);
+    }, [order]);
+
+    const toggleIsFullTank = () => setIsFullTank(!isFullTank);
+    const toggleIsNeedChildChair = () => setIsNeedChildChair(!isNeedChildChair);
+    const toggleIsRightWheel = () => setIsRightWheel(!isRightWheel);
+
     return (
         <div>
             {/* <picture className={styles.picture}>
@@ -12,9 +28,12 @@ export const OrderCard = ({ order }) => {
             </picture> */}
             <div className={styles.information}>
                 <p className={styles.text}>
-                    <span>{order?.carId?.name}</span> в г.{" "}
-                    <span>{order?.cityId?.name}</span>,{" "}
-                    {order?.pointId?.address}
+                    <span contentEditable={false}>{order?.carId?.name}</span> в
+                    г.{" "}
+                    <span contentEditable={false}>{order?.cityId?.name}</span>,{" "}
+                    <span contentEditable={false}>
+                        {order?.pointId?.address}
+                    </span>
                 </p>
                 <p className={styles.text}>
                     {new Date(order?.dateFrom).toLocaleString([], {
@@ -38,6 +57,31 @@ export const OrderCard = ({ order }) => {
                     Цвет: <span>{order?.color}</span>
                 </p>
             </div>
+            <form>
+                <Checkbox
+                    name="isFullTank"
+                    value={isFullTank}
+                    checked={isFullTank}
+                    onChange={toggleIsFullTank}
+                    label="Полный бак"
+                />
+                <Checkbox
+                    name="isNeedChildChair"
+                    value={isNeedChildChair}
+                    checked={isNeedChildChair}
+                    onChange={toggleIsNeedChildChair}
+                    label="Детское кресло"
+                />
+                <Checkbox
+                    name="isRightWheel"
+                    value={isRightWheel}
+                    checked={isRightWheel}
+                    onChange={toggleIsRightWheel}
+                    label="Правый руль"
+                />
+            </form>
+            <p className={styles.price}>{order?.price.toLocaleString()} ₽</p>
+            <ControlEdit />
         </div>
     );
 };
