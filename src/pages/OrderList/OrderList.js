@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Filters from "../../components/UIKit/Filters";
 import { useDispatch, useSelector } from "react-redux";
 import {
+    changeLastViewedPage,
     getCityList,
     getModelList,
     getStatusList,
@@ -13,12 +14,13 @@ import {
 
 import styles from "./orderList.module.sass";
 import PaginatedList from "../../components/UIKit/PaginatedList";
+import OrderCard from "../../components/OrderCard";
+import Paginate from "../../components/UIKit/Paginate";
 
 export const OrderList = () => {
     const [modelFilter, setModelFilter] = useState({});
     const [cityFilter, setCityFilter] = useState({});
     const [statusFilter, setStatusFilter] = useState({});
-    const [orderListByParams, setOrderListByParams] = useState();
     const dispatch = useDispatch();
     const {
         periodList,
@@ -30,6 +32,8 @@ export const OrderList = () => {
         selectedCity,
         selectedStatus,
         orderList,
+        lastViewedPage,
+        countOfPages,
     } = useSelector((state) => state.orderList);
 
     const changeSelectedPeriod = (selectedPeriod) =>
@@ -99,7 +103,17 @@ export const OrderList = () => {
                         statusFilter,
                     ]}
                 />
-                <PaginatedList elements={orderList} />
+                <div className={styles.list}>
+                    {orderList?.map((order) => (
+                        <OrderCard key={order?.id} order={order} />
+                    ))}
+                </div>
+                <Paginate
+                    activePage={lastViewedPage}
+                    countOfPages={countOfPages}
+                    changePage={changeLastViewedPage}
+                />
+                {/* <PaginatedList elements={orderList} /> */}
             </div>
         </>
     );

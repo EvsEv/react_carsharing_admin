@@ -1,4 +1,6 @@
 import {
+    CHANGE_PAGE_ORDER_LIST,
+    COUNT_OF_PAGES_OF_ORDER_LIST,
     GET_CITY_LIST,
     GET_MODEL_LIST,
     GET_ORDER_LIST,
@@ -26,6 +28,8 @@ const initialState = {
     selectedCity: { name: "Неважно", id: "noMatter" },
     selectedStatus: { name: "Неважно", id: "noMatter" },
     orderList: null,
+    lastViewedPage: 0,
+    countOfPages: null,
 };
 
 export const orderList = (state = initialState, action) => {
@@ -55,6 +59,10 @@ export const orderList = (state = initialState, action) => {
             return { ...state, selectedStatus: action.payload };
         case GET_ORDER_LIST:
             return { ...state, orderList: action.payload };
+        case CHANGE_PAGE_ORDER_LIST:
+            return { ...state, lastViewedPage: action.payload };
+        case COUNT_OF_PAGES_OF_ORDER_LIST:
+            return { ...state, countOfPages: action.payload };
 
         default:
             return state;

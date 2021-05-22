@@ -1,4 +1,6 @@
 import {
+    CHANGE_PAGE_ORDER_LIST,
+    COUNT_OF_PAGES_OF_ORDER_LIST,
     GET_CITY_LIST,
     GET_MODEL_LIST,
     GET_ORDER_LIST,
@@ -47,4 +49,14 @@ export const addSelectedCityToStore = (selectedCity) => ({
 export const addSelectedStatusToStore = (selectedStatus) => ({
     type: SET_SELECTED_STATUS,
     payload: selectedStatus,
+});
+
+export const changeLastViewedPageInStore = (page) => ({
+    type: CHANGE_PAGE_ORDER_LIST,
+    payload: page,
+});
+
+export const changeCountOfPagesInStore = (count) => ({
+    type: COUNT_OF_PAGES_OF_ORDER_LIST,
+    payload: count,
 });
