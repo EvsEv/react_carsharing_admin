@@ -108,7 +108,7 @@ export const fetchDataWithComplexParamters = async (name, parameters) => {
             }
         );
         const json = await response.json();
-
+        console.log(json.count);
         return json;
     } catch (e) {
         console.log(e);

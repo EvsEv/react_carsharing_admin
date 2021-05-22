@@ -63,8 +63,10 @@ export const getOrderList = () => {
         let currentDate = new Date();
         let dateFrom = new Date();
 
+        console.log(lastViewedPage);
+
         const parameters = [
-            "sort[createdAt]=-1",
+            "sort[dateFrom]=-1",
             "&limit=5",
             `&page=${lastViewedPage}`,
         ];
@@ -117,13 +119,10 @@ export const getOrderList = () => {
         dateFrom.setMinutes(0);
         dateFrom.setSeconds(0);
 
-        console.log(lastViewedPage);
-
         const orderListFromServer = await fetchDataWithComplexParamters(
             "order",
             parameters.join("")
         );
-        console.log(orderListFromServer);
         dispatch(calculateCountOfPages(orderListFromServer.count));
         dispatch(addOrderListToStore(orderListFromServer.data));
     };
