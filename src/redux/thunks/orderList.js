@@ -10,6 +10,7 @@ import {
     addStatusListToStore,
     changeCountOfPagesInStore,
     changeLastViewedPageInStore,
+    setErrorToStore,
 } from "../actionCreators/orderList";
 
 export const getModelList = () => {
@@ -64,7 +65,7 @@ export const getOrderList = () => {
         let dateFrom = new Date();
 
         const parameters = [
-            "sort[dateFrom]=-1",
+            "sort[createdAt]=-1",
             "&limit=5",
             `&page=${lastViewedPage}`,
         ];
@@ -96,7 +97,7 @@ export const getOrderList = () => {
                 parameters.push(
                     `&dateFrom[$gt]=${dateFrom.getTime()}&dateFrom[$lt]=${currentDate.getTime()}`
                 );
-
+                break;
             case "halfYear":
                 dateFrom.setMonth(dateFrom.getMonth() - 6);
                 parameters.push(
@@ -104,7 +105,7 @@ export const getOrderList = () => {
                 );
                 break;
             case "fullYear":
-                dateFrom.setMonth(dateFrom.getFullYear() - 1);
+                dateFrom.setYear(dateFrom.getFullYear() - 1);
                 parameters.push(
                     `&dateFrom[$gt]=${dateFrom.getTime()}&dateFrom[$lt]=${currentDate.getTime()}`
                 );
@@ -117,12 +118,18 @@ export const getOrderList = () => {
         dateFrom.setMinutes(0);
         dateFrom.setSeconds(0);
 
-        const orderListFromServer = await fetchDataWithComplexParamters(
-            "order",
-            parameters.join("")
-        );
-        dispatch(calculateCountOfPages(orderListFromServer?.count));
-        dispatch(addOrderListToStore(orderListFromServer?.data));
+        try {
+            const orderListFromServer = await fetchDataWithComplexParamters(
+                "order",
+                parameters.join("")
+            );
+            dispatch(calculateCountOfPages(orderListFromServer.count));
+            dispatch(addOrderListToStore(orderListFromServer.data));
+            dispatch(setErrorToStore(null));
+        } catch (error) {
+            dispatch(addOrderListToStore([]));
+            dispatch(setErrorToStore(error.name));
+        }
     };
 };
 

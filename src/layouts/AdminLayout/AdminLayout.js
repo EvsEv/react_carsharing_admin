@@ -31,7 +31,10 @@ export const AdminLayout = () => {
                             render={() => <CarSetting />}
                         />
                         <Route path="/carsTable" render={() => <CarsTable />} />
-                        <Route path="" component={() => <Error />} />
+                        <Route
+                            path="/500"
+                            component={() => <Error number={500} />}
+                        />
                         <Route path="" component={() => <Error />} />
                     </Switch>
                 </main>
