@@ -1,25 +1,23 @@
 @import ../../../styles/variables
 
-.submit
+.button
   font-size: 11.5px
   line-height: 13px
   color: $white
   width: 110px
   padding: 8px 0
-  background-color: $brightBlue
   outline: none
   border: none
   border-radius: 4px
   cursor: pointer
+  background: $white
+  transition: all $short ease
+  &:disabled
+    color: $mainBlack
+    background: $ultraGrey
+
+.submit
+  background-color: $brightBlue
 
 .reset
-  font-size: 11.5px
-  line-height: 13px
-  color: $white
-  width: 110px
-  padding: 8px 0
   background-color: $crimson
-  outline: none
-  border: none
-  border-radius: 4px
-  cursor: pointer

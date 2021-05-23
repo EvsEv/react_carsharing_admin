@@ -8,6 +8,8 @@ import {
     addSelectedPeriodToStore,
     addSelectedStatusToStore,
     addStatusListToStore,
+    changeCountOfPagesInStore,
+    changeLastViewedPageInStore,
 } from "../actionCreators/orderList";
 
 export const getModelList = () => {
@@ -35,7 +37,7 @@ export const getStatusList = () => {
                 : status.name === "issued"
                 ? { ...status, name: "Выполненный" }
                 : status.name === "confirmed"
-                ? { ...status, name: "Подтвержденный" }
+                ? { ...status, name: "Принятый" }
                 : status.name === "cancelled"
                 ? { ...status, name: "Отменненый" }
                 : null
@@ -44,14 +46,28 @@ export const getStatusList = () => {
     };
 };
 
+export const calculateCountOfPages = (count) => {
+    const pages = count % 5 ? Math.floor(count / 5) : count / 5 - 1;
+    return changeCountOfPagesInStore(pages);
+};
+
 export const getOrderList = () => {
     return async (dispatch, getState) => {
-        const { selectedModel, selectedCity, selectedPeriod, selectedStatus } =
-            getState().orderList;
+        const {
+            selectedModel,
+            selectedCity,
+            selectedPeriod,
+            selectedStatus,
+            lastViewedPage,
+        } = getState().orderList;
         let currentDate = new Date();
         let dateFrom = new Date();
 
-        const parameters = ["limit=100"];
+        const parameters = [
+            "sort[dateFrom]=-1",
+            "&limit=5",
+            `&page=${lastViewedPage}`,
+        ];
         if (selectedModel.id !== "noMatter") {
             parameters.push(`&carId[id]=${selectedModel.id}`);
         }
@@ -105,7 +121,8 @@ export const getOrderList = () => {
             "order",
             parameters.join("")
         );
-        dispatch(addOrderListToStore(orderListFromServer));
+        dispatch(calculateCountOfPages(orderListFromServer?.count));
+        dispatch(addOrderListToStore(orderListFromServer?.data));
     };
 };
 
@@ -120,3 +137,8 @@ export const setSelectedCity = (selectedCity) => (dispatch) =>
 
 export const setSelectedStatus = (selectedStatus) => (dispatch) =>
     dispatch(addSelectedStatusToStore(selectedStatus));
+
+export const changeLastViewedPage = (page) => (dispatch) => {
+    dispatch(changeLastViewedPageInStore(page));
+    dispatch(getOrderList());
+};

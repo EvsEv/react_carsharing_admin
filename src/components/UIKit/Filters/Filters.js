@@ -5,14 +5,17 @@ import { fetchData, fetchDataWithComplexParamters } from "../../../api/fetch";
 
 import styles from "./filters.module.sass";
 import { useDispatch } from "react-redux";
-import { getOrderList } from "../../../redux/thunks/orderList";
+import {
+    changeLastViewedPage,
+    getOrderList,
+} from "../../../redux/thunks/orderList";
 
 export const Filters = ({ filters }) => {
     const dispatch = useDispatch();
 
     const onSubmit = (event) => {
         event.preventDefault();
-        dispatch(getOrderList());
+        dispatch(changeLastViewedPage(0));
     };
     const onReset = (event) => {
         event.preventDefault();
@@ -22,6 +25,8 @@ export const Filters = ({ filters }) => {
     useEffect(() => {
         dispatch(getOrderList());
     }, []);
+
+    console.log("Filters rerendered");
 
     return (
         <form className={styles.form} onSubmit={onSubmit} onReset={onReset}>

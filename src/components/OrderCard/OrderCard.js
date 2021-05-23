@@ -5,6 +5,8 @@ import ControlEdit from "../UIKit/ControlEdit";
 import styles from "./orderCard.module.sass";
 
 export const OrderCard = ({ order }) => {
+    const [city, setCity] = useState();
+    const [point, setPoint] = useState();
     const [isFullTank, setIsFullTank] = useState();
     const [isNeedChildChair, setIsNeedChildChair] = useState();
     const [isRightWheel, setIsRightWheel] = useState();
@@ -21,6 +23,7 @@ export const OrderCard = ({ order }) => {
     }, []);
 
     useEffect(() => {
+        setCity(order?.cityId.name);
         setIsFullTank(order?.isFullTank);
         setIsNeedChildChair(order?.isNeedChildChair);
         setIsRightWheel(order?.isRightWheel);
@@ -94,7 +97,7 @@ export const OrderCard = ({ order }) => {
                     ? order.price.toLocaleString() + " ₽"
                     : "Не указана"}
             </p>
-            <ControlEdit />
+            {/* <ControlEdit /> */}
         </div>
     );
 };

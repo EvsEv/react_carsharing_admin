@@ -1,4 +1,5 @@
 @import ../../../styles/variables
+@import ../../../styles/mixins
 
 .searchDropdown
   width: 50%
@@ -74,7 +75,7 @@
 .suggestion
   width: 100%
   max-height: 100px
-  overflow-y: scroll
+  overflow-y: auto
   padding: 0
   margin: 0
   position: absolute
@@ -83,6 +84,7 @@
   z-index: 50
   background: $darkWhite
   border-radius: 4px
+  @include customScroll()
 
 .item
   font-size: 11px
