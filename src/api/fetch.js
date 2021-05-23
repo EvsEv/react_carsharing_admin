@@ -1,3 +1,5 @@
+import { useHistory } from "react-router-dom";
+
 export const login = async () => {
     try {
         const secretKey = process.env.REACT_APP_SECRET_KEY;
@@ -110,6 +112,6 @@ export const fetchDataWithComplexParamters = async (name, parameters) => {
         const json = await response.json();
         return json;
     } catch (e) {
-        console.log(e);
+        throw e;
     }
 };
