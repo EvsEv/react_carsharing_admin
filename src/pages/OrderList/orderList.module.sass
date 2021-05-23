@@ -10,14 +10,21 @@
   margin-bottom: 30px
 
 .content
+  min-height: 324px
   background: $white
   border-radius: $borderRadiusBig
   box-shadow: $defaultBoxShadow
   display: flex
   flex-direction: column
-  overflow-y: scroll
+  overflow-y: auto
 
 .list
   padding: 0 21.5px
   flex-grow: 1
-  overflow-y: scroll
+  overflow-y: auto
+  position: relative
+  @include customScroll()
+
+.notification
+  display: block
+  min-height: 444px

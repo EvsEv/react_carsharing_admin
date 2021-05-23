@@ -26,6 +26,8 @@ export const Filters = ({ filters }) => {
         dispatch(getOrderList());
     }, []);
 
+    console.log("Filters rerendered");
+
     return (
         <form className={styles.form} onSubmit={onSubmit} onReset={onReset}>
             <div className={styles.parameters}>

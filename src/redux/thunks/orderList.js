@@ -37,7 +37,7 @@ export const getStatusList = () => {
                 : status.name === "issued"
                 ? { ...status, name: "Выполненный" }
                 : status.name === "confirmed"
-                ? { ...status, name: "Подтвержденный" }
+                ? { ...status, name: "Принятый" }
                 : status.name === "cancelled"
                 ? { ...status, name: "Отменненый" }
                 : null
@@ -62,8 +62,6 @@ export const getOrderList = () => {
         } = getState().orderList;
         let currentDate = new Date();
         let dateFrom = new Date();
-
-        console.log(lastViewedPage);
 
         const parameters = [
             "sort[dateFrom]=-1",
@@ -123,8 +121,8 @@ export const getOrderList = () => {
             "order",
             parameters.join("")
         );
-        dispatch(calculateCountOfPages(orderListFromServer.count));
-        dispatch(addOrderListToStore(orderListFromServer.data));
+        dispatch(calculateCountOfPages(orderListFromServer?.count));
+        dispatch(addOrderListToStore(orderListFromServer?.data));
     };
 };
 

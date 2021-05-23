@@ -1,5 +1,60 @@
-.active
-  background: salmon
+@import ../../../styles/variables
 
-// button
-//   width: 50px
+.paginate
+  padding: 21px 0
+  margin: 0 auto
+  display: flex
+  gap: 7px
+  position: relative
+
+.button
+  font-size: 15px
+  line-height: 1
+  color: $brightBlue
+  background: none
+  border: none
+  outline: none
+  width: 38px
+  height: 18px
+  cursor: pointer
+  border-radius: 4px
+  padding: 0
+
+.active
+  color: $white
+  background: $brightBlue
+
+.decrease, .increase
+  display: block
+  padding: 0
+  position: absolute
+  top: 33%
+  left: -27px
+
+.increase
+  left: auto
+  right: -38px
+
+
+.dropdown
+  display: block
+  width: 100%
+  box-sizing: border-box
+  padding: 15px
+  background: $white
+  box-shadow: $defaultBoxShadow
+  position: absolute
+  top: 0
+  left: 0
+  transform: translateY(-100%)
+  display: flex
+
+.search
+  font-size: 11.5px
+  line-height: 13px
+  display: block
+  border: none
+  border-bottom: 1px solid $darkBlue
+  outline: none
+  flex-grow: 1
+  margin-right: 15px

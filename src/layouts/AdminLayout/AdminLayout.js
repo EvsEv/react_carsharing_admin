@@ -32,6 +32,7 @@ export const AdminLayout = () => {
                         />
                         <Route path="/carsTable" render={() => <CarsTable />} />
                         <Route path="" component={() => <Error />} />
+                        <Route path="" component={() => <Error />} />
                     </Switch>
                 </main>
                 <Footer />

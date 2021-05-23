@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Filters from "../../components/UIKit/Filters";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -48,66 +48,79 @@ export const OrderList = () => {
     const changeSelectedStatus = (selectedStatus) =>
         dispatch(setSelectedStatus(selectedStatus));
 
-    const periodFilter = {
-        variants: periodList,
-        selectedValue: selectedPeriod?.name,
-        changeValue: changeSelectedPeriod,
-        placeholder: "Период",
-    };
-
     useEffect(() => {
         dispatch(getModelList());
         dispatch(getCityList());
         dispatch(getStatusList());
     }, []);
 
-    useEffect(() => {
-        setModelFilter({
-            variants: modelList,
-            selectedValue: selectedModel?.name,
-            changeValue: changeSelectedModel,
-            // label: "Тип автомобиля",
-            placeholder: "Модель",
-        });
-    }, [modelList]);
+    const printList = useMemo(() => {
+        console.log("List rerendered");
+        return (
+            <div className={styles.list}>
+                {orderList?.length ? (
+                    orderList.map((order) => (
+                        <OrderCard key={order?.id} order={order} />
+                    ))
+                ) : (
+                    <span className={styles.notification}>
+                        Заказов, подходящих под выбранные фильтры, не найдено
+                    </span>
+                )}
+            </div>
+        );
+    }, [orderList]);
 
-    useEffect(() => {
-        setCityFilter({
-            variants: cityList,
-            selectedValue: selectedCity?.name,
-            changeValue: changeSelectedCity,
-            // label: "Выбранный город",
-            placeholder: "Город",
-        });
-    }, [cityList]);
+    const printFilters = useMemo(() => {
+        return (
+            <Filters
+                filters={[
+                    {
+                        variants: periodList,
+                        selectedValue: selectedPeriod?.name,
+                        changeValue: changeSelectedPeriod,
+                        placeholder: "Период",
+                    },
+                    {
+                        variants: modelList,
+                        selectedValue: selectedModel?.name,
+                        changeValue: changeSelectedModel,
+                        placeholder: "Модель",
+                    },
+                    {
+                        variants: cityList,
+                        selectedValue: selectedCity?.name,
+                        changeValue: changeSelectedCity,
+                        placeholder: "Город",
+                    },
+                    {
+                        variants: statusList,
+                        selectedValue: selectedStatus?.name,
+                        changeValue: changeSelectedStatus,
+                        placeholder: "Статус",
+                    },
+                ]}
+            />
+        );
+    }, [
+        periodList,
+        selectedPeriod,
+        modelList,
+        selectedModel,
+        selectedModel,
+        selectedCity,
+        statusList,
+        selectedStatus,
+    ]);
 
-    useEffect(() => {
-        setStatusFilter({
-            variants: statusList,
-            selectedValue: selectedStatus?.name,
-            changeValue: changeSelectedStatus,
-            // label: "Выбранный город",
-            placeholder: "Статус",
-        });
-    }, [statusList]);
+    console.log("OrderList rerendered");
 
     return (
         <>
             <h1 className={styles.title}>Заказы</h1>
             <div className={styles.content}>
-                <Filters
-                    filters={[
-                        periodFilter,
-                        modelFilter,
-                        cityFilter,
-                        statusFilter,
-                    ]}
-                />
-                <div className={styles.list}>
-                    {orderList?.map((order) => (
-                        <OrderCard key={order?.id} order={order} />
-                    ))}
-                </div>
+                {printFilters}
+                {printList}
                 <Paginate
                     activePage={lastViewedPage}
                     countOfPages={countOfPages}
