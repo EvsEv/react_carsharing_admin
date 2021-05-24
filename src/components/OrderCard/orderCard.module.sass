@@ -1,4 +1,5 @@
 @import ../../styles/variables
+@import ../../styles/media
 
 .card
   min-height: 70px
@@ -57,3 +58,8 @@
 .price
   width: 100px
   text-align: center
+
+@include desktopMinDevice
+  .addedInformation
+    width: calc(160 * 100% / 1047)
+    align-self: center

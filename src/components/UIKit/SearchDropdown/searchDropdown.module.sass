@@ -1,5 +1,6 @@
 @import ../../../styles/variables
 @import ../../../styles/mixins
+@import ../../../styles/media
 
 .searchDropdown
   width: 50%
@@ -94,6 +95,11 @@
   transition: all $short ease
   &:hover
     background: $ligthGrey
+
+@include desktopMinDevice
+  .searchDropdown
+    width: auto
+    max-width: 94.5px
 
 
 

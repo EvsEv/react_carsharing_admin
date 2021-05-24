@@ -1,4 +1,5 @@
 @import ../../../styles/variables
+@import ../../../styles/media
 
 .form
   margin-left: auto
@@ -73,3 +74,15 @@
     border-radius: 50%
     background: $greyBlue
     box-shadow: 0 -3px 0 $greyBlue, 0 3px 0 $greyBlue
+
+@include desktopMinDevice
+  .form
+    height: 100%
+    display: flex
+    flex-direction: column-reverse
+  .cancelled
+    margin: 0
+  .confirmed
+    border-radius: 4px 4px 0px 0px
+  .changed
+    border-radius: 0px 0px 4px 4px

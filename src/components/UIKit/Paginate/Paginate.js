@@ -50,14 +50,13 @@ export const Paginate = ({ activePage, countOfPages, changePage }) => {
 
     const onClick = (page) => {
         if (page === "...") return setShowSearchDropdown(true);
-        if (page === "»") return dispatch(changePage(activePage + 1));
         dispatch(changePage(page));
     };
 
     const decreasePage = () => dispatch(changePage(activePage - 1));
     const increasePage = () => dispatch(changePage(activePage + 1));
 
-    const onTypingInsearch = (event) => {
+    const onTypingInSearch = (event) => {
         event.target.validity.valid && setSearchingPage(event.target.value);
     };
 
@@ -108,7 +107,7 @@ export const Paginate = ({ activePage, countOfPages, changePage }) => {
                         id="searchPage"
                         className={styles.search}
                         value={searchingPage}
-                        onChange={onTypingInsearch}
+                        onChange={onTypingInSearch}
                         type="number"
                         min="0"
                         max={countOfPages + 1}

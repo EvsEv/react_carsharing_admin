@@ -1,4 +1,5 @@
 @import ../../../styles/variables
+@import ../../../styles/media
 
 .button
   font-size: 11.5px
@@ -21,3 +22,7 @@
 
 .reset
   background-color: $crimson
+
+@include desktopMinDevice
+  .button
+    width: 90px

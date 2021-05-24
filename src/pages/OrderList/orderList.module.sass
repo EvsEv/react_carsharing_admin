@@ -1,5 +1,6 @@
 @import ../../styles/variables
 @import ../../styles/mixins
+@import ../../styles/media
 
 .title
   font-size: 29px
@@ -28,3 +29,7 @@
 .notification
   display: block
   min-height: 444px
+
+@include desktopMinDevice
+  .title
+    margin-bottom: 15px
