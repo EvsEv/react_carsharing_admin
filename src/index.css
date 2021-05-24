@@ -48,7 +48,7 @@ button {
         url("./assets/fonts/Roboto-Light.otf") format("opentype"),
         url("./assets//fonts/Roboto-Light.woff") format("woff");
 }
-
+/* 
 ::-webkit-scrollbar {
     width: 5px;
 }
@@ -60,4 +60,4 @@ button {
 ::-webkit-scrollbar-thumb {
     border-radius: 5px;
     background-color: #3d5170;
-}
+} */

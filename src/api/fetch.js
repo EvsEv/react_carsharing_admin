@@ -1,3 +1,5 @@
+import { useHistory } from "react-router-dom";
+
 export const login = async () => {
     try {
         const secretKey = process.env.REACT_APP_SECRET_KEY;
@@ -54,6 +56,85 @@ export const logout = async () => {
         const bearer = await logout.json();
 
         return bearer;
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+export const fetchData = async (
+    name,
+    parameter = "",
+    value = "",
+    limit = "",
+    page = 0
+) => {
+    const appId = process.env.REACT_APP_APPLICATION_ID;
+    const bearer = await JSON.parse(localStorage.bearer);
+
+    const headers = {
+        "X-Api-Factory-Application-Id": appId,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${bearer.access_token}`,
+    };
+
+    try {
+        const response = await fetch(
+            `https://api-factory.simbirsoft1.com/api/db/${name}?${parameter}=${value}&limit=${limit}&page=${page}`,
+            {
+                headers,
+            }
+        );
+        const json = await response.json();
+
+        return json.data;
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+export const fetchDataWithComplexParamters = async (name, parameters) => {
+    const appId = process.env.REACT_APP_APPLICATION_ID;
+    const bearer = await JSON.parse(localStorage.bearer);
+
+    const headers = {
+        "X-Api-Factory-Application-Id": appId,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${bearer.access_token}`,
+    };
+
+    try {
+        const response = await fetch(
+            `https://api-factory.simbirsoft1.com/api/db/${name}?${parameters}`,
+            {
+                headers,
+            }
+        );
+        const json = await response.json();
+        return json;
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const putData = async (table, body, id) => {
+    const appId = process.env.REACT_APP_APPLICATION_ID;
+    try {
+        const headers = {
+            "Content-Type": "application/json",
+            "X-Api-Factory-Application-Id": appId,
+        };
+        const response = await fetch(
+            `https://api-factory.simbirsoft1.com/api/db/${table}/${id}`,
+            {
+                method: "PUT",
+                headers,
+                body: JSON.stringify(body),
+            }
+        );
+
+        const json = await response.json();
+
+        return json.data;
     } catch (e) {
         console.log(e);
     }

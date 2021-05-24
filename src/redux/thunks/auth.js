@@ -8,10 +8,11 @@ export const setUserInformation = (username) => setUserInfo(username);
 
 export const loginUser = () => {
     return async (dispatch) => {
-        await login();
+        const bearer = await login();
         localStorage.setItem("isAuth", 1);
+        localStorage.setItem("bearer", JSON.stringify(bearer));
         dispatch(isAuthorizeUser());
-        dispatch(setUserInformation("Admin"));
+        dispatch(setUserInformation(bearer.username));
     };
 };
 

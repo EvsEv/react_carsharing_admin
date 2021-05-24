@@ -43,6 +43,7 @@
   padding: 0
   margin: 0
   overflow-y: auto
+  @include customScroll()
 
 .item
   position: relative
@@ -114,7 +115,7 @@
   .menu
     transform: translateX(-100%)
     position: absolute
-    z-index: 3
+    z-index: 4
     height: 100vh
     transition: all $short ease-in-out
     box-shadow: none

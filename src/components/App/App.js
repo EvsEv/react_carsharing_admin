@@ -13,7 +13,7 @@ export const App = () => {
         if (localStorage.isAuth === "1") {
             dispatch(loginUser());
         }
-    }, []);
+    }, [dispatch]);
 
     const printLayout = useMemo(() => {
         if (localStorage.isAuth === "1") {

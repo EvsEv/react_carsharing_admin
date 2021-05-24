@@ -1,0 +1,75 @@
+@import ../../../styles/variables
+@import ../../../styles/media
+@import ../../../styles/mixins
+
+.input
+  display: none
+  &:checked
+    ~.checkbox
+      background: $brightBlue
+      border: none
+      border-radius: 2px
+      &::after
+        display: block
+  &:disabled
+    ~.checkbox
+      background: $ultraGrey
+      border-color: $softhGrey
+
+
+.label
+  position: relative
+  border: none
+  &.notEditable
+    .text, .checkbox
+      cursor: default
+    .input
+      &:disabled
+        ~.text
+          color: $unchecked
+        &:checked
+          ~.checkbox
+            border: 0.5px solid #0EC261
+            &::after
+              border-bottom-color: $mainBlack
+              border-left-color: $mainBlack
+          ~.text
+              color: $mainBlack
+
+.text
+  font-size: 10px
+  line-height: 13px
+  padding-left: 21px
+  display: block
+  cursor: pointer
+
+.checkbox
+  width: 13px
+  height: 13px
+  position: absolute
+  left: 0
+  top: 50%
+  background: $white
+  border: 0.5px solid $softhGrey
+  border-radius: 1px
+  box-sizing: border-box
+  cursor: pointer
+  transform: translateY(-50%)
+  transition: all $short ease
+  &::after
+    content: ""
+    width: 5px
+    height: 2px
+    border: 1px solid $white
+    border-top-color: transparent
+    border-right-color: transparent
+    position: absolute
+    top: 50%
+    left: 50%
+    transform-origin: bottom left
+    transform: rotate(-45deg) translateY(-50%) translateX(20%)
+    display: none
+
+@include mobileDevice
+  .text
+    @include adaptedForMobile(font-size, 10, 14, px)

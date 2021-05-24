@@ -1,84 +1,71 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Button from "../Button";
 import SearchDropdown from "../SearchDropdown";
+import { fetchData, fetchDataWithComplexParamters } from "../../../api/fetch";
 
 import styles from "./filters.module.sass";
+import { useDispatch } from "react-redux";
+import {
+    changeLastViewedPage,
+    getOrderList,
+    resetSettingsAndUpdateList,
+} from "../../../redux/thunks/orderList";
 
-const variantsModel = [
-    { name: "Первый вариант" },
-    { name: "Второй вариант" },
-    { name: "Третий вариант" },
-    { name: "Четвертый вариант" },
-    { name: "6 вариант" },
-    { name: "7 вариант" },
-    { name: "8 вариант" },
-    { name: "9 вариант" },
-    { name: "Test" },
-    { name: "Testing" },
-    { name: "Varios test suggestion" },
-    { name: "77 вариант тестовый" },
-];
+export const Filters = ({ filters }) => {
+    const [showForm, setShowForm] = useState(true);
+    const dispatch = useDispatch();
+    const form = useRef();
 
-const variantsCity = [
-    { name: "Ульяновск" },
-    { name: "Димитровград" },
-    { name: "Саранск" },
-    { name: "Владивосток" },
-    { name: "Санкт-Петербург" },
-    { name: "Казань" },
-    { name: "8 вариант" },
-    { name: "9 вариант" },
-    { name: "Test" },
-    { name: "Testing" },
-    { name: "Varios test suggestion" },
-    { name: "77 вариант тестовый" },
-];
+    const formClasses = [styles.form];
 
-export const Filters = () => {
-    const [carList, setCarList] = useState([{ name: "Неважно" }]);
-    const [cityList, setCityList] = useState([{ name: "Неважно" }]);
-    const [selectedModel, setSelectedModel] = useState(carList[0].name);
-    const [selectedCity, setSelectedCity] = useState(cityList[0].name);
-
-    useEffect(() => {
-        setCarList(carList.concat(variantsModel));
-        setCityList(cityList.concat(variantsCity));
-    }, []);
+    if (!showForm) {
+        formClasses.push(styles.hidden);
+    }
 
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log(event);
+        dispatch(changeLastViewedPage(0));
     };
-
     const onReset = (event) => {
         event.preventDefault();
-        setSelectedModel(carList[0].name);
-        setSelectedCity(cityList[0].name);
+        dispatch(resetSettingsAndUpdateList());
     };
 
+    useEffect(() => {
+        dispatch(getOrderList());
+    }, []);
+
+    const hiddenForm = (event) => setShowForm(!showForm);
+
     return (
-        <form className={styles.form} onSubmit={onSubmit}>
-            <div className={styles.parameters}>
-                <SearchDropdown
-                    type='small'
-                    variants={carList}
-                    placeholder='Модель'
-                    selectedValue={selectedModel}
-                    changeValue={setSelectedModel}
-                    parameter='model'
-                />
-                <SearchDropdown
-                    type='small'
-                    variants={cityList}
-                    placeholder='Город'
-                    selectedValue={selectedCity}
-                    changeValue={setSelectedCity}
-                    parameter='city'
-                />
-            </div>
-            <button type='reset' onClick={onReset}>
-                reset
+        <>
+            <form
+                ref={form}
+                className={formClasses.join(" ")}
+                onSubmit={onSubmit}
+                onReset={onReset}
+            >
+                <div className={styles.parameters}>
+                    {filters.map((filter, index) => (
+                        <SearchDropdown
+                            key={index}
+                            label={filter?.label}
+                            variants={filter.variants}
+                            placeholder={filter.placeholder}
+                            selectedValue={filter?.selectedValue}
+                            changeValue={filter.changeValue}
+                            type="small"
+                        />
+                    ))}
+                </div>
+                <div className={styles.control}>
+                    <Button text="Сбросить" type="reset" />
+                    <Button text="Применить" type="submit" />
+                </div>
+            </form>
+            <button className={styles.toggle} onClick={hiddenForm}>
+                {showForm ? "Скрыть" : "Показать фильтры"}
             </button>
-            <button type='submit'>twrwt</button>
-        </form>
+        </>
     );
 };

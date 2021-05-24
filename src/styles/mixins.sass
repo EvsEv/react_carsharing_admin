@@ -26,3 +26,24 @@
   @include basicPadding(padding-bottom)
   @include basicPaddingSide(padding-left)
   @include basicPaddingSide(padding-right)
+
+@mixin customScroll()
+  &::-webkit-scrollbar
+    position: absolute
+    top: 0
+    right: 20px
+    width: 5px
+  &::-webkit-scrollbar-track
+    position: absolute
+    top: 0
+    right: 20px
+    border-radius: 10px
+  &::-webkit-scrollbar-thumb
+    position: absolute
+    top: 0
+    right: 20px
+    border-radius: 5px
+    background-color: #3d5170
+
+@mixin adaptedForMobile($property, $minValue, $maxValue, $unit)
+  #{$property}: calc((100vw - 320px) * #{$maxValue - $minValue} / (812 - 320) + #{$minValue}#{$unit})

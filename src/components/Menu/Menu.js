@@ -16,7 +16,6 @@ export const Menu = React.forwardRef((props, ref) => {
     const classesForMenu = [styles.menu];
     if (props.showMenu) {
         classesForMenu.push(styles.showMenu);
-        console.log(props.showMenu);
     }
 
     const onClickLink = () => props.setShowMenu(false);
@@ -33,7 +32,7 @@ export const Menu = React.forwardRef((props, ref) => {
                 <ul className={styles.list}>
                     <li className={styles.item}>
                         <NavLink
-                            to="/car-setting"
+                            to="/carSetting"
                             activeClassName={styles.active}
                             className={styles.link}
                             onClick={onClickLink}
@@ -44,7 +43,7 @@ export const Menu = React.forwardRef((props, ref) => {
                     </li>
                     <li className={styles.item}>
                         <NavLink
-                            to="/cars-table"
+                            to="/carsTable"
                             activeClassName={styles.active}
                             className={styles.link}
                             onClick={onClickLink}

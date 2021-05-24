@@ -1,9 +1,8 @@
 @import ../../styles/variables
+@import ../../styles/mixins
 
 .body
   height: 100vh
-  max-width: 1920px
-  margin: 0 auto
   display: flex
   background-color: $ligthGrey
 
@@ -13,6 +12,10 @@
   flex-direction: column
   justify-content: space-between
 
-.content
+.main
+  @include wrapperPaddings()
   flex-grow: 1
+  overflow-y: auto
+  display: flex
+  flex-direction: column
   overflow-y: auto
