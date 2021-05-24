@@ -5,6 +5,7 @@ import {
     GET_MODEL_LIST,
     GET_ORDER_LIST,
     GET_STATUS_LIST,
+    RESET_SETTINGS_ORDER_LIST,
     SET_ERROR,
     SET_PERIOD,
     SET_SELECTED_CITY,
@@ -63,3 +64,5 @@ export const changeCountOfPagesInStore = (count) => ({
 });
 
 export const setErrorToStore = (error) => ({ type: SET_ERROR, payload: error });
+
+export const resetSettings = () => ({ type: RESET_SETTINGS_ORDER_LIST });

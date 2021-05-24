@@ -5,6 +5,7 @@ import {
     GET_MODEL_LIST,
     GET_ORDER_LIST,
     GET_STATUS_LIST,
+    RESET_SETTINGS_ORDER_LIST,
     SET_ERROR,
     SET_PERIOD,
     SET_SELECTED_CITY,
@@ -67,6 +68,15 @@ export const orderList = (state = initialState, action) => {
             return { ...state, countOfPages: action.payload };
         case SET_ERROR:
             return { ...state, error: action.payload };
+        case RESET_SETTINGS_ORDER_LIST:
+            return {
+                ...state,
+                selectedPeriod: state.periodList[0],
+                selectedModel: state.modelList[0],
+                selectedCity: state.cityList[0],
+                selectedStatus: state.statusList[0],
+                lastViewedPage: 0,
+            };
         default:
             return state;
     }

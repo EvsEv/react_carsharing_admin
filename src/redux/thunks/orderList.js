@@ -10,6 +10,7 @@ import {
     addStatusListToStore,
     changeCountOfPagesInStore,
     changeLastViewedPageInStore,
+    resetSettings,
     setErrorToStore,
 } from "../actionCreators/orderList";
 
@@ -147,5 +148,10 @@ export const setSelectedStatus = (selectedStatus) => (dispatch) =>
 
 export const changeLastViewedPage = (page) => (dispatch) => {
     dispatch(changeLastViewedPageInStore(page));
+    dispatch(getOrderList());
+};
+
+export const resetSettingsAndUpdateList = () => (dispatch) => {
+    dispatch(resetSettings());
     dispatch(getOrderList());
 };
