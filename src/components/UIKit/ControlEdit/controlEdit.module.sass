@@ -1,0 +1,75 @@
+@import ../../../styles/variables
+
+.form
+  margin-left: auto
+
+.button
+  font-size: 11px
+  line-height: 13px
+  color: $control
+  min-width:  71.5px
+  padding: 5.5px 7.5px 6px 15.5px
+  box-sizing: border-box
+  background: none
+  border: 0.5px solid $softhGrey
+  cursor: pointer
+  position: relative
+  transition: all $short ease
+  &:hover
+    color: $mainBlack
+    border-color: $darkBlue
+    z-index: 3
+
+
+.confirmed
+  border-radius: 4px 0px 0px 4px
+  &::before
+    content: ""
+    position: absolute
+    width: 7px
+    height: 3px
+    border-bottom: 2px solid $confirmed
+    border-left: 2px solid $confirmed
+    top: 40%
+    left: 8px
+    transform: rotate(-45deg) translateY(-50%)
+    transition: all $short ease
+  &:active
+    background: $confirmed
+    color: $white
+    &::before
+      border-color: $white
+
+.cancelled
+  margin: 0 -1px
+  &::before, &::after
+    content: ''
+    position: absolute
+    top: 30%
+    left: 7px
+    width: 2px
+    height: 9px
+    background: $crimson
+    transform: rotate(45deg)
+    transition: all $short ease
+  &::after
+    transform: rotate(-45deg)
+  &:active
+    background: $crimson
+    color: $white
+    &::before, &::after
+      background: $white
+
+
+.changed
+  border-radius: 0px 4px 4px 0px
+  &::before
+    content: ''
+    position: absolute
+    top: 44%
+    left: 8px
+    width: 2px
+    height: 2px
+    border-radius: 50%
+    background: $greyBlue
+    box-shadow: 0 -3px 0 $greyBlue, 0 3px 0 $greyBlue

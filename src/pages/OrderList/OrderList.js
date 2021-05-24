@@ -5,6 +5,7 @@ import {
     changeLastViewedPage,
     getCityList,
     getModelList,
+    getOrderList,
     getStatusList,
     setSelectedCity,
     setSelectedModel,
@@ -21,6 +22,9 @@ export const OrderList = () => {
     const [modelFilter, setModelFilter] = useState({});
     const [cityFilter, setCityFilter] = useState({});
     const [statusFilter, setStatusFilter] = useState({});
+    const [confirmedStatus, setConfirmedStatus] = useState({});
+    const [cancelledStatus, setCancelledStatus] = useState({});
+    const [isChangedStatusOrder, setisChangedStatusOrder] = useState(false);
     const dispatch = useDispatch();
     const {
         periodList,
@@ -54,17 +58,39 @@ export const OrderList = () => {
         dispatch(getStatusList());
     }, []);
 
+    useEffect(() => {
+        isChangedStatusOrder && dispatch(getOrderList());
+        setisChangedStatusOrder(false);
+    }, [isChangedStatusOrder]);
+
+    useEffect(() => {
+        statusList.forEach((status) => {
+            if (status.name === "Принятый") {
+                return setConfirmedStatus({ ...status, name: "confirmed" });
+            }
+            if (status.name === "Отменненый") {
+                setCancelledStatus({ ...status, name: "cancelled" });
+            }
+        });
+    }, [statusList]);
+
     const printList = useMemo(() => {
         console.log("List rerendered");
         return (
             <div className={styles.list}>
                 {orderList?.length ? (
                     orderList.map((order) => (
-                        <OrderCard key={order?.id} order={order} />
+                        <OrderCard
+                            key={order?.id}
+                            order={order}
+                            confirmedStatus={confirmedStatus}
+                            cancelledStatus={cancelledStatus}
+                            changeStatus={setisChangedStatusOrder}
+                        />
                     ))
                 ) : (
                     <span className={styles.notification}>
-                        Заказов, подходящих под выбранные фильтры, не найдено
+                        Заказов на текущей странице не найдено
                     </span>
                 )}
             </div>

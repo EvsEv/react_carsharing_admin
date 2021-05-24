@@ -100,8 +100,7 @@ export const Paginate = ({ activePage, countOfPages, changePage }) => {
             )}
             {showSearchDropdown && (
                 <form
-                    onSumbit={goToTypedPage}
-                    onSubmit
+                    onSubmit={goToTypedPage}
                     ref={searchDropdown}
                     className={styles.dropdown}
                 >

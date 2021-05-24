@@ -4,14 +4,17 @@ import ControlEdit from "../UIKit/ControlEdit";
 
 import styles from "./orderCard.module.sass";
 
-export const OrderCard = ({ order }) => {
+export const OrderCard = ({
+    order,
+    confirmedStatus,
+    cancelledStatus,
+    changeStatus,
+}) => {
     const [city, setCity] = useState();
-    const [point, setPoint] = useState();
     const [isFullTank, setIsFullTank] = useState();
     const [isNeedChildChair, setIsNeedChildChair] = useState();
     const [isRightWheel, setIsRightWheel] = useState();
     const [imageSrc, setImageSrc] = useState();
-
     useEffect(() => {
         if (order.carId?.thumbnail.path.indexOf("base64") != -1) {
             setImageSrc(order.carId?.thumbnail.path);
@@ -21,6 +24,16 @@ export const OrderCard = ({ order }) => {
             );
         }
     }, []);
+
+    const cardClasses = [styles.card];
+
+    if (order.orderStatusId?.id === confirmedStatus.id) {
+        cardClasses.push(styles.confirmed);
+    }
+
+    if (order.orderStatusId?.id === cancelledStatus.id) {
+        cardClasses.push(styles.cancelled);
+    }
 
     useEffect(() => {
         setCity(order?.cityId.name);
@@ -34,7 +47,7 @@ export const OrderCard = ({ order }) => {
     const toggleIsRightWheel = () => setIsRightWheel(!isRightWheel);
 
     return (
-        <div className={styles.card}>
+        <div className={cardClasses.join(" ")}>
             <picture className={styles.picture}>
                 <img src={imageSrc} />
             </picture>
@@ -76,6 +89,7 @@ export const OrderCard = ({ order }) => {
                     checked={isFullTank}
                     onChange={toggleIsFullTank}
                     label="Полный бак"
+                    notEditable={true}
                 />
                 <Checkbox
                     name="isNeedChildChair"
@@ -83,6 +97,7 @@ export const OrderCard = ({ order }) => {
                     checked={isNeedChildChair}
                     onChange={toggleIsNeedChildChair}
                     label="Детское кресло"
+                    notEditable={true}
                 />
                 <Checkbox
                     name="isRightWheel"
@@ -90,6 +105,7 @@ export const OrderCard = ({ order }) => {
                     checked={isRightWheel}
                     onChange={toggleIsRightWheel}
                     label="Правый руль"
+                    notEditable={true}
                 />
             </form>
             <p className={styles.price}>
@@ -97,7 +113,13 @@ export const OrderCard = ({ order }) => {
                     ? order.price.toLocaleString() + " ₽"
                     : "Не указана"}
             </p>
-            {/* <ControlEdit /> */}
+            <ControlEdit
+                table="order"
+                id={order.id}
+                confirmedStatus={confirmedStatus}
+                cancelledStatus={cancelledStatus}
+                changeStatus={changeStatus}
+            />
         </div>
     );
 };

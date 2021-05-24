@@ -115,3 +115,27 @@ export const fetchDataWithComplexParamters = async (name, parameters) => {
         throw e;
     }
 };
+
+export const putData = async (table, body, id) => {
+    const appId = process.env.REACT_APP_APPLICATION_ID;
+    try {
+        const headers = {
+            "Content-Type": "application/json",
+            "X-Api-Factory-Application-Id": appId,
+        };
+        const response = await fetch(
+            `https://api-factory.simbirsoft1.com/api/db/${table}/${id}`,
+            {
+                method: "PUT",
+                headers,
+                body: JSON.stringify(body),
+            }
+        );
+
+        const json = await response.json();
+
+        return json.data;
+    } catch (e) {
+        console.log(e);
+    }
+};
