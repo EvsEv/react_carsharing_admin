@@ -75,7 +75,6 @@ export const OrderList = () => {
     }, [statusList]);
 
     const printList = useMemo(() => {
-        console.log("List rerendered");
         return (
             <div className={styles.list}>
                 {orderList?.length ? (
@@ -138,8 +137,6 @@ export const OrderList = () => {
         statusList,
         selectedStatus,
     ]);
-
-    console.log("OrderList rerendered");
 
     return (
         <>

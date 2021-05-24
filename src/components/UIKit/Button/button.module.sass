@@ -1,4 +1,6 @@
 @import ../../../styles/variables
+@import ../../../styles/media
+@import ../../../styles/mixins
 
 .button
   font-size: 11.5px
@@ -21,3 +23,12 @@
 
 .reset
   background-color: $crimson
+
+@include desktopMinDevice
+  .button
+    width: 90px
+
+@include mobileDevice
+  .button
+    @include adaptedForMobile(font-size, 10, 14, px)
+    width: calc(50% - 5px)

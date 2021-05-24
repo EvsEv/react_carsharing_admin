@@ -1,4 +1,6 @@
 @import ../../styles/variables
+@import ../../styles/media
+@import ../../styles/mixins
 
 .card
   min-height: 70px
@@ -57,3 +59,55 @@
 .price
   width: 100px
   text-align: center
+  span
+    display: none
+
+@include desktopMinDevice
+  .information
+    width: calc(385 * 100% / 1090)
+  .addedInformation
+    width: calc(160 * 100% / 1047)
+    margin-right: calc(30 * 100% / 1047)
+    align-self: center
+
+@include mobileDevice
+  .card
+    flex-direction: column
+    align-items: flex-start
+    grid-gap: 10px
+    position: relative
+  .picture
+    width: 100%
+    height: 100%
+    padding-bottom: 0
+    margin-right: 0
+    position: absolute
+    top: 0
+    right: 0
+    opacity: 0.05
+    img
+      object-fit: cover
+    // order: 1
+  .information
+    width: 100%
+    margin-right: 0
+    // order: 3
+  .addedInformation
+    align-self: flex-start
+    // order: 2
+    width: calc(50% - 10px)
+    // width: 100%
+    // flex-direction: row
+    // justify-content: flex-start
+    margin-right: 0
+  .price
+    @include adaptedForMobile(font-size, 10, 14, px)
+    width: 150px
+    text-align: start
+    margin-right: 0
+    // order: 4
+    span
+      display: inline
+  .text
+    @include adaptedForMobile(font-size, 10, 14, px)
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "../Button";
 import SearchDropdown from "../SearchDropdown";
 import { fetchData, fetchDataWithComplexParamters } from "../../../api/fetch";
@@ -8,10 +8,19 @@ import { useDispatch } from "react-redux";
 import {
     changeLastViewedPage,
     getOrderList,
+    resetSettingsAndUpdateList,
 } from "../../../redux/thunks/orderList";
 
 export const Filters = ({ filters }) => {
+    const [showForm, setShowForm] = useState(true);
     const dispatch = useDispatch();
+    const form = useRef();
+
+    const formClasses = [styles.form];
+
+    if (!showForm) {
+        formClasses.push(styles.hidden);
+    }
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -19,34 +28,44 @@ export const Filters = ({ filters }) => {
     };
     const onReset = (event) => {
         event.preventDefault();
-        console.log("тыщ");
+        dispatch(resetSettingsAndUpdateList());
     };
 
     useEffect(() => {
         dispatch(getOrderList());
     }, []);
 
-    console.log("Filters rerendered");
+    const hiddenForm = (event) => setShowForm(!showForm);
 
     return (
-        <form className={styles.form} onSubmit={onSubmit} onReset={onReset}>
-            <div className={styles.parameters}>
-                {filters.map((filter, index) => (
-                    <SearchDropdown
-                        key={index}
-                        label={filter?.label}
-                        variants={filter.variants}
-                        placeholder={filter.placeholder}
-                        selectedValue={filter?.selectedValue}
-                        changeValue={filter.changeValue}
-                        type="small"
-                    />
-                ))}
-            </div>
-            <div className={styles.control}>
-                <Button text="Сбросить" type="reset" />
-                <Button text="Применить" type="submit" />
-            </div>
-        </form>
+        <>
+            <form
+                ref={form}
+                className={formClasses.join(" ")}
+                onSubmit={onSubmit}
+                onReset={onReset}
+            >
+                <div className={styles.parameters}>
+                    {filters.map((filter, index) => (
+                        <SearchDropdown
+                            key={index}
+                            label={filter?.label}
+                            variants={filter.variants}
+                            placeholder={filter.placeholder}
+                            selectedValue={filter?.selectedValue}
+                            changeValue={filter.changeValue}
+                            type="small"
+                        />
+                    ))}
+                </div>
+                <div className={styles.control}>
+                    <Button text="Сбросить" type="reset" />
+                    <Button text="Применить" type="submit" />
+                </div>
+            </form>
+            <button className={styles.toggle} onClick={hiddenForm}>
+                {showForm ? "Скрыть" : "Показать фильтры"}
+            </button>
+        </>
     );
 };

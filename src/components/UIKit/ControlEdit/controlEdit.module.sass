@@ -1,4 +1,5 @@
 @import ../../../styles/variables
+@import ../../../styles/media
 
 .form
   margin-left: auto
@@ -10,7 +11,7 @@
   min-width:  71.5px
   padding: 5.5px 7.5px 6px 15.5px
   box-sizing: border-box
-  background: none
+  background: $white
   border: 0.5px solid $softhGrey
   cursor: pointer
   position: relative
@@ -73,3 +74,27 @@
     border-radius: 50%
     background: $greyBlue
     box-shadow: 0 -3px 0 $greyBlue, 0 3px 0 $greyBlue
+
+@include desktopMinDevice
+  .form
+    height: 100%
+    display: flex
+    flex-direction: column-reverse
+  .cancelled
+    margin: -1px 0
+  .confirmed
+    border-radius: 0px 0px 4px 4px
+  .changed
+    border-radius: 4px 4px 0px 0px
+
+@include mobileDevice
+  .form
+    width: 100%
+    flex-direction: row
+  .confirmed
+    border-radius: 4px 0px 0px 4px
+  .changed
+    border-radius: 0px 4px 4px 0px
+  .cancelled
+    margin: 0 -1px
+    border-radius: none

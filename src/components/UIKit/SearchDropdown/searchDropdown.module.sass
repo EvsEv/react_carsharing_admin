@@ -1,5 +1,6 @@
 @import ../../../styles/variables
 @import ../../../styles/mixins
+@import ../../../styles/media
 
 .searchDropdown
   width: 50%
@@ -95,6 +96,15 @@
   &:hover
     background: $ligthGrey
 
+@include desktopMinDevice
+  .searchDropdown
+    width: auto
+    max-width: 94.5px
+
+@include mobileDevice
+  .searchDropdown
+    max-width: calc(50% - 5px)
+    width: calc(50% - 5px)
 
 
 

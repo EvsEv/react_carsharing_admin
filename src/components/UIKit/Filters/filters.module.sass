@@ -1,10 +1,13 @@
 @import ../../../styles/mixins
+@import ../../../styles/media
+@import ../../../styles/variables
 
 .form
   padding: 15px 21.5px
   display: flex
   justify-content: space-between
   align-items: center
+  transition: all $short ease
 
 .parameters
   width: 50%
@@ -21,3 +24,41 @@
     margin-right: 15px
     &:last-of-type
       margin-right: 0
+
+.toggle
+  display: none
+  background: none
+  border: none
+  transition: all $short ease
+  cursor: pointer
+
+@include desktopMinDevice
+  .parameters
+    width: auto
+    gap: 10px
+
+
+@include mobileDevice
+  .form
+    flex-wrap: wrap
+    gap: 20px
+  .control
+    width: 100%
+    display: flex
+    justify-content: space-between
+    button
+      margin-right: 0
+  .parameters
+    width: 100%
+    row-gap: 20px
+  .toggle
+    display: block
+    padding: 10px 0
+    margin-bottom: 10px
+    border-bottom: 1px solid $ligthGrey
+  .hidden
+    max-height: 0
+    padding: 0
+    z-index: -2
+    transform: translateY(-100%)
+    transition: all $short ease

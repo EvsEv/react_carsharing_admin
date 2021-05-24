@@ -44,3 +44,6 @@
     right: 20px
     border-radius: 5px
     background-color: #3d5170
+
+@mixin adaptedForMobile($property, $minValue, $maxValue, $unit)
+  #{$property}: calc((100vw - 320px) * #{$maxValue - $minValue} / (812 - 320) + #{$minValue}#{$unit})
