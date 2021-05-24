@@ -81,8 +81,20 @@
     display: flex
     flex-direction: column-reverse
   .cancelled
-    margin: 0
+    margin: -1px 0
   .confirmed
     border-radius: 0px 0px 4px 4px
   .changed
     border-radius: 4px 4px 0px 0px
+
+@include mobileDevice
+  .form
+    width: 100%
+    flex-direction: row
+  .confirmed
+    order-radius: 0px 4px 4px 0px
+  .changed
+    border-radius: 0px 4px 4px 0px
+  .cancelled
+    margin: 0 -1px
+    border-radius: none

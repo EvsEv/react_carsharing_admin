@@ -109,6 +109,7 @@ export const OrderCard = ({
                 />
             </form>
             <p className={styles.price}>
+                <span>Цена: </span>
                 {order?.price
                     ? order.price.toLocaleString() + " ₽"
                     : "Не указана"}

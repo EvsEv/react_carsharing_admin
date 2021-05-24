@@ -27,3 +27,18 @@
   .parameters
     width: auto
     gap: 10px
+
+
+@include mobileDevice
+  .form
+    flex-wrap: wrap
+    gap: 20px
+  .control
+    width: 100%
+    display: flex
+    justify-content: space-between
+    button
+      margin-right: 0
+  .parameters
+    width: 100%
+    row-gap: 20px

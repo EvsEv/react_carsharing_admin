@@ -1,4 +1,6 @@
 @import ../../../styles/variables
+@import ../../../styles/media
+@import ../../../styles/mixins
 
 .input
   display: none
@@ -34,8 +36,6 @@
           ~.text
               color: $mainBlack
 
-
-
 .text
   font-size: 10px
   line-height: 13px
@@ -69,3 +69,7 @@
     transform-origin: bottom left
     transform: rotate(-45deg) translateY(-50%) translateX(20%)
     display: none
+
+@include mobileDevice
+  .text
+    @include adaptedForMobile(font-size, 10, 14, px)

@@ -111,7 +111,7 @@ export const Paginate = ({ activePage, countOfPages, changePage }) => {
                         type="number"
                         min="0"
                         max={countOfPages + 1}
-                        placeholder={`Номер (от 0 до ${countOfPages + 1})`}
+                        placeholder={`Макс. ${countOfPages + 1}`}
                     />
                     <Button
                         type="submit"

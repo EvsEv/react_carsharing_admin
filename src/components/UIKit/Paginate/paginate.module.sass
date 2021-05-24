@@ -1,4 +1,6 @@
 @import ../../../styles/variables
+@import ../../../styles/media
+@import ../../../styles/mixins
 
 .paginate
   padding: 21px 0
@@ -58,3 +60,17 @@
   outline: none
   flex-grow: 1
   margin-right: 15px
+
+@include mobileDevice
+  .paginate
+    padding-top: 8px
+    padding-bottom: 8px
+    gap: 5px
+  .button
+    @include adaptedForMobile(font-size, 10, 14, px)
+    @include adaptedForMobile(width, 23, 28, px)
+  .search
+    @include adaptedForMobile(font-size, 10, 14, px)
+  .decrease, .increase
+    top: 23%
+
