@@ -18,6 +18,23 @@
 .label
   position: relative
   border: none
+  &.notEditable
+    .text, .checkbox
+      cursor: default
+    .input
+      &:disabled
+        ~.text
+          color: $unchecked
+        &:checked
+          ~.checkbox
+            border: 0.5px solid #0EC261
+            &::after
+              border-bottom-color: $mainBlack
+              border-left-color: $mainBlack
+          ~.text
+              color: $mainBlack
+
+
 
 .text
   font-size: 10px

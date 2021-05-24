@@ -2,9 +2,18 @@
 
 .card
   min-height: 70px
-  padding: 15.5px 0
+  padding: 15.5px 10px
   display: flex
   align-items: center
+  border-bottom: 3px solid $white
+  border-radius: 17px
+  transition: all $short ease
+
+.confirmed
+  background: rgba($confirmed, 0.05)
+
+.cancelled
+  background: rgba($crimson, 0.05)
 
 .picture
   width: calc(136 * 100% / 1090)
@@ -37,10 +46,14 @@
     color: $mainBlack
 
 .addedInformation
-  width: calc(96 * 100% / 1047)
+  width: calc(100 * 100% / 1047)
   margin-right: calc(68 * 100% / 1047)
   align-self: stretch
   display: flex
   flex-direction: column
   justify-content: space-between
   gap: 7px
+
+.price
+  width: 100px
+  text-align: center
