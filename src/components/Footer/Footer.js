@@ -3,9 +3,15 @@ import { Link } from "react-router-dom";
 
 import styles from "./footer.module.sass";
 
-export const Footer = () => {
+export const Footer = ({ aside }) => {
+    const footerClasses = [styles.footer];
+
+    if (aside) {
+        footerClasses.push(styles.aside);
+    }
+
     return (
-        <footer className={styles.footer}>
+        <footer className={footerClasses.join(" ")}>
             <div className={styles.linksBlock}>
                 <Link to="/" className={styles.link}>
                     Главная страница
