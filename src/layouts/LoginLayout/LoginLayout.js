@@ -1,18 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../../components/UIKit/Button/Button";
+import { useHistory } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../assets/icons/logo.svg";
 
 import styles from "./loginLayout.module.sass";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../redux/thunks/auth";
+import { setUserTokens } from "../../redux/thunks/auth";
+import { login } from "../../api/fetch";
 
 export const LoginLayout = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [showNotification, setShowNotification] = useState(false);
     const dispatch = useDispatch();
-    const onSubmit = (event) => {
+
+    const onSubmit = async (event) => {
         event.preventDefault();
-        dispatch(loginUser());
+        const response = await login(username, password);
+        if (response) {
+            localStorage.setItem("tokens", JSON.stringify(response));
+            dispatch(setUserTokens(response));
+        } else {
+            setShowNotification(true);
+        }
     };
+    const history = useHistory();
+
+    if (history.location.pathname === "/") {
+        history.push("/admin");
+    }
+
+    const changeUsername = (event) => {
+        setUsername(event.target.value);
+    };
+
+    const changePassword = (event) => {
+        setPassword(event.target.value);
+    };
+
+    const hideNotification = () => setShowNotification(false);
 
     return (
         <div className={styles.wrapper}>
@@ -22,38 +49,58 @@ export const LoginLayout = () => {
             </div>
             <form className={styles.form} onSubmit={onSubmit}>
                 <h1 className={styles.title}>Вход</h1>
+                {showNotification && (
+                    <div className={styles.notification}>
+                        <span>Не удаётся войти.</span> Пожалуйста, проверьте
+                        правильность написания <span>логина</span> и{" "}
+                        <span>пароля</span>.
+                        <ul>
+                            <li>Возможно, нажата клавиша Caps Lock?</li>
+                            <li>
+                                Может быть, у Вас включена неправильная
+                                раскладка? (русская или английская)
+                            </li>
+                            <li>
+                                Попробуйте набрать свой пароль в текстовом
+                                редакторе и скопировать в графу «Пароль»
+                            </li>
+                        </ul>
+                        <button onClick={hideNotification}>Скрыть</button>
+                    </div>
+                )}
                 <div className={styles.field}>
-                    <label htmlFor='mail' className={styles.label}>
-                        Почта
+                    <label htmlFor="mail" className={styles.label}>
+                        Имя пользователя
                     </label>
                     <input
                         className={styles.input}
-                        type='email'
-                        id='mail'
-                        name='mail'
+                        value={username}
+                        onChange={changeUsername}
+                        type="text"
+                        id="mail"
+                        name="mail"
                         required
-                        placeholder='Введите почту'
+                        placeholder="Введите почту"
                     />
-                    <span>Некорректный формат электронной почты</span>
                 </div>
                 <div className={styles.field}>
-                    <label htmlFor='password' className={styles.label}>
+                    <label htmlFor="password" className={styles.label}>
                         Пароль
                     </label>
                     <input
                         className={styles.input}
-                        type='password'
-                        id='password'
-                        name='password'
+                        value={password}
+                        onChange={changePassword}
+                        type="password"
+                        id="password"
+                        name="password"
                         required
-                        placeholder='Введите пароль'
+                        placeholder="Введите пароль"
                     />
                 </div>
                 <div className={styles.access}>
-                    <a href='#' className={styles.request}>
-                        Запросить доступ
-                    </a>
-                    <Button type='submit' text='Войти' />
+                    <p className={styles.request}>Запросить доступ</p>
+                    <Button type="submit" text="Войти" />
                 </div>
             </form>
         </div>

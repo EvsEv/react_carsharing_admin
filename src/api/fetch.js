@@ -1,6 +1,4 @@
-import { useHistory } from "react-router-dom";
-
-export const login = async () => {
+export const login = async (username, password) => {
     try {
         const secretKey = process.env.REACT_APP_SECRET_KEY;
         const appKey = process.env.REACT_APP_APPLICATION_KEY;
@@ -13,8 +11,8 @@ export const login = async () => {
             Authorization: "Basic " + authKey,
         };
         const body = {
-            username: "intern",
-            password: "intern-S!",
+            username,
+            password,
         };
         const login = await fetch(
             "https://api-factory.simbirsoft1.com/api/auth/login",
@@ -27,6 +25,7 @@ export const login = async () => {
 
         const bearer = await login.json();
         bearer.username = "Admin";
+        console.log(bearer);
         return bearer;
     } catch (e) {
         console.log(e);
@@ -69,7 +68,7 @@ export const fetchData = async (
     page = 0
 ) => {
     const appId = process.env.REACT_APP_APPLICATION_ID;
-    const bearer = await JSON.parse(localStorage.bearer);
+    const bearer = await JSON.parse(localStorage.tokens);
 
     const headers = {
         "X-Api-Factory-Application-Id": appId,
@@ -94,7 +93,7 @@ export const fetchData = async (
 
 export const fetchDataWithComplexParamters = async (name, parameters) => {
     const appId = process.env.REACT_APP_APPLICATION_ID;
-    const bearer = await JSON.parse(localStorage.bearer);
+    const bearer = await JSON.parse(localStorage.tokens);
 
     const headers = {
         "X-Api-Factory-Application-Id": appId,
