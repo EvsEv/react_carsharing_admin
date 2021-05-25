@@ -1,5 +1,4 @@
-export const AUTH = "AUTH";
-export const SET_USER_INFO = "SET_USER_INFO";
+export const SET_USER_TOKENS = "SET_USER_TOKENS";
 
 export const GET_MODEL_LIST = "GET_MODEL_LIST";
 export const GET_CITY_LIST = "GET_CITY_LIST";

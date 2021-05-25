@@ -25,17 +25,24 @@ export const AdminLayout = () => {
                 <Header setShowMenu={setShowElement} />
                 <main className={styles.main}>
                     <Switch>
-                        <Route path="/" exact render={() => <OrderList />} />
                         <Route
-                            path="/carSetting"
+                            path="/admin"
+                            exact
+                            render={() => <OrderList />}
+                        />
+                        <Route
+                            path="/admin/carSetting"
                             render={() => <CarSetting />}
                         />
-                        <Route path="/carsTable" render={() => <CarsTable />} />
                         <Route
+                            path="/admin/carsTable"
+                            render={() => <CarsTable />}
+                        />
+                        {/* <Route
                             path="/500"
                             component={() => <Error number={500} />}
-                        />
-                        <Route path="" component={() => <Error />} />
+                        /> */}
+                        <Route component={() => <Error />} />
                     </Switch>
                 </main>
                 <Footer />

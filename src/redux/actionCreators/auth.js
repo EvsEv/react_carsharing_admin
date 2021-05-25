@@ -1,11 +1,6 @@
-import { AUTH, SET_USER_INFO } from "../types";
+import { SET_USER_TOKENS } from "../types";
 
-export const isAuthUser = (isAuth) => ({
-    type: AUTH,
-    payload: isAuth,
-});
-
-export const setUserInfo = (username) => ({
-    type: SET_USER_INFO,
-    username,
+export const setUserTokensToStore = (tokens) => ({
+    type: SET_USER_TOKENS,
+    payload: tokens,
 });
