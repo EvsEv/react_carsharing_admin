@@ -63,14 +63,14 @@
 
 @include mobileDevice
   .paginate
-    padding-top: 8px
-    padding-bottom: 8px
-    gap: 5px
+    gap: 2px
   .button
-    @include adaptedForMobile(font-size, 10, 14, px)
+    font-size: 14px
+    // @include adaptedForMobile(font-size, 10, 14, px)
     @include adaptedForMobile(width, 23, 28, px)
+    padding: 0 3px
+    box-sizing: content-box
   .search
-    @include adaptedForMobile(font-size, 10, 14, px)
-  .decrease, .increase
-    top: 23%
+    font-size: 14px
+    // @include adaptedForMobile(font-size, 10, 14, px)
 

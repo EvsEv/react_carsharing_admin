@@ -52,13 +52,20 @@
     width: 100%
     row-gap: 20px
   .toggle
-    display: block
+    display: flex
+    align-items: center
+    justify-content: center
     padding: 10px 0
     margin-bottom: 10px
     border-bottom: 1px solid $ligthGrey
+    span
+      width: 20px
+      height: 20px
+      display: block
+      transform: rotate(90deg)
+      transition: all $short ease
+  .rotate
+    span
+      transform: rotate(-90deg)
   .hidden
-    max-height: 0
-    padding: 0
-    z-index: -2
-    transform: translateY(-100%)
-    transition: all $short ease
+    display: none

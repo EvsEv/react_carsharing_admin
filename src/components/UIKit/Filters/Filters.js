@@ -17,9 +17,11 @@ export const Filters = ({ filters }) => {
     const form = useRef();
 
     const formClasses = [styles.form];
+    const toggleClasses = [styles.toggle];
 
     if (!showForm) {
         formClasses.push(styles.hidden);
+        toggleClasses.push(styles.rotate);
     }
 
     const onSubmit = (event) => {
@@ -35,7 +37,7 @@ export const Filters = ({ filters }) => {
         dispatch(getOrderList());
     }, []);
 
-    const hiddenForm = (event) => setShowForm(!showForm);
+    const toggleForm = (event) => setShowForm(!showForm);
 
     return (
         <>
@@ -63,8 +65,8 @@ export const Filters = ({ filters }) => {
                     <Button text="Применить" type="submit" />
                 </div>
             </form>
-            <button className={styles.toggle} onClick={hiddenForm}>
-                {showForm ? "Скрыть" : "Показать фильтры"}
+            <button className={toggleClasses.join(" ")} onClick={toggleForm}>
+                <span>»</span>
             </button>
         </>
     );
