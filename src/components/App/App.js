@@ -17,7 +17,7 @@ export const App = () => {
 
     return (
         <HashRouter basename="/">
-            {tokens ? <AdminLayout /> : <LoginLayout />}
+            {localStorage.tokens || tokens ? <AdminLayout /> : <LoginLayout />}
         </HashRouter>
     );
 };

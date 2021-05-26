@@ -17,20 +17,33 @@ import {
 export const getModelList = () => {
     return async (dispatch) => {
         const modelListFromServer = await fetchData("car");
+        if (modelListFromServer.code) {
+            return dispatch(setErrorToStore(modelListFromServer.code));
+        }
         dispatch(addModelListToStore(modelListFromServer));
+        dispatch(setErrorToStore(null));
     };
 };
 
 export const getCityList = () => {
     return async (dispatch) => {
         const cityListFromServer = await fetchData("city");
+        if (cityListFromServer.code) {
+            return dispatch(setErrorToStore(cityListFromServer.code));
+        }
         dispatch(addCityListToStore(cityListFromServer));
+        dispatch(setErrorToStore(null));
     };
 };
 
 export const getStatusList = () => {
     return async (dispatch) => {
         const statusListFromServer = await fetchData("orderStatus");
+
+        if (statusListFromServer.code) {
+            return dispatch(setErrorToStore(statusListFromServer.code));
+        }
+
         const translatedStatusList = statusListFromServer.map((status) =>
             status.name === "new"
                 ? { ...status, name: "Новый" }
@@ -44,7 +57,9 @@ export const getStatusList = () => {
                 ? { ...status, name: "Отменненый" }
                 : null
         );
+
         dispatch(addStatusListToStore(translatedStatusList));
+        dispatch(setErrorToStore(null));
     };
 };
 
@@ -119,18 +134,16 @@ export const getOrderList = () => {
         dateFrom.setMinutes(0);
         dateFrom.setSeconds(0);
 
-        try {
-            const orderListFromServer = await fetchDataWithComplexParamters(
-                "order",
-                parameters.join("")
-            );
-            dispatch(calculateCountOfPages(orderListFromServer.count));
-            dispatch(addOrderListToStore(orderListFromServer.data));
-            dispatch(setErrorToStore(null));
-        } catch (error) {
-            dispatch(addOrderListToStore([]));
-            dispatch(setErrorToStore(error.name));
+        const orderListFromServer = await fetchDataWithComplexParamters(
+            "order",
+            parameters.join("")
+        );
+        if (orderListFromServer.code) {
+            return dispatch(setErrorToStore(orderListFromServer.code));
         }
+        dispatch(calculateCountOfPages(orderListFromServer.count));
+        dispatch(addOrderListToStore(orderListFromServer.data));
+        dispatch(setErrorToStore(null));
     };
 };
 
