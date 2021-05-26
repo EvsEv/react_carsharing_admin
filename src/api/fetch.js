@@ -25,35 +25,6 @@ export const login = async (username, password) => {
 
         const bearer = await login.json();
         bearer.username = "Admin";
-        console.log(bearer);
-        return bearer;
-    } catch (e) {
-        console.log(e);
-    }
-};
-
-export const logout = async () => {
-    try {
-        const secretKey = process.env.REACT_APP_SECRET_KEY;
-        const appKey = process.env.REACT_APP_APPLICATION_KEY;
-        const appId = process.env.REACT_APP_APPLICATION_ID;
-        const key = `${appKey}:${secretKey}`;
-        const authKey = window.btoa(key);
-        const headers = {
-            "Content-Type": "application/json",
-            "X-Api-Factory-Application-Id": appId,
-            Authorization: "Basic " + authKey,
-        };
-        const logout = await fetch(
-            "https://api-factory.simbirsoft1.com/api/auth/logout",
-            {
-                method: "POST",
-                headers: headers,
-            }
-        );
-
-        const bearer = await logout.json();
-
         return bearer;
     } catch (e) {
         console.log(e);
@@ -83,11 +54,18 @@ export const fetchData = async (
                 headers,
             }
         );
+
+        if (!response.ok) {
+            throw new Error(response.status);
+        }
+
         const json = await response.json();
 
         return json.data;
     } catch (e) {
-        console.log(e);
+        return {
+            code: e.message,
+        };
     }
 };
 
@@ -108,10 +86,15 @@ export const fetchDataWithComplexParamters = async (name, parameters) => {
                 headers,
             }
         );
+        if (!response.ok) {
+            throw new Error(response.status);
+        }
         const json = await response.json();
         return json;
     } catch (e) {
-        throw e;
+        return {
+            code: e.message,
+        };
     }
 };
 
@@ -131,9 +114,47 @@ export const putData = async (table, body, id) => {
             }
         );
 
+        if (!response.ok) {
+            throw new Error(response.status);
+        }
+
         const json = await response.json();
 
         return json.data;
+    } catch (e) {
+        return {
+            code: e.message,
+        };
+    }
+};
+
+export const getUpdatedTokens = async (refreshToken) => {
+    try {
+        const secretKey = process.env.REACT_APP_SECRET_KEY;
+        const appKey = process.env.REACT_APP_APPLICATION_KEY;
+        const appId = process.env.REACT_APP_APPLICATION_ID;
+        const key = `${appKey}:${secretKey}`;
+        const authKey = window.btoa(key);
+        const headers = {
+            "Content-Type": "application/json",
+            "X-Api-Factory-Application-Id": appId,
+            Authorization: "Basic " + authKey,
+        };
+        const body = {
+            refresh_token: refreshToken,
+        };
+        const login = await fetch(
+            "https://api-factory.simbirsoft1.com/api/auth/refresh",
+            {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify(body),
+            }
+        );
+
+        const bearer = await login.json();
+        bearer.username = "Admin";
+        return bearer;
     } catch (e) {
         console.log(e);
     }

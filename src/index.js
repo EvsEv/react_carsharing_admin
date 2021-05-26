@@ -7,6 +7,7 @@ import App from "./components/App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import thunk from "redux-thunk";
+import { refreshToken } from "./redux/middleware/refreshToken";
 
 const ReactReduxDevTools =
     process.env.NODE_ENV === "development"
@@ -16,7 +17,7 @@ const ReactReduxDevTools =
 
 const store = createStore(
     rootReducer,
-    compose(applyMiddleware(thunk), ReactReduxDevTools)
+    compose(applyMiddleware(thunk, refreshToken), ReactReduxDevTools)
 );
 
 ReactDOM.render(
