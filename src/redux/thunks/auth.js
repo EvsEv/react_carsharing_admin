@@ -1,5 +1,14 @@
+import { getUpdatedTokens } from "../../api/fetch";
 import { setUserTokensToStore } from "../actionCreators/auth";
 
-export const setUserTokens = (tokens) => {
-    return (dispatch) => dispatch(setUserTokensToStore(tokens));
+export const setUserTokens = (tokens) => (dispatch) => {
+    console.log("tok", tokens);
+    dispatch(setUserTokensToStore(tokens));
+};
+
+export const refreshTokens = () => async (dispatch, getState) => {
+    const { tokens } = getState().auth;
+    const updatedTokens = await getUpdatedTokens(tokens?.refresh_token);
+    localStorage.setItem("tokens", JSON.stringify(updatedTokens));
+    dispatch(setUserTokensToStore(updatedTokens));
 };
