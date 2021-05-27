@@ -1,5 +1,8 @@
 import { getUpdatedTokens } from "../../api/fetch";
-import { setUserTokensToStore } from "../actionCreators/auth";
+import {
+    setErrorOfLoggedAuthToStore,
+    setUserTokensToStore,
+} from "../actionCreators/auth";
 
 export const setUserTokens = (tokens) => (dispatch) => {
     console.log("tok", tokens);
@@ -12,3 +15,6 @@ export const refreshTokens = () => async (dispatch, getState) => {
     localStorage.setItem("tokens", JSON.stringify(updatedTokens));
     dispatch(setUserTokensToStore(updatedTokens));
 };
+
+export const setErrorOfLoggedAuth = (error) => (dispatch) =>
+    dispatch(setErrorOfLoggedAuthToStore(error));

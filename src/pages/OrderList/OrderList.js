@@ -1,84 +1,128 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Filters from "../../components/UIKit/Filters";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    changeLastViewedPage,
-    getCityList,
-    getModelList,
-    getOrderList,
-    getStatusList,
-    setSelectedCity,
-    setSelectedModel,
-    setSelectedPeriod,
-    setSelectedStatus,
-} from "../../redux/thunks/orderList";
 
 import styles from "./orderList.module.sass";
-import PaginatedList from "../../components/UIKit/PaginatedList";
 import OrderCard from "../../components/OrderCard";
 import Paginate from "../../components/UIKit/Paginate";
+import {
+    getCarsList,
+    getCityList,
+    getOrderStatusList,
+} from "../../redux/thunks/listsOfEntities";
+import {
+    getFilteredOrderList,
+    setSelectedCar,
+    setSelectedCity,
+    setSelectedPeriod,
+    setSelectedOrderStatus,
+    changeLastViewedPage,
+    resetAndUpdateFilteredOrderList,
+} from "../../redux/thunks/orderList";
 
 export const OrderList = () => {
-    const [modelFilter, setModelFilter] = useState({});
-    const [cityFilter, setCityFilter] = useState({});
-    const [statusFilter, setStatusFilter] = useState({});
     const [confirmedStatus, setConfirmedStatus] = useState({});
-    const [cancelledStatus, setCancelledStatus] = useState({});
     const [isChangedStatusOrder, setisChangedStatusOrder] = useState(false);
-    const dispatch = useDispatch();
+    const [cancelledStatus, setCancelledStatus] = useState({});
     const {
-        periodList,
-        modelList,
-        cityList,
-        statusList,
         selectedPeriod,
-        selectedModel,
+        selectedCar,
         selectedCity,
-        selectedStatus,
-        orderList,
+        selectedOrderStatus,
         lastViewedPage,
         countOfPages,
+        filteredOrderList,
     } = useSelector((state) => state.orderList);
+    const { periodList, carsList, cityList, orderStatusList } = useSelector(
+        (state) => state.listsOfEntities
+    );
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getCarsList());
+        dispatch(getCityList());
+        dispatch(getOrderStatusList());
+        dispatch(getFilteredOrderList());
+    }, []);
+
+    useEffect(() => {
+        orderStatusList.forEach((status) => {
+            if (status.name === "confirmed") {
+                return setConfirmedStatus(status);
+            }
+            if (status.name === "cancelled") {
+                setCancelledStatus(status);
+            }
+        });
+    }, [orderStatusList]);
+
+    useEffect(() => {
+        isChangedStatusOrder && dispatch(getFilteredOrderList());
+        setisChangedStatusOrder(false);
+    }, [isChangedStatusOrder]);
 
     const changeSelectedPeriod = (selectedPeriod) =>
         dispatch(setSelectedPeriod(selectedPeriod));
 
-    const changeSelectedModel = (selectedModel) =>
-        dispatch(setSelectedModel(selectedModel));
+    const changeSelectedCar = (selectedCar) =>
+        dispatch(setSelectedCar(selectedCar));
 
     const changeSelectedCity = (selectedCity) =>
         dispatch(setSelectedCity(selectedCity));
 
     const changeSelectedStatus = (selectedStatus) =>
-        dispatch(setSelectedStatus(selectedStatus));
+        dispatch(setSelectedOrderStatus(selectedStatus));
 
-    useEffect(() => {
-        dispatch(getModelList());
-        dispatch(getCityList());
-        dispatch(getStatusList());
-    }, []);
+    const submitFilters = () => changeLastViewedPage(0);
 
-    useEffect(() => {
-        isChangedStatusOrder && dispatch(getOrderList());
-        setisChangedStatusOrder(false);
-    }, [isChangedStatusOrder]);
-
-    useEffect(() => {
-        statusList.forEach((status) => {
-            if (status.name === "Принятый") {
-                return setConfirmedStatus({ ...status, name: "confirmed" });
-            }
-            if (status.name === "Отменненый") {
-                setCancelledStatus({ ...status, name: "cancelled" });
-            }
-        });
-    }, [statusList]);
+    const printFilters = useMemo(() => {
+        return (
+            <Filters
+                submitFilters={submitFilters}
+                resetAndUpdate={resetAndUpdateFilteredOrderList}
+                filters={[
+                    {
+                        variants: periodList,
+                        selectedValue: selectedPeriod?.name,
+                        changeValue: changeSelectedPeriod,
+                        placeholder: "Период",
+                    },
+                    {
+                        variants: carsList,
+                        selectedValue: selectedCar?.name,
+                        changeValue: changeSelectedCar,
+                        placeholder: "Модель",
+                    },
+                    {
+                        variants: cityList,
+                        selectedValue: selectedCity?.name,
+                        changeValue: changeSelectedCity,
+                        placeholder: "Город",
+                    },
+                    {
+                        variants: orderStatusList,
+                        selectedValue: selectedOrderStatus?.name,
+                        changeValue: changeSelectedStatus,
+                        placeholder: "Статус",
+                    },
+                ]}
+            />
+        );
+    }, [
+        periodList,
+        selectedPeriod,
+        carsList,
+        selectedCar,
+        selectedCity,
+        orderStatusList,
+        selectedOrderStatus,
+    ]);
 
     const printList = useMemo(() => {
         return (
             <div className={styles.list}>
-                {orderList?.length ? (
-                    orderList.map((order) => (
+                {filteredOrderList?.length ? (
+                    filteredOrderList.map((order) => (
                         <OrderCard
                             key={order?.id}
                             order={order}
@@ -94,49 +138,7 @@ export const OrderList = () => {
                 )}
             </div>
         );
-    }, [orderList]);
-
-    const printFilters = useMemo(() => {
-        return (
-            <Filters
-                filters={[
-                    {
-                        variants: periodList,
-                        selectedValue: selectedPeriod?.name,
-                        changeValue: changeSelectedPeriod,
-                        placeholder: "Период",
-                    },
-                    {
-                        variants: modelList,
-                        selectedValue: selectedModel?.name,
-                        changeValue: changeSelectedModel,
-                        placeholder: "Модель",
-                    },
-                    {
-                        variants: cityList,
-                        selectedValue: selectedCity?.name,
-                        changeValue: changeSelectedCity,
-                        placeholder: "Город",
-                    },
-                    {
-                        variants: statusList,
-                        selectedValue: selectedStatus?.name,
-                        changeValue: changeSelectedStatus,
-                        placeholder: "Статус",
-                    },
-                ]}
-            />
-        );
-    }, [
-        periodList,
-        selectedPeriod,
-        modelList,
-        selectedModel,
-        selectedModel,
-        selectedCity,
-        statusList,
-        selectedStatus,
-    ]);
+    }, [filteredOrderList]);
 
     return (
         <>
@@ -149,7 +151,6 @@ export const OrderList = () => {
                     countOfPages={countOfPages}
                     changePage={changeLastViewedPage}
                 />
-                {/* <PaginatedList elements={orderList} /> */}
             </div>
         </>
     );

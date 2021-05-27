@@ -1,56 +1,37 @@
 import {
     CHANGE_PAGE_ORDER_LIST,
     COUNT_OF_PAGES_OF_ORDER_LIST,
-    GET_CITY_LIST,
-    GET_MODEL_LIST,
-    GET_ORDER_LIST,
-    GET_STATUS_LIST,
+    GET_FILTERED_ORDER_LIST,
     RESET_SETTINGS_ORDER_LIST,
-    SET_ERROR,
-    SET_PERIOD,
-    SET_SELECTED_CITY,
-    SET_SELECTED_MODEL,
-    SET_SELECTED_STATUS,
+    SET_CAR_TO_ORDER_LIST,
+    SET_CITY_TO_ORDER_LIST,
+    SET_ORDER_STATUS_TO_ORDER_LIST,
+    SET_PERIOD_TO_ORDER_LIST,
 } from "../types";
 
-export const addModelListToStore = (modelList) => ({
-    type: GET_MODEL_LIST,
-    payload: modelList,
-});
-
-export const addCityListToStore = (cityList) => ({
-    type: GET_CITY_LIST,
-    payload: cityList,
-});
-
-export const addStatusListToStore = (statusList) => ({
-    type: GET_STATUS_LIST,
-    payload: statusList,
-});
-
-export const addOrderListToStore = (orderList) => ({
-    type: GET_ORDER_LIST,
-    payload: orderList,
-});
-
 export const addSelectedPeriodToStore = (selectedPeriod) => ({
-    type: SET_PERIOD,
+    type: SET_PERIOD_TO_ORDER_LIST,
     payload: selectedPeriod,
 });
 
-export const addSelectedModelToStore = (selectedModel) => ({
-    type: SET_SELECTED_MODEL,
-    payload: selectedModel,
+export const addSelectedCarToStore = (selectedCar) => ({
+    type: SET_CAR_TO_ORDER_LIST,
+    payload: selectedCar,
 });
 
 export const addSelectedCityToStore = (selectedCity) => ({
-    type: SET_SELECTED_CITY,
+    type: SET_CITY_TO_ORDER_LIST,
     payload: selectedCity,
 });
 
-export const addSelectedStatusToStore = (selectedStatus) => ({
-    type: SET_SELECTED_STATUS,
+export const addSelectedOrderStatusToStore = (selectedStatus) => ({
+    type: SET_ORDER_STATUS_TO_ORDER_LIST,
     payload: selectedStatus,
+});
+
+export const getFilteredOrderListToStore = (list) => ({
+    type: GET_FILTERED_ORDER_LIST,
+    payload: list,
 });
 
 export const changeLastViewedPageInStore = (page) => ({
@@ -62,7 +43,5 @@ export const changeCountOfPagesInStore = (count) => ({
     type: COUNT_OF_PAGES_OF_ORDER_LIST,
     payload: count,
 });
-
-export const setErrorToStore = (error) => ({ type: SET_ERROR, payload: error });
 
 export const resetSettings = () => ({ type: RESET_SETTINGS_ORDER_LIST });

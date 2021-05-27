@@ -15,6 +15,12 @@ export const LoginLayout = () => {
     const [showNotification, setShowNotification] = useState(false);
     const dispatch = useDispatch();
 
+    const history = useHistory();
+
+    if (history.location.pathname === "/") {
+        history.push("/admin");
+    }
+
     const onSubmit = async (event) => {
         event.preventDefault();
         const response = await login(username, password);
@@ -25,11 +31,6 @@ export const LoginLayout = () => {
             setShowNotification(true);
         }
     };
-    const history = useHistory();
-
-    if (history.location.pathname === "/") {
-        history.push("/admin");
-    }
 
     const changeUsername = (event) => {
         setUsername(event.target.value);
