@@ -1,5 +1,4 @@
 import { fetchDataWithComplexParamters } from "../../api/fetch";
-import { getFilteredOrderListToStore } from "../actionCreators/listsOfEntities";
 import {
     addSelectedPeriodToStore,
     addSelectedCarToStore,
@@ -8,6 +7,7 @@ import {
     changeLastViewedPageInStore,
     changeCountOfPagesInStore,
     resetSettings,
+    getFilteredOrderListToStore,
 } from "../actionCreators/orderList";
 import { setErrorOfLoggedAuth } from "./auth";
 

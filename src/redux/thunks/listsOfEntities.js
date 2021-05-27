@@ -2,8 +2,10 @@ import { fetchData } from "../../api/fetch";
 import { setErrorOfLoggedAuthToStore } from "../actionCreators/auth";
 import {
     addCarsListToStore,
+    addCategoryListToStore,
     addCityListToStore,
     addOrderStatusListToStore,
+    setColorListToStore,
 } from "../actionCreators/listsOfEntities";
 
 export const getCarsList = () => {
@@ -42,6 +44,20 @@ export const getOrderStatusList = () => {
             );
         }
         dispatch(addOrderStatusListToStore(statusListFromServer));
+        dispatch(setErrorOfLoggedAuthToStore(null));
+    };
+};
+
+export const getCategoryList = () => {
+    return async (dispatch) => {
+        const categoryListFromServer = await fetchData("category");
+
+        if (categoryListFromServer.code) {
+            return dispatch(
+                setErrorOfLoggedAuthToStore(categoryListFromServer.code)
+            );
+        }
+        dispatch(addCategoryListToStore(categoryListFromServer));
         dispatch(setErrorOfLoggedAuthToStore(null));
     };
 };

@@ -2,7 +2,8 @@ import {
     GET_CITY_LIST,
     GET_ORDER_STATUS_LIST,
     GET_CARS_LIST,
-    GET_FILTERED_ORDER_LIST,
+    GET_CATEGORY_LIST,
+    SET_COLOR_LIST,
 } from "../types";
 
 export const addCarsListToStore = (modelList) => ({
@@ -20,7 +21,7 @@ export const addOrderStatusListToStore = (statusList) => ({
     payload: statusList,
 });
 
-export const getFilteredOrderListToStore = (list) => ({
-    type: GET_FILTERED_ORDER_LIST,
-    payload: list,
+export const addCategoryListToStore = (categoryList) => ({
+    type: GET_CATEGORY_LIST,
+    payload: categoryList,
 });

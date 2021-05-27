@@ -1,4 +1,10 @@
-import { GET_CITY_LIST, GET_CARS_LIST, GET_ORDER_STATUS_LIST } from "../types";
+import {
+    GET_CITY_LIST,
+    GET_CARS_LIST,
+    GET_ORDER_STATUS_LIST,
+    GET_CATEGORY_LIST,
+    SET_COLOR_LIST,
+} from "../types";
 
 const initialState = {
     periodList: [
@@ -12,6 +18,8 @@ const initialState = {
     carsList: [{ name: "Неважно", id: "noMatter" }],
     cityList: [{ name: "Неважно", id: "noMatter" }],
     orderStatusList: [{ name: "Неважно", id: "noMatter" }],
+    categoryList: [{ name: "Неважно", id: "noMatter" }],
+    colorList: [{ name: "Неважно" }],
 };
 
 export const listsOfEntities = (state = initialState, action) => {
@@ -32,6 +40,16 @@ export const listsOfEntities = (state = initialState, action) => {
                 orderStatusList: [state.orderStatusList[0]].concat(
                     action.payload
                 ),
+            };
+        case GET_CATEGORY_LIST:
+            return {
+                ...state,
+                categoryList: [state.categoryList[0]].concat(action.payload),
+            };
+        case SET_COLOR_LIST:
+            return {
+                ...state,
+                colorList: [state.colorList[0]].concat(action.payload),
             };
         default:
             return state;

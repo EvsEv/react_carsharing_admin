@@ -1,6 +1,7 @@
 import {
     CHANGE_PAGE_ORDER_LIST,
     COUNT_OF_PAGES_OF_ORDER_LIST,
+    GET_FILTERED_ORDER_LIST,
     RESET_SETTINGS_ORDER_LIST,
     SET_CAR_TO_ORDER_LIST,
     SET_CITY_TO_ORDER_LIST,
@@ -26,6 +27,11 @@ export const addSelectedCityToStore = (selectedCity) => ({
 export const addSelectedOrderStatusToStore = (selectedStatus) => ({
     type: SET_ORDER_STATUS_TO_ORDER_LIST,
     payload: selectedStatus,
+});
+
+export const getFilteredOrderListToStore = (list) => ({
+    type: GET_FILTERED_ORDER_LIST,
+    payload: list,
 });
 
 export const changeLastViewedPageInStore = (page) => ({
