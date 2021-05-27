@@ -1,80 +1,40 @@
-import { fetchData, fetchDataWithComplexParamters } from "../../api/fetch";
+import { fetchDataWithComplexParamters } from "../../api/fetch";
+import { getFilteredOrderListToStore } from "../actionCreators/listsOfEntities";
 import {
-    addCityListToStore,
-    addModelListToStore,
-    addOrderListToStore,
-    addSelectedCityToStore,
-    addSelectedModelToStore,
     addSelectedPeriodToStore,
-    addSelectedStatusToStore,
-    addStatusListToStore,
-    changeCountOfPagesInStore,
+    addSelectedCarToStore,
+    addSelectedCityToStore,
+    addSelectedOrderStatusToStore,
     changeLastViewedPageInStore,
+    changeCountOfPagesInStore,
     resetSettings,
-    setErrorToStore,
 } from "../actionCreators/orderList";
+import { setErrorOfLoggedAuth } from "./auth";
 
-export const getModelList = () => {
-    return async (dispatch) => {
-        const modelListFromServer = await fetchData("car");
-        if (modelListFromServer.code) {
-            return dispatch(setErrorToStore(modelListFromServer.code));
-        }
-        dispatch(addModelListToStore(modelListFromServer));
-        dispatch(setErrorToStore(null));
-    };
-};
+export const setSelectedPeriod = (selectedPeriod) => (dispatch) =>
+    dispatch(addSelectedPeriodToStore(selectedPeriod));
 
-export const getCityList = () => {
-    return async (dispatch) => {
-        const cityListFromServer = await fetchData("city");
-        if (cityListFromServer.code) {
-            return dispatch(setErrorToStore(cityListFromServer.code));
-        }
-        dispatch(addCityListToStore(cityListFromServer));
-        dispatch(setErrorToStore(null));
-    };
-};
+export const setSelectedCar = (selectedCar) => (dispatch) =>
+    dispatch(addSelectedCarToStore(selectedCar));
 
-export const getStatusList = () => {
-    return async (dispatch) => {
-        const statusListFromServer = await fetchData("orderStatus");
+export const setSelectedCity = (selectedCity) => (dispatch) =>
+    dispatch(addSelectedCityToStore(selectedCity));
 
-        if (statusListFromServer.code) {
-            return dispatch(setErrorToStore(statusListFromServer.code));
-        }
-
-        const translatedStatusList = statusListFromServer.map((status) =>
-            status.name === "new"
-                ? { ...status, name: "Новый" }
-                : status.name === "temp"
-                ? { ...status, name: "В процессе" }
-                : status.name === "issued"
-                ? { ...status, name: "Выполненный" }
-                : status.name === "confirmed"
-                ? { ...status, name: "Принятый" }
-                : status.name === "cancelled"
-                ? { ...status, name: "Отменненый" }
-                : null
-        );
-
-        dispatch(addStatusListToStore(translatedStatusList));
-        dispatch(setErrorToStore(null));
-    };
-};
+export const setSelectedOrderStatus = (selectedStatus) => (dispatch) =>
+    dispatch(addSelectedOrderStatusToStore(selectedStatus));
 
 export const calculateCountOfPages = (count) => {
     const pages = count % 5 ? Math.floor(count / 5) : count / 5 - 1;
     return changeCountOfPagesInStore(pages);
 };
 
-export const getOrderList = () => {
+export const getFilteredOrderList = () => {
     return async (dispatch, getState) => {
         const {
-            selectedModel,
+            selectedCar,
             selectedCity,
             selectedPeriod,
-            selectedStatus,
+            selectedOrderStatus,
             lastViewedPage,
         } = getState().orderList;
         let currentDate = new Date();
@@ -85,15 +45,15 @@ export const getOrderList = () => {
             "&limit=5",
             `&page=${lastViewedPage}`,
         ];
-        if (selectedModel.id !== "noMatter") {
-            parameters.push(`&carId[id]=${selectedModel.id}`);
+        if (selectedCar.id !== "noMatter") {
+            parameters.push(`&carId[id]=${selectedCar.id}`);
         }
         if (selectedCity.id !== "noMatter") {
             parameters.push(`&cityId[id]=${selectedCity.id}`);
         }
 
-        if (selectedStatus.id !== "noMatter") {
-            parameters.push(`&orderStatusId[id]=${selectedStatus.id}`);
+        if (selectedOrderStatus.id !== "noMatter") {
+            parameters.push(`&orderStatusId[id]=${selectedOrderStatus.id}`);
         }
         switch (selectedPeriod.id) {
             case "day":
@@ -139,32 +99,20 @@ export const getOrderList = () => {
             parameters.join("")
         );
         if (orderListFromServer.code) {
-            return dispatch(setErrorToStore(orderListFromServer.code));
+            return dispatch(setErrorOfLoggedAuth(orderListFromServer.code));
         }
         dispatch(calculateCountOfPages(orderListFromServer.count));
-        dispatch(addOrderListToStore(orderListFromServer.data));
-        dispatch(setErrorToStore(null));
+        dispatch(getFilteredOrderListToStore(orderListFromServer.data));
+        dispatch(setErrorOfLoggedAuth(null));
     };
 };
 
-export const setSelectedPeriod = (selectedPeriod) => (dispatch) =>
-    dispatch(addSelectedPeriodToStore(selectedPeriod));
-
-export const setSelectedModel = (selectedModel) => (dispatch) =>
-    dispatch(addSelectedModelToStore(selectedModel));
-
-export const setSelectedCity = (selectedCity) => (dispatch) =>
-    dispatch(addSelectedCityToStore(selectedCity));
-
-export const setSelectedStatus = (selectedStatus) => (dispatch) =>
-    dispatch(addSelectedStatusToStore(selectedStatus));
-
 export const changeLastViewedPage = (page) => (dispatch) => {
     dispatch(changeLastViewedPageInStore(page));
-    dispatch(getOrderList());
+    dispatch(getFilteredOrderList());
 };
 
-export const resetSettingsAndUpdateList = () => (dispatch) => {
+export const resetAndUpdateFilteredOrderList = () => (dispatch) => {
     dispatch(resetSettings());
-    dispatch(getOrderList());
+    dispatch(getFilteredOrderList());
 };

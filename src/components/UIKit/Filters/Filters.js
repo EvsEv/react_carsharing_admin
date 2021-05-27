@@ -1,17 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Button from "../Button";
 import SearchDropdown from "../SearchDropdown";
-import { fetchData, fetchDataWithComplexParamters } from "../../../api/fetch";
 
 import styles from "./filters.module.sass";
 import { useDispatch } from "react-redux";
-import {
-    changeLastViewedPage,
-    getOrderList,
-    resetSettingsAndUpdateList,
-} from "../../../redux/thunks/orderList";
 
-export const Filters = ({ filters }) => {
+export const Filters = ({ filters, submitFilters, resetAndUpdate }) => {
     const [showForm, setShowForm] = useState(true);
     const dispatch = useDispatch();
     const form = useRef();
@@ -26,16 +20,12 @@ export const Filters = ({ filters }) => {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        dispatch(changeLastViewedPage(0));
+        dispatch(submitFilters());
     };
     const onReset = (event) => {
         event.preventDefault();
-        dispatch(resetSettingsAndUpdateList());
+        dispatch(resetAndUpdate());
     };
-
-    useEffect(() => {
-        dispatch(getOrderList());
-    }, []);
 
     const toggleForm = (event) => setShowForm(!showForm);
 
