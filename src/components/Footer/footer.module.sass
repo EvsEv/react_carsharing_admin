@@ -24,7 +24,25 @@
   line-height: 16px
   color: $greyBlue
 
+.aside
+  display: none
+
 @include mobileDevice
+  .footer
+    display: none
+  .aside
+    display: block
+    box-shadow: none
+    .linksBlock
+      margin-bottom: 5px
+    .link
+      margin-right: 0
+      margin-bottom: 5px
+      &:last-of-type
+        margin-bottom: 0
+    .copyright
+      text-align: left
+
   .linksBlock
     flex-direction: column
     flex-shrink: 0

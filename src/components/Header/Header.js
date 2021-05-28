@@ -5,18 +5,16 @@ import { ReactComponent as NotificationIcon } from "../../assets/icons/notificat
 import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
 import avatar from "../../assets/images/avatar.jpg";
 import useClickNotOnElement from "../../hooks/useClickNotOnElement";
-import { logoutUser } from "../../redux/thunks/auth";
+import { logoutUser, setUserTokens } from "../../redux/thunks/auth";
 
 import styles from "./header.module.sass";
 
 export const Header = ({ setShowMenu }) => {
-    const { username } = useSelector((state) => state.auth);
     const profileDropdown = useRef();
     const searchbar = useRef();
     const dispatch = useDispatch();
-    const [showProfileDropdown, setShowProfleDropdown] = useClickNotOnElement(
-        profileDropdown
-    );
+    const [showProfileDropdown, setShowProfleDropdown] =
+        useClickNotOnElement(profileDropdown);
 
     const [showSearch, setShowSearch] = useClickNotOnElement(searchbar);
 
@@ -40,7 +38,10 @@ export const Header = ({ setShowMenu }) => {
 
     const onClickSearchButton = () => setShowSearch(!showSearch);
 
-    const logOut = () => dispatch(logoutUser());
+    const logOut = () => {
+        localStorage.removeItem("tokens");
+        dispatch(setUserTokens(null));
+    };
 
     return (
         <header className={styles.header}>
@@ -59,8 +60,8 @@ export const Header = ({ setShowMenu }) => {
             <div className={classesForSearchbar.join(" ")} ref={searchbar}>
                 <input
                     className={styles.input}
-                    type='text'
-                    placeholder='Поиск ...'
+                    type="text"
+                    placeholder="Поиск ..."
                 />
                 <SearchIcon />
             </div>
@@ -77,7 +78,9 @@ export const Header = ({ setShowMenu }) => {
                         <picture className={styles.avatar}>
                             <img src={avatar} />
                         </picture>
-                        <p className={styles.name}>{username}</p>
+                        <p className={styles.name}>
+                            {JSON.parse(localStorage.tokens).username}
+                        </p>
                     </button>
                     {showProfileDropdown && (
                         <div

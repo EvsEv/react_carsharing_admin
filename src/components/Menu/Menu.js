@@ -9,6 +9,7 @@ import { ReactComponent as ListIcon } from "../../assets/icons/menu/list.svg";
 import { ReactComponent as NewIcon } from "../../assets/icons/menu/new.svg";
 import { ReactComponent as PersonIcon } from "../../assets/icons/menu/person.svg";
 import { ReactComponent as ShapeIcon } from "../../assets/icons/menu/shape.svg";
+import Footer from "../Footer";
 
 import styles from "./menu.module.sass";
 
@@ -32,7 +33,7 @@ export const Menu = React.forwardRef((props, ref) => {
                 <ul className={styles.list}>
                     <li className={styles.item}>
                         <NavLink
-                            to="/carSetting"
+                            to="/admin/carSetting"
                             activeClassName={styles.active}
                             className={styles.link}
                             onClick={onClickLink}
@@ -43,7 +44,7 @@ export const Menu = React.forwardRef((props, ref) => {
                     </li>
                     <li className={styles.item}>
                         <NavLink
-                            to="/carsTable"
+                            to="/admin/carsTable"
                             activeClassName={styles.active}
                             className={styles.link}
                             onClick={onClickLink}
@@ -55,7 +56,7 @@ export const Menu = React.forwardRef((props, ref) => {
                     <li className={styles.item}>
                         <NavLink
                             exact
-                            to="/"
+                            to="/admin"
                             activeClassName={styles.active}
                             className={styles.link}
                             onClick={onClickLink}
@@ -90,6 +91,7 @@ export const Menu = React.forwardRef((props, ref) => {
                     </li>
                 </ul>
             </nav>
+            <Footer aside={true} />
         </aside>
     );
 });

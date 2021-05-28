@@ -3,24 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { HashRouter } from "react-router-dom";
 import AdminLayout from "../../layouts/AdminLayout";
 import LoginLayout from "../../layouts/LoginLayout";
-import { loginUser } from "../../redux/thunks/auth";
+import { setUserTokens } from "../../redux/thunks/auth";
 
 export const App = () => {
+    const { tokens } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-    const { isAuth } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        if (localStorage.isAuth === "1") {
-            dispatch(loginUser());
+        if (localStorage.tokens) {
+            dispatch(setUserTokens(JSON.parse(localStorage.tokens)));
         }
-    }, [dispatch]);
+    }, []);
 
-    const printLayout = useMemo(() => {
-        if (localStorage.isAuth === "1") {
-            return <AdminLayout />;
-        }
-        return <LoginLayout />;
-    }, [isAuth]);
-
-    return <HashRouter basename='/'>{printLayout}</HashRouter>;
+    return (
+        <HashRouter basename="/">
+            {localStorage.tokens || tokens ? <AdminLayout /> : <LoginLayout />}
+        </HashRouter>
+    );
 };

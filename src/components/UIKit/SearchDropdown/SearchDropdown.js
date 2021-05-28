@@ -96,6 +96,8 @@ export const SearchDropdown = ({
         setShowDropdown(false);
     };
 
+    const resetFilterToNoMatter = () => !value && changeValue(variants[0]);
+
     return (
         <div className={searchDropdownClasses.join(" ")}>
             {label && (
@@ -104,6 +106,9 @@ export const SearchDropdown = ({
                 </label>
             )}
             <div className={styles.inputField}>
+                {!label && (
+                    <p className={styles.name}>{placeholder.toLowerCase()}</p>
+                )}
                 <input
                     className={inputClasses.join(" ")}
                     onChange={onType}
@@ -112,6 +117,7 @@ export const SearchDropdown = ({
                     placeholder={placeholder}
                     name={parameter}
                     title={title}
+                    onBlur={resetFilterToNoMatter}
                 />
                 {error && <span className={styles.errorType}>{error}</span>}
                 {showDropdown && (

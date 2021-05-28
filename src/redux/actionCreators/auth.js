@@ -1,11 +1,14 @@
-import { AUTH, SET_USER_INFO } from "../types";
+import { SET_ERROR_OF_LOGGED_AUTH, SET_USER_TOKENS } from "../types";
 
-export const isAuthUser = (isAuth) => ({
-    type: AUTH,
-    payload: isAuth,
-});
+export const setUserTokensToStore = (tokens) => {
+    console.log("tok2", tokens);
+    return {
+        type: SET_USER_TOKENS,
+        payload: tokens,
+    };
+};
 
-export const setUserInfo = (username) => ({
-    type: SET_USER_INFO,
-    username,
+export const setErrorOfLoggedAuthToStore = (error) => ({
+    type: SET_ERROR_OF_LOGGED_AUTH,
+    payload: error,
 });

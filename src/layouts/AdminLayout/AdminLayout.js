@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import Menu from "../../components/Menu";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -14,6 +14,11 @@ import Error from "../../pages/Error";
 export const AdminLayout = () => {
     const menu = useRef();
     const [showElement, setShowElement] = useClickNotOnElement(menu);
+    const history = useHistory();
+
+    if (history.location.pathname === "/") {
+        history.push("/admin");
+    }
     return (
         <div className={styles.body}>
             <Menu
@@ -25,17 +30,24 @@ export const AdminLayout = () => {
                 <Header setShowMenu={setShowElement} />
                 <main className={styles.main}>
                     <Switch>
-                        <Route path="/" exact render={() => <OrderList />} />
                         <Route
-                            path="/carSetting"
+                            path="/admin"
+                            exact
+                            render={() => <OrderList />}
+                        />
+                        <Route
+                            path="/admin/carSetting"
                             render={() => <CarSetting />}
                         />
-                        <Route path="/carsTable" render={() => <CarsTable />} />
                         <Route
+                            path="/admin/carsTable"
+                            render={() => <CarsTable />}
+                        />
+                        {/* <Route
                             path="/500"
                             component={() => <Error number={500} />}
-                        />
-                        <Route path="" component={() => <Error />} />
+                        /> */}
+                        <Route component={() => <Error />} />
                     </Switch>
                 </main>
                 <Footer />

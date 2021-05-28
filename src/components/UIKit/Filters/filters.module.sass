@@ -2,8 +2,43 @@
 @import ../../../styles/media
 @import ../../../styles/variables
 
+.inputField
+  width: 110px
+  position: relative
+
+.input
+  font-size: 11px
+  line-height: 13px
+  color: $mainBlack
+  width: 100%
+  padding: 8px 10.5px 9px
+  border: 1px solid $softhGrey
+  box-sizing: border-box
+  border-radius: 4px
+  transition: all $short ease
+  &:focus
+    outline: none
+    border-color: $darkBlue
+  &.error
+    border-color: $crimson
+    box-shadow: 0px 2.5px 5.5px rgba(196, 24, 60, 0.1)
+  &::placeholder
+    color: $mainBlack
+
+.name
+  font-size: 9px
+  line-height: 13px
+  color: $dimBlack
+  background: $white
+  padding: 0px 2px
+  position: absolute
+  top: 0
+  left: 12px
+  z-index: 4
+  transform: translateY(-50%)
+
 .form
-  padding: 15px 21.5px
+  padding: 20px 21.5px 15px
   display: flex
   justify-content: space-between
   align-items: center
@@ -51,14 +86,23 @@
   .parameters
     width: 100%
     row-gap: 20px
+  .inputField
+    width: calc(50% - 5px)
   .toggle
-    display: block
+    display: flex
+    align-items: center
+    justify-content: center
     padding: 10px 0
     margin-bottom: 10px
     border-bottom: 1px solid $ligthGrey
+    span
+      width: 20px
+      height: 20px
+      display: block
+      transform: rotate(90deg)
+      transition: all $short ease
+  .rotate
+    span
+      transform: rotate(-90deg)
   .hidden
-    max-height: 0
-    padding: 0
-    z-index: -2
-    transform: translateY(-100%)
-    transition: all $short ease
+    display: none
