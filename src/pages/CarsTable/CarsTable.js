@@ -19,6 +19,17 @@ import {
     setSelectedCategory,
 } from "../../redux/thunks/carsTable";
 import Paginate from "../../components/UIKit/Paginate";
+import CarInfo from "../../components/CarInfo";
+
+const head = [
+    "Модель",
+    "Описание",
+    "Мин. цена",
+    "Макс. цена",
+    "Топливо",
+    "Цвета",
+    "Номер",
+];
 
 export const CarsTable = () => {
     const { carsList, categoryList } = useSelector(
@@ -82,12 +93,22 @@ export const CarsTable = () => {
         );
     }, [carsList, categoryList, priceMin, priceMax]);
 
+    const bodyTable = useMemo(() => {
+        return (
+            <>
+                {filteredCarsList?.map((car) => (
+                    <CarInfo information={car} key={car.id} />
+                ))}
+            </>
+        );
+    }, [filteredCarsList]);
+
     return (
         <>
             <h1 className={styles.title}>Автомобили</h1>
             <div className={styles.content}>
                 {printFilters}
-                <Table rows={filteredCarsList} />
+                <Table head={head} body={bodyTable} />
                 <Paginate
                     activePage={lastViewedPage}
                     countOfPages={countOfPages}
