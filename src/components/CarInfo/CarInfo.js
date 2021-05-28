@@ -17,13 +17,21 @@ export const CarInfo = ({ information }) => {
                     : "Не указано"}
             </td>
             <td>
-                {information?.colors.length
-                    ? information.colors.map((color) => (
-                          <tr>
-                              <td>{color}</td>
-                          </tr>
-                      ))
-                    : "Не указаны"}
+                <table>
+                    <tbody>
+                        {information?.colors.length ? (
+                            information.colors.map((color, idx) => (
+                                <tr key={idx}>
+                                    <td>{color}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td>Не указаны</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
             </td>
             <td>
                 {information?.number

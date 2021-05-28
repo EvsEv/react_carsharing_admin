@@ -96,11 +96,9 @@ export const CarsTable = () => {
     const bodyTable = useMemo(() => {
         return (
             <>
-                {filteredCarsList?.length
-                    ? filteredCarsList.map((car) => (
-                          <CarInfo information={car} />
-                      ))
-                    : "Подходящих автомобилей не найдено"}
+                {filteredCarsList?.map((car) => (
+                    <CarInfo information={car} key={car.id} />
+                ))}
             </>
         );
     }, [filteredCarsList]);

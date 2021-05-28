@@ -9,11 +9,19 @@ export const Table = ({ head, body }) => {
                 <thead>
                     <tr>
                         {head.map((item) => (
-                            <th>{item}</th>
+                            <th key={item}>{item}</th>
                         ))}
                     </tr>
                 </thead>
-                <tbody>{body}</tbody>
+                <tbody>
+                    {body.props.children?.length ? (
+                        body
+                    ) : (
+                        <tr className={styles.notification}>
+                            <td>Подходящих вариантов не найдено</td>
+                        </tr>
+                    )}
+                </tbody>
             </table>
         </div>
     );

@@ -1,4 +1,5 @@
 @import ../../styles/variables
+@import ../../styles/media
 
 .title
   font-size: 29px
@@ -16,3 +17,11 @@
   display: flex
   flex-direction: column
   overflow-y: auto
+
+@include desktopMinDevice
+  .title
+    margin-bottom: 15px
+
+@include mobileDevice
+  .title
+    font-size: 23px

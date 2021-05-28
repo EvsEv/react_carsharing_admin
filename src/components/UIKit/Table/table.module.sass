@@ -1,40 +1,106 @@
 @import ../../../styles/variables
+@import ../../../styles/mixins
+@import ../../../styles/media
 
 .wrapper
   flex-grow: 1
   overflow: auto
   padding: 0 20px
+  position: relative
 
 .table
-  display: flex
-  flex-direction: column
+  width: 100%
   border-spacing: 0 10px
-  font-size: 12px
-  height: 100%
-  line-height: 1
   thead
-    background: $white
-    flex-shrink: 0
-  tbody
-    flex-grow: 1
-    overflow: auto
-    display: flex
-    flex-direction: column
-    justify-content: center
-    align-items: center
-  th, td
-    width: calc(1060px / 7)
-  td
-    color: $greyBlue
-  tr
-    th:first-of-type,
-      text-align: start
-    td
-      text-align: center
-      &:first-of-type
-        text-align: start
-      tr
-        td
-          text-align: center
-          &:first-of-type
+    padding-bottom: 20px
+    th
+      background-color: $white
+      position: sticky
+      top: 0px
+      padding-top: 10px
+      padding-bottom: 10px
+  td, th
+    font-size: 12px
+    text-align: center
+    width: calc(100% / 7)
+    table
+      width: 100%
+      tbody
+        tr
+          td:first-of-type
             text-align: center
+  tr
+    td:first-of-type, th:first-of-type
+      text-align: left
+
+  tbody
+    tr:hover
+      background-color: $ligthGrey
+      cursor: pointer
+
+.notification
+  td
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translateX(-50%)
+    width: 220px
+
+
+@include mobileDevice
+  .table
+    width: 768px
+    td, th
+      width: 300px
+
+// .table
+//   display: flex
+//   flex-direction: column
+//   border-spacing: 0 10px
+//   font-size: 12px
+//   height: 100%
+//   line-height: 1
+//   thead
+//     background: $white
+//     flex-shrink: 0
+//     padding-bottom: 10px
+//   tbody
+//     flex-grow: 1
+//     overflow: auto
+//     display: flex
+//     flex-direction: column
+//     justify-content: center
+//     align-items: center
+//     @include customScroll()
+//     tr
+//       padding: 10px 0
+//       &:hover
+//         background: $ligthGrey
+//         cursor: pointer
+//   th, td
+//     width: calc(100% / 7)
+//   td
+//     color: $greyBlue
+//   tr
+//     display: flex
+//     align-items: center
+//     width: 100%
+//     th:first-of-type,
+//       text-align: start
+//     td
+//       text-align: center
+//       &:first-of-type
+//         text-align: start
+//       table
+//         display: flex
+//         flex-direction: column
+//         width: 100%
+//         align-items: center
+//         td:first-of-type
+//           text-align: center
+//         tbody
+//           width: 100%
+//           tr
+//             padding: 0
+//             td
+//               width: 100%
