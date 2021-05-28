@@ -44,11 +44,11 @@ export const getFilteredCarsTable = () => {
             `&page=${lastViewedPage}`,
         ];
 
-        if (selectedCarModel.id !== "noMatter") {
+        if (selectedCarModel?.id !== "noMatter") {
             parameters.push(`&id=${selectedCarModel.id}`);
         }
 
-        if (selectedCategory.id !== "noMatter") {
+        if (selectedCategory?.id !== "noMatter") {
             parameters.push(`&categoryId[id]=${selectedCategory.id}`);
         }
 

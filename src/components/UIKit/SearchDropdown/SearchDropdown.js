@@ -43,13 +43,19 @@ export const SearchDropdown = ({
     }, [variants]);
 
     useEffect(() => {
+        if (!selectedValue) {
+            changeValue(variants[0]);
+        }
+    }, []);
+
+    useEffect(() => {
         if (selectedValue) {
             setValue(selectedValue);
             setTitle(selectedValue);
             setError(false);
         } else {
             setTitle("Выберите значение");
-            setError("Неверное значение");
+            setError("Нет совпадений");
         }
     }, [selectedValue]);
 
@@ -71,7 +77,7 @@ export const SearchDropdown = ({
             setSuggestions(variants);
             setShowDropdown(false);
         } else {
-            setError("Неверное значение");
+            setError("нет  совпадений");
         }
 
         if (!event.target.value) {
@@ -96,7 +102,9 @@ export const SearchDropdown = ({
         setShowDropdown(false);
     };
 
-    const resetFilterToNoMatter = () => !value && changeValue(variants[0]);
+    const resetFilterToNoMatter = () => {
+        !value && changeValue(variants[0]);
+    };
 
     return (
         <div className={searchDropdownClasses.join(" ")}>
