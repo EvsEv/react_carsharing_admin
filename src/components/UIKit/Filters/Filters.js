@@ -5,8 +5,15 @@ import SearchDropdown from "../SearchDropdown";
 import styles from "./filters.module.sass";
 import { useDispatch } from "react-redux";
 
-export const Filters = ({ filters, submitFilters, resetAndUpdate }) => {
+export const Filters = ({
+    filters,
+    submitFilters,
+    resetAndUpdate,
+    rangeFilters,
+}) => {
     const [showForm, setShowForm] = useState(true);
+    const [minValue, setMinValue] = useState(rangeFilters.minValue || "");
+    const [maxValue, setMaxValue] = useState(rangeFilters.maxValue || "");
     const dispatch = useDispatch();
     const form = useRef();
 
@@ -20,14 +27,26 @@ export const Filters = ({ filters, submitFilters, resetAndUpdate }) => {
 
     const onSubmit = (event) => {
         event.preventDefault();
+        if (rangeFilters) {
+            rangeFilters.changeMinValue(minValue);
+            rangeFilters.changeMaxValue(maxValue);
+        }
         dispatch(submitFilters());
     };
     const onReset = (event) => {
         event.preventDefault();
+        if (rangeFilters) {
+            setMinValue("");
+            setMaxValue("");
+        }
         dispatch(resetAndUpdate());
     };
 
     const toggleForm = (event) => setShowForm(!showForm);
+
+    const setMinPrice = (event) => setMinValue(event.target.value);
+
+    const setMaxPrice = (event) => setMaxValue(event.target.value);
 
     return (
         <>
@@ -49,6 +68,39 @@ export const Filters = ({ filters, submitFilters, resetAndUpdate }) => {
                             type="small"
                         />
                     ))}
+                    {rangeFilters && (
+                        <>
+                            <div className={styles.inputField}>
+                                <p className={styles.name}>
+                                    {rangeFilters.minName}
+                                </p>
+                                <input
+                                    className={styles.input}
+                                    type="number"
+                                    onChange={setMinPrice}
+                                    min={0}
+                                    max={maxValue}
+                                    step={1000}
+                                    value={minValue}
+                                    placeholder="Неважно"
+                                />
+                            </div>
+                            <div className={styles.inputField}>
+                                <p className={styles.name}>
+                                    {rangeFilters.maxName}
+                                </p>
+                                <input
+                                    className={styles.input}
+                                    type="number"
+                                    min={minValue || 0}
+                                    step={1000}
+                                    onChange={setMaxPrice}
+                                    value={maxValue}
+                                    placeholder="Неважно"
+                                />
+                            </div>{" "}
+                        </>
+                    )}
                 </div>
                 <div className={styles.control}>
                     <Button text="Сбросить" type="reset" />

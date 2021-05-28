@@ -6,7 +6,10 @@ export const Table = ({ rows }) => {
     return (
         <div>
             {rows?.map((row) => (
-                <div>{row.name}</div>
+                <div>
+                    {row.name} <bold>{row.priceMin.toLocaleString()}</bold>р{" "}
+                    {row.priceMax.toLocaleString()}
+                </div>
             ))}
         </div>
     );

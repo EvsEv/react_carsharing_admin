@@ -2,6 +2,41 @@
 @import ../../../styles/media
 @import ../../../styles/variables
 
+.inputField
+  width: 110px
+  position: relative
+
+.input
+  font-size: 11px
+  line-height: 13px
+  color: $mainBlack
+  width: 100%
+  padding: 8px 10.5px 9px
+  border: 1px solid $softhGrey
+  box-sizing: border-box
+  border-radius: 4px
+  transition: all $short ease
+  &:focus
+    outline: none
+    border-color: $darkBlue
+  &.error
+    border-color: $crimson
+    box-shadow: 0px 2.5px 5.5px rgba(196, 24, 60, 0.1)
+  &::placeholder
+    color: $mainBlack
+
+.name
+  font-size: 9px
+  line-height: 13px
+  color: $dimBlack
+  background: $white
+  padding: 0px 2px
+  position: absolute
+  top: 0
+  left: 12px
+  z-index: 4
+  transform: translateY(-50%)
+
 .form
   padding: 15px 21.5px
   display: flex
@@ -51,6 +86,8 @@
   .parameters
     width: 100%
     row-gap: 20px
+  .inputField
+    width: calc(50% - 5px)
   .toggle
     display: flex
     align-items: center
