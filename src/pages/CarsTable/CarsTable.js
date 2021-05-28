@@ -91,7 +91,14 @@ export const CarsTable = () => {
                 }}
             />
         );
-    }, [carsList, categoryList, priceMin, priceMax]);
+    }, [
+        carsList,
+        selectedCarModel,
+        selectedCategory,
+        categoryList,
+        priceMin,
+        priceMax,
+    ]);
 
     const bodyTable = useMemo(() => {
         return (
