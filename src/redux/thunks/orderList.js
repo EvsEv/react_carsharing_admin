@@ -45,17 +45,17 @@ export const getFilteredOrderList = () => {
             "&limit=5",
             `&page=${lastViewedPage}`,
         ];
-        if (selectedCar.id !== "noMatter") {
+        if (selectedCar?.id !== "noMatter") {
             parameters.push(`&carId[id]=${selectedCar.id}`);
         }
-        if (selectedCity.id !== "noMatter") {
+        if (selectedCity?.id !== "noMatter") {
             parameters.push(`&cityId[id]=${selectedCity.id}`);
         }
 
-        if (selectedOrderStatus.id !== "noMatter") {
+        if (selectedOrderStatus?.id !== "noMatter") {
             parameters.push(`&orderStatusId[id]=${selectedOrderStatus.id}`);
         }
-        switch (selectedPeriod.id) {
+        switch (selectedPeriod?.id) {
             case "day":
                 dateFrom.setDate(currentDate.getDate() - 1);
                 parameters.push(
