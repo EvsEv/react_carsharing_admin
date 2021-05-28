@@ -1,0 +1,40 @@
+@import ../../../styles/variables
+
+.wrapper
+  flex-grow: 1
+  overflow: auto
+  padding: 0 20px
+
+.table
+  display: flex
+  flex-direction: column
+  border-spacing: 0 10px
+  font-size: 12px
+  height: 100%
+  line-height: 1
+  thead
+    background: $white
+    flex-shrink: 0
+  tbody
+    flex-grow: 1
+    overflow: auto
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+  th, td
+    width: calc(1060px / 7)
+  td
+    color: $greyBlue
+  tr
+    th:first-of-type,
+      text-align: start
+    td
+      text-align: center
+      &:first-of-type
+        text-align: start
+      tr
+        td
+          text-align: center
+          &:first-of-type
+            text-align: center

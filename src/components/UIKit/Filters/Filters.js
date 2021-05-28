@@ -12,8 +12,8 @@ export const Filters = ({
     rangeFilters,
 }) => {
     const [showForm, setShowForm] = useState(true);
-    const [minValue, setMinValue] = useState(rangeFilters.minValue || "");
-    const [maxValue, setMaxValue] = useState(rangeFilters.maxValue || "");
+    const [minValue, setMinValue] = useState(rangeFilters?.minValue || "");
+    const [maxValue, setMaxValue] = useState(rangeFilters?.maxValue || "");
     const dispatch = useDispatch();
     const form = useRef();
 

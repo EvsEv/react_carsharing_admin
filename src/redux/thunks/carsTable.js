@@ -24,7 +24,7 @@ export const setMaxPrice = (price) => (dispatch) =>
     dispatch(addMaxPriceToStore(Number(price)));
 
 const calculateCountOfPages = (count) => {
-    const pages = count % 5 ? Math.floor(count / 5) : count / 5 - 1;
+    const pages = count % 7 ? Math.floor(count / 7) : count / 7 - 1;
     return changeCountOfPagesInStore(pages);
 };
 
