@@ -12,6 +12,9 @@ import {
 import {
     changeLastViewedPage,
     getFilteredCarsTable,
+    resetAndUpdateFilteredCarsTable,
+    setMaxPrice,
+    setMinPrice,
     setSelectedCarModel,
     setSelectedCategory,
 } from "../../redux/thunks/carsTable";
@@ -27,6 +30,8 @@ export const CarsTable = () => {
         lastViewedPage,
         countOfPages,
         filteredCarsList,
+        priceMin,
+        priceMax,
     } = useSelector((state) => state.carsTable);
     const dispatch = useDispatch();
 
@@ -41,12 +46,16 @@ export const CarsTable = () => {
     const changeSelectedCategory = (selectedCategory) =>
         dispatch(setSelectedCategory(selectedCategory));
 
+    const changePriceMin = (price) => dispatch(setMinPrice(price));
+    const changePriceMax = (price) => dispatch(setMaxPrice(price));
+
     const submitFilters = () => changeLastViewedPage(0);
 
     const printFilters = useMemo(() => {
         return (
             <Filters
                 submitFilters={submitFilters}
+                resetAndUpdate={resetAndUpdateFilteredCarsTable}
                 filters={[
                     {
                         variants: carsList,
@@ -61,19 +70,30 @@ export const CarsTable = () => {
                         placeholder: "Категория",
                     },
                 ]}
+                rangeFilters={{
+                    minValue: priceMin,
+                    maxValue: priceMax,
+                    minName: "минимальная цена",
+                    maxName: "максимальная цена",
+                    changeMinValue: changePriceMin,
+                    changeMaxValue: changePriceMax,
+                }}
             />
         );
-    }, [carsList, categoryList]);
+    }, [carsList, categoryList, priceMin, priceMax]);
 
     return (
-        <div>
-            {printFilters}
-            <Table rows={filteredCarsList} />
-            <Paginate
-                activePage={lastViewedPage}
-                countOfPages={countOfPages}
-                changePage={changeLastViewedPage}
-            />
-        </div>
+        <>
+            <h1 className={styles.title}>Автомобили</h1>
+            <div className={styles.content}>
+                {printFilters}
+                <Table rows={filteredCarsList} />
+                <Paginate
+                    activePage={lastViewedPage}
+                    countOfPages={countOfPages}
+                    changePage={changeLastViewedPage}
+                />
+            </div>
+        </>
     );
 };

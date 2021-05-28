@@ -5,7 +5,8 @@ import {
     RESET_SETTINGS_CARS_TABLE,
     SET_CARMODEL_TO_CARS_TABLE,
     SET_CATEGORY_TO_CARS_TABLE,
-    SET_COLOR_TO_CARS_TABLE,
+    SET_MAX_PRICE_TO_CARS_TABLE,
+    SET_MIN_PRICE_TO_CARS_TABLE,
 } from "../types";
 
 export const addSelectedCarModelToStore = (carModel) => ({
@@ -16,6 +17,16 @@ export const addSelectedCarModelToStore = (carModel) => ({
 export const addSelectedCategoryToStore = (category) => ({
     type: SET_CATEGORY_TO_CARS_TABLE,
     payload: category,
+});
+
+export const addMinPriceToStore = (price) => ({
+    type: SET_MIN_PRICE_TO_CARS_TABLE,
+    payload: price,
+});
+
+export const addMaxPriceToStore = (price) => ({
+    type: SET_MAX_PRICE_TO_CARS_TABLE,
+    payload: price,
 });
 
 export const getFilteredCarsTableToStore = (list) => ({

@@ -1,10 +1,13 @@
 import { fetchDataWithComplexParamters } from "../../api/fetch";
 import {
+    addMaxPriceToStore,
+    addMinPriceToStore,
     addSelectedCarModelToStore,
     addSelectedCategoryToStore,
     changeCountOfPagesInStore,
     changeLastViewedPageInStore,
     getFilteredCarsTableToStore,
+    resetSettings,
 } from "../actionCreators/carsTable";
 import { setErrorOfLoggedAuth } from "./auth";
 
@@ -14,6 +17,12 @@ export const setSelectedCategory = (selectedCategory) => (dispatch) =>
 export const setSelectedCarModel = (selectedCarModel) => (dispatch) =>
     dispatch(addSelectedCarModelToStore(selectedCarModel));
 
+export const setMinPrice = (price) => (dispatch) =>
+    dispatch(addMinPriceToStore(Number(price)));
+
+export const setMaxPrice = (price) => (dispatch) =>
+    dispatch(addMaxPriceToStore(Number(price)));
+
 const calculateCountOfPages = (count) => {
     const pages = count % 5 ? Math.floor(count / 5) : count / 5 - 1;
     return changeCountOfPagesInStore(pages);
@@ -21,12 +30,17 @@ const calculateCountOfPages = (count) => {
 
 export const getFilteredCarsTable = () => {
     return async (dispatch, getState) => {
-        const { selectedCarModel, selectedCategory, lastViewedPage } =
-            getState().carsTable;
+        const {
+            selectedCarModel,
+            selectedCategory,
+            priceMin,
+            priceMax,
+            lastViewedPage,
+        } = getState().carsTable;
 
         const parameters = [
             "sort[createdAt]=-1",
-            "&limit=5",
+            "&limit=7",
             `&page=${lastViewedPage}`,
         ];
 
@@ -36,6 +50,14 @@ export const getFilteredCarsTable = () => {
 
         if (selectedCategory.id !== "noMatter") {
             parameters.push(`&categoryId[id]=${selectedCategory.id}`);
+        }
+
+        if (priceMin) {
+            parameters.push(`&priceMin[$gt]=${priceMin}`);
+        }
+
+        if (priceMax) {
+            parameters.push(`&priceMax[$lt]=${priceMax}`);
         }
 
         const carsTableFromServer = await fetchDataWithComplexParamters(
@@ -55,5 +77,10 @@ export const getFilteredCarsTable = () => {
 
 export const changeLastViewedPage = (page) => (dispatch) => {
     dispatch(changeLastViewedPageInStore(page));
+    dispatch(getFilteredCarsTable());
+};
+
+export const resetAndUpdateFilteredCarsTable = () => (dispatch) => {
+    dispatch(resetSettings());
     dispatch(getFilteredCarsTable());
 };

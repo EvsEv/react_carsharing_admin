@@ -106,6 +106,9 @@ export const SearchDropdown = ({
                 </label>
             )}
             <div className={styles.inputField}>
+                {!label && (
+                    <p className={styles.name}>{placeholder.toLowerCase()}</p>
+                )}
                 <input
                     className={inputClasses.join(" ")}
                     onChange={onType}
