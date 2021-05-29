@@ -100,10 +100,13 @@ export const fetchDataWithComplexParamters = async (name, parameters) => {
 
 export const putData = async (table, body, id) => {
     const appId = process.env.REACT_APP_APPLICATION_ID;
+    const bearer = await JSON.parse(localStorage.tokens);
+
     try {
         const headers = {
             "Content-Type": "application/json",
             "X-Api-Factory-Application-Id": appId,
+            Authorization: `Bearer ${bearer.access_token}`,
         };
         const response = await fetch(
             `https://api-factory.simbirsoft1.com/api/db/${table}/${id}`,

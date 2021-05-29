@@ -3,6 +3,7 @@ import Checkbox from "../UIKit/Checkbox";
 import ControlEdit from "../UIKit/ControlEdit";
 
 import styles from "./orderCard.module.sass";
+import { putData } from "../../api/fetch";
 
 export const OrderCard = ({
     order,
@@ -42,9 +43,15 @@ export const OrderCard = ({
         setIsRightWheel(order?.isRightWheel);
     }, [order]);
 
-    const toggleIsFullTank = () => setIsFullTank(!isFullTank);
-    const toggleIsNeedChildChair = () => setIsNeedChildChair(!isNeedChildChair);
-    const toggleIsRightWheel = () => setIsRightWheel(!isRightWheel);
+    const onConfirmed = async () => {
+        await putData("order", { orderStatusId: confirmedStatus }, order?.id);
+        changeStatus(true);
+    };
+
+    const onCancelled = async () => {
+        await putData("order", { orderStatusId: cancelledStatus }, order?.id);
+        changeStatus(true);
+    };
 
     return (
         <div className={cardClasses.join(" ")}>
@@ -87,7 +94,6 @@ export const OrderCard = ({
                     name="isFullTank"
                     value={isFullTank}
                     checked={isFullTank}
-                    onChange={toggleIsFullTank}
                     label="Полный бак"
                     notEditable={true}
                 />
@@ -95,7 +101,6 @@ export const OrderCard = ({
                     name="isNeedChildChair"
                     value={isNeedChildChair}
                     checked={isNeedChildChair}
-                    onChange={toggleIsNeedChildChair}
                     label="Детское кресло"
                     notEditable={true}
                 />
@@ -103,7 +108,6 @@ export const OrderCard = ({
                     name="isRightWheel"
                     value={isRightWheel}
                     checked={isRightWheel}
-                    onChange={toggleIsRightWheel}
                     label="Правый руль"
                     notEditable={true}
                 />
@@ -114,13 +118,7 @@ export const OrderCard = ({
                     ? order.price.toLocaleString() + " ₽"
                     : "Не указана"}
             </p>
-            <ControlEdit
-                table="order"
-                id={order.id}
-                confirmedStatus={confirmedStatus}
-                cancelledStatus={cancelledStatus}
-                changeStatus={changeStatus}
-            />
+            <ControlEdit onConfirmed={onConfirmed} onCancelled={onCancelled} />
         </div>
     );
 };

@@ -1,4 +1,5 @@
 @import ../../styles/variables
+@import ../../styles/media
 @import ../../styles/mixins
 
 .body
@@ -17,6 +18,23 @@
   @include wrapperPaddings()
   flex-grow: 1
   overflow-y: auto
+  display: flex
+  flex-direction: column
+  overflow-y: auto
+
+.title
+  font-size: 29px
+  font-weight: normal
+  line-height: 33px
+  color: $darkBlue
+  letter-spacing: -0.725px
+  margin-bottom: 30px
+
+.content
+  min-height: 324px
+  background: $white
+  border-radius: $borderRadiusBig
+  box-shadow: $defaultBoxShadow
   display: flex
   flex-direction: column
   overflow-y: auto

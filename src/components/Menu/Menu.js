@@ -24,7 +24,7 @@ export const Menu = React.forwardRef((props, ref) => {
     return (
         <aside className={classesForMenu.join(" ")} ref={ref}>
             <div className={styles.logo}>
-                <Link to="/" className={styles.link} onClick={onClickLink}>
+                <Link to="/admin" className={styles.link} onClick={onClickLink}>
                     <Logo className={styles.logotype} />
                     <h2 className={styles.name}>Need for car</h2>
                 </Link>
@@ -56,7 +56,7 @@ export const Menu = React.forwardRef((props, ref) => {
                     <li className={styles.item}>
                         <NavLink
                             exact
-                            to="/admin"
+                            to="/admin/orderList"
                             activeClassName={styles.active}
                             className={styles.link}
                             onClick={onClickLink}
@@ -66,10 +66,16 @@ export const Menu = React.forwardRef((props, ref) => {
                         </NavLink>
                     </li>
                     <li className={styles.item}>
-                        <p className={styles.link} title="В разработке">
+                        <NavLink
+                            exact
+                            to="/admin/"
+                            activeClassName={styles.active}
+                            className={styles.link}
+                            onClick={onClickLink}
+                        >
                             <ShapeIcon />
-                            Menu 4
-                        </p>
+                            Все сущности
+                        </NavLink>
                     </li>
                     <li className={styles.item}>
                         <p className={styles.link} title="В разработке">
