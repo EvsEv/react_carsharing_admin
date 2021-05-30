@@ -1,44 +1,60 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { putData } from "../../api/fetch";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDataWithComplexParamters, putData } from "../../api/fetch";
+import { getCityList } from "../../redux/thunks/listsOfEntities";
 import ControlEdit from "../UIKit/ControlEdit";
+import { SearchDropdown } from "../UIKit/SearchDropdown/SearchDropdown";
 
 import styles from "./listItem.module.sass";
 
 export const ListItem = ({ item, isChanged }) => {
     const [name, setName] = useState(item?.name);
-    const [city, setCity] = useState(item?.cityId?.name);
+    const [city, setCity] = useState(item?.cityId);
     const [address, setAddress] = useState(item?.address);
     const [description, setDescription] = useState(item?.description);
     const [price, setPrice] = useState(item?.price);
-    const [tariff, setTariff] = useState(item?.rateTypeId?.name);
-    const [rateDescriptionUnit, setRateDescriptionUnit] = useState(
-        item?.rateTypeId?.unit
-    );
+    const [tariff, setTariff] = useState(item?.rateTypeId);
     const [unit, setUnit] = useState(item?.unit);
     const [isEdited, setIsEdited] = useState(false);
 
     const { selectedEntity } = useSelector((state) => state.entitiesList);
 
+    const { cityList } = useSelector((state) => state.listsOfEntities);
+    const [listOfCities, setListOfCities] = useState([]);
+    const [listOfRateTypes, setListOfRateTpes] = useState([]);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const correctCityList = cityList.slice(1, cityList.length);
+        const index = correctCityList.findIndex(
+            (city) => city?.id === item?.cityId?.id
+        );
+        const correctListOfCities = [
+            correctCityList[index],
+            ...correctCityList.slice(0, index),
+            ...correctCityList.slice(index + 1, -1),
+        ];
+        setListOfCities(correctListOfCities);
+    }, [cityList, item]);
+
     const editName = (event) => setName(event.target.value);
-    const editCity = (event) => setCity(event.target.value);
+    const editCity = (city) => setCity({ name: city?.name, id: city?.id });
     const editAddress = (event) => setAddress(event.target.value);
     const editDescription = (event) => setDescription(event.target.value);
     const editPrice = (event) => setPrice(event.target.value);
-    const editTariff = (event) => setTariff(event.target.value);
-    const editRateDescriptionUnit = (event) =>
-        setRateDescriptionUnit(event.target.value);
+    const editTariff = (event) => setTariff(event);
     const editUnit = (event) => setUnit(event.target.value);
 
     const onReset = () => {
+        isChanged(false);
         setIsEdited(false);
         setName(item?.name);
-        setCity(item?.cityId?.name);
+        setCity(item?.cityId);
         setAddress(item?.address);
         setDescription(item?.description);
         setPrice(item?.price);
-        setTariff(item?.price);
-        setRateDescriptionUnit(item?.rateTypeId?.unit);
+        setTariff(item?.rateTypeId);
         setUnit(item?.unit);
     };
 
@@ -65,26 +81,50 @@ export const ListItem = ({ item, isChanged }) => {
             changedData.unit = unit;
         }
 
-        const answer = await putData(
-            selectedEntity.name,
-            { ...changedData },
-            item?.id
-        );
+        if (city?.id && city?.name && city.id !== item.cityId.id) {
+            changedData.cityId = city;
+        }
+
+        if (tariff?.id && tariff?.name) {
+            changedData.rateTypeId = tariff;
+        }
+
+        await putData(selectedEntity.name, { ...changedData }, item?.id);
 
         isChanged(true);
+    };
+
+    const onChanged = async () => {
+        setIsEdited(true);
+
+        if (item?.cityId) {
+            dispatch(getCityList());
+        }
+
+        if (item?.rateTypeId) {
+            const rateIdFromServer = await fetchDataWithComplexParamters(
+                "rateType",
+                "page=0"
+            );
+            setListOfRateTpes(rateIdFromServer.data);
+        }
     };
 
     return (
         <div style={{ border: "1px solid black" }}>
             {item?.cityId?.name && (
-                <p>
+                <div>
                     Город:{" "}
-                    <input
-                        onChange={editCity}
+                    <SearchDropdown
+                        variants={listOfCities}
+                        selectedValue={city?.name}
+                        changeValue={editCity}
+                        parameter={item.id}
+                        type="small"
+                        // placeholder="Доступные"
                         disabled={!isEdited}
-                        value={city}
                     />
-                </p>
+                </div>
             )}
             {item?.address && (
                 <p>
@@ -126,25 +166,19 @@ export const ListItem = ({ item, isChanged }) => {
                     />
                 </p>
             )}
-            {item?.rateTypeId?.name && (
-                <p>
-                    Тариф:{" "}
-                    <input
-                        onChange={editTariff}
+            {item?.rateTypeId && (
+                <div>
+                    Тип тарифа:{" "}
+                    <SearchDropdown
+                        variants={listOfRateTypes}
+                        selectedValue={tariff?.name}
+                        changeValue={editTariff}
+                        parameter={item.id}
+                        type="small"
+                        // placeholder="Доступные"
                         disabled={!isEdited}
-                        value={tariff}
                     />
-                </p>
-            )}
-            {item?.rateTypeId?.unit && (
-                <p>
-                    Единица времени:{" "}
-                    <input
-                        disabled={!isEdited}
-                        onChange={editRateDescriptionUnit}
-                        value={rateDescriptionUnit}
-                    />
-                </p>
+                </div>
             )}
             {item?.unit && (
                 <p>
@@ -158,7 +192,7 @@ export const ListItem = ({ item, isChanged }) => {
             )}
             <ControlEdit
                 onCancelled={onReset}
-                onChanged={() => setIsEdited(true)}
+                onChanged={onChanged}
                 onConfirmed={onSubmit}
             />
         </div>

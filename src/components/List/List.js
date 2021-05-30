@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCityList } from "../../redux/thunks/listsOfEntities";
 import ListItem from "../ListItem";
 
 import styles from "./list.module.sass";

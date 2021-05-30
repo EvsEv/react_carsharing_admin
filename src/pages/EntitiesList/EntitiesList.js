@@ -10,6 +10,7 @@ import {
     getFilteredEntityList,
     setSelectedEntity,
 } from "../../redux/thunks/entitiesList";
+import { getCityList } from "../../redux/thunks/listsOfEntities";
 
 import styles from "./entitiesList.module.sass";
 
@@ -23,7 +24,7 @@ export const EntitiesList = () => {
     } = useSelector((state) => state.entitiesList);
     const dispatch = useDispatch();
 
-    const [state, setState] = useState(false);
+    const [isChanged, setIsChanged] = useState(false);
 
     useEffect(() => {
         dispatch(addOtherEntities());
@@ -34,8 +35,8 @@ export const EntitiesList = () => {
     }, [otherEntities]);
 
     useEffect(() => {
-        state && dispatch(getFilteredEntityList());
-    }, [state]);
+        dispatch(getFilteredEntityList());
+    }, [isChanged]);
 
     const onSelectTab = (tab) => {
         dispatch(setSelectedEntity(tab));
@@ -50,7 +51,7 @@ export const EntitiesList = () => {
                 <List
                     current={selectedEntity}
                     elements={filteredListBySelected}
-                    isChanged={setState}
+                    isChanged={setIsChanged}
                 />
                 <Paginate
                     activePage={lastViewedPage}
