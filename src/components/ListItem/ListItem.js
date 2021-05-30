@@ -5,7 +5,7 @@ import ControlEdit from "../UIKit/ControlEdit";
 
 import styles from "./listItem.module.sass";
 
-export const ListItem = ({ item }) => {
+export const ListItem = ({ item, isChanged }) => {
     const [name, setName] = useState(item?.name);
     const [city, setCity] = useState(item?.cityId?.name);
     const [address, setAddress] = useState(item?.address);
@@ -71,7 +71,7 @@ export const ListItem = ({ item }) => {
             item?.id
         );
 
-        console.log(answer);
+        isChanged(true);
     };
 
     return (

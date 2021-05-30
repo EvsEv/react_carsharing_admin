@@ -51,6 +51,7 @@ export const getOrderStatusList = () => {
 export const getCategoryList = () => {
     return async (dispatch) => {
         const categoryListFromServer = await fetchData("category");
+        console.log(categoryListFromServer);
 
         if (categoryListFromServer.code) {
             return dispatch(
