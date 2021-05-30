@@ -10,11 +10,11 @@ export const Filters = ({
     submitFilters,
     resetAndUpdate,
     rangeFilters,
+    correctCondition,
 }) => {
     const [showForm, setShowForm] = useState(true);
     const [minValue, setMinValue] = useState(rangeFilters?.minValue || "");
     const [maxValue, setMaxValue] = useState(rangeFilters?.maxValue || "");
-    const [isCorrect, setIsCorrect] = useState(true);
     const dispatch = useDispatch();
     const form = useRef();
 
@@ -32,7 +32,7 @@ export const Filters = ({
             rangeFilters.changeMinValue(minValue);
             rangeFilters.changeMaxValue(maxValue);
         }
-        dispatch(submitFilters());
+        submitFilters();
     };
     const onReset = (event) => {
         event.preventDefault();
@@ -40,26 +40,14 @@ export const Filters = ({
             setMinValue("");
             setMaxValue("");
         }
-        dispatch(resetAndUpdate());
+        resetAndUpdate();
     };
 
-    const toggleForm = (event) => setShowForm(!showForm);
+    const toggleForm = () => setShowForm(!showForm);
 
     const setMinPrice = (event) => setMinValue(event.target.value);
 
     const setMaxPrice = (event) => setMaxValue(event.target.value);
-
-    const disabledToSubmit = () => {
-        setIsCorrect(
-            Boolean(
-                filters.find((filter) => filter.selectedValue === undefined)
-            )
-        );
-    };
-
-    useEffect(() => {
-        disabledToSubmit();
-    }, [filters]);
 
     return (
         <>
@@ -119,7 +107,7 @@ export const Filters = ({
                     <Button text="Сбросить" type="reset" />
                     <Button
                         text="Применить"
-                        disabled={isCorrect}
+                        disabled={!correctCondition}
                         type="submit"
                     />
                 </div>
