@@ -1,0 +1,48 @@
+@import ../../../styles/variables
+
+.tabs
+  padding: 0
+  margin: 0
+  display: flex
+  width: 100%
+
+
+.item
+  list-style-type: none
+  width: calc(100% / 6)
+  box-sizing: border-box
+  position: relative
+  &::after
+    content: ""
+    position: absolute
+    top: 100%
+    left: 0
+    width: 100%
+    height: 4px
+    background-color: rgba($brightBlue, 0.1)
+    transition: all $short ease
+  &:hover
+    &:not(.active &)
+      &::after
+        background-color: rgba($brightBlue, 0.4)
+      .button
+        color: $brightBlue
+
+
+
+.active
+  &::after
+    background-color: $brightBlue
+  .button
+    color: $brightBlue
+
+.button
+  font-weight: bold
+  color: $mainBlack
+  width: 100%
+  height: 100%
+  border: none
+  background: none
+  padding: $cell * 2
+  cursor: pointer
+  transition: all $short ease

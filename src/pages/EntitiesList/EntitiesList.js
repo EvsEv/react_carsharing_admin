@@ -47,7 +47,11 @@ export const EntitiesList = () => {
         <>
             <h1 className={styles.title}>Все сущности</h1>
             <section className={styles.content}>
-                <Tabs list={otherEntities} setActive={onSelectTab} />
+                <Tabs
+                    list={otherEntities}
+                    setActive={onSelectTab}
+                    active={selectedEntity}
+                />
                 <List
                     current={selectedEntity}
                     elements={filteredListBySelected}

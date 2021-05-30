@@ -48,7 +48,6 @@ export const ListItem = ({ item, isChanged }) => {
 
     const onReset = () => {
         isChanged(false);
-        setIsEdited(false);
         setName(item?.name);
         setCity(item?.cityId);
         setAddress(item?.address);
@@ -56,6 +55,7 @@ export const ListItem = ({ item, isChanged }) => {
         setPrice(item?.price);
         setTariff(item?.rateTypeId);
         setUnit(item?.unit);
+        setIsEdited(false);
     };
 
     const onSubmit = async () => {
@@ -92,6 +92,7 @@ export const ListItem = ({ item, isChanged }) => {
         await putData(selectedEntity.name, { ...changedData }, item?.id);
 
         isChanged(true);
+        setIsEdited(false);
     };
 
     const onChanged = async () => {
@@ -121,7 +122,6 @@ export const ListItem = ({ item, isChanged }) => {
                         changeValue={editCity}
                         parameter={item.id}
                         type="small"
-                        // placeholder="Доступные"
                         disabled={!isEdited}
                     />
                 </div>
@@ -175,7 +175,6 @@ export const ListItem = ({ item, isChanged }) => {
                         changeValue={editTariff}
                         parameter={item.id}
                         type="small"
-                        // placeholder="Доступные"
                         disabled={!isEdited}
                     />
                 </div>
