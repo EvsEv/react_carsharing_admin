@@ -148,8 +148,8 @@ export const CarsTable = () => {
                 rangeFilters={{
                     minValue: minPriceValue,
                     maxValue: maxPriceValue,
-                    minName: "минимальная цена",
-                    maxName: "максимальная цена",
+                    minName: "Минимальная цена",
+                    maxName: "Максимальная цена",
                     changeMinValue: typePriceMin,
                     changeMaxValue: typePriceMax,
                 }}

@@ -135,7 +135,9 @@ export const SearchDropdown = ({
                     onBlur={resetFilterToNoMatter}
                     disabled={disabled}
                 />
-                {error && <span className={styles.errorType}>{error}</span>}
+                {error && type !== "auto" && (
+                    <span className={styles.errorType}>{error}</span>
+                )}
                 {showDropdown && (
                     <ul className={styles.suggestion} ref={dropdown}>
                         {suggestions.map((suggestion, idx) => (

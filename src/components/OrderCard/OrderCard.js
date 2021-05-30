@@ -118,7 +118,12 @@ export const OrderCard = ({
                     ? order.price.toLocaleString() + " ₽"
                     : "Не указана"}
             </p>
-            <ControlEdit onConfirmed={onConfirmed} onCancelled={onCancelled} />
+            <ControlEdit
+                onConfirmed={onConfirmed}
+                onCancelled={onCancelled}
+                onChanged={() => {}}
+                order={true}
+            />
         </div>
     );
 };

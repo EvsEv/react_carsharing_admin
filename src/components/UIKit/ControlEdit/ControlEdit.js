@@ -7,10 +7,21 @@ export const ControlEdit = ({
     onCancelled,
     onChanged,
     isEdited,
+    type,
+    order,
 }) => {
+    const classes = [styles.form];
+
+    if (type) {
+        classes.push(styles[type]);
+    }
+
     return (
-        <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-            {isEdited && (
+        <form
+            className={classes.join(" ")}
+            onSubmit={(e) => e.preventDefault()}
+        >
+            {(isEdited || order) && (
                 <button
                     type="submit"
                     className={[styles.button, styles.confirmed].join(" ")}
@@ -19,7 +30,7 @@ export const ControlEdit = ({
                     Готово
                 </button>
             )}
-            {isEdited && (
+            {(isEdited || order) && (
                 <button
                     className={[styles.button, styles.cancelled].join(" ")}
                     onClick={onCancelled}
@@ -27,13 +38,15 @@ export const ControlEdit = ({
                     Отменить
                 </button>
             )}
-            <button
-                disabled={isEdited}
-                onClick={() => onChanged()}
-                className={[styles.button, styles.changed].join(" ")}
-            >
-                Изменить
-            </button>
+            {(!isEdited || order) && (
+                <button
+                    disabled={isEdited}
+                    onClick={() => onChanged()}
+                    className={[styles.button, styles.changed].join(" ")}
+                >
+                    Изменить
+                </button>
+            )}
         </form>
     );
 };

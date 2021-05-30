@@ -1,4 +1,5 @@
 @import ../../../styles/variables
+@import ../../../styles/media
 
 .tabs
   padding: 0
@@ -20,21 +21,20 @@
     width: 100%
     height: 4px
     background-color: rgba($brightBlue, 0.1)
-    transition: all $short ease
   &:hover
-    &:not(.active &)
-      &::after
-        background-color: rgba($brightBlue, 0.4)
-      .button
-        color: $brightBlue
-
-
+    &::after
+      background-color: rgba($brightBlue, 0.4)
+    .button
+      color: $brightBlue
 
 .active
   &::after
     background-color: $brightBlue
   .button
     color: $brightBlue
+  &:hover
+    &::after
+      background-color: $brightBlue
 
 .button
   font-family: "RobotoReg"
@@ -47,4 +47,32 @@
   background: none
   padding: $cell * 2
   cursor: pointer
-  transition: all $short ease
+
+@include mobileDevice
+  .tabs
+    background-color: rgba($brightBlue, 0.1)
+    border-radius: $borderRadiusBig
+    padding: $cell
+    padding-top: 0
+    row-gap: $cell * 2
+    flex-wrap: wrap
+  .item
+    width: auto
+    &::after
+      height: 2px
+      top: auto
+      bottom: -3px
+      background: transparent
+    &:hover
+      &::after
+        background: transparent
+  .active.item
+    &::after
+      background-color: $brightBlue
+  .button
+    font-size: 14px
+    padding-top: $cell * 3
+    padding-bottom: $cell
+
+
+

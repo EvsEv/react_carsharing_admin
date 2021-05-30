@@ -66,61 +66,66 @@ export const Paginate = ({ activePage, countOfPages, changePage }) => {
         dispatch(changePage(searchingPage - 1));
         setSearchingPage("");
     };
-    return (
-        <div className={styles.paginate}>
-            {activePage > 0 && (
-                <button
-                    onClick={decreasePage}
-                    className={[styles.button, styles.decrease].join(" ")}
-                >
-                    «
-                </button>
-            )}
-            {pages.map((page, idx) => (
-                <button
-                    className={
-                        page === activePage
-                            ? [styles.button, styles.active].join(" ")
-                            : styles.button
-                    }
-                    onClick={() => onClick(page)}
-                    key={idx}
-                >
-                    {Number.isInteger(page) ? page + 1 : page}
-                </button>
-            ))}
-            {activePage < countOfPages && (
-                <button
-                    onClick={increasePage}
-                    className={[styles.button, styles.increase].join(" ")}
-                >
-                    »
-                </button>
-            )}
-            {showSearchDropdown && (
-                <form
-                    onSubmit={goToTypedPage}
-                    ref={searchDropdown}
-                    className={styles.dropdown}
-                >
-                    <input
-                        id="searchPage"
-                        className={styles.search}
-                        value={searchingPage}
-                        onChange={onTypingInSearch}
-                        type="number"
-                        min="0"
-                        max={countOfPages + 1}
-                        placeholder={`Макс. ${countOfPages + 1}`}
-                    />
-                    <Button
-                        type="submit"
-                        text="Перейти"
-                        disabled={!searchingPage}
-                        action={goToTypedPage}
-                    />
-                </form>
-            )}
-        </div>
-    );
+
+    if (countOfPages > 0) {
+        return (
+            <div className={styles.paginate}>
+                {activePage > 0 && (
+                    <button
+                        onClick={decreasePage}
+                        className={[styles.button, styles.decrease].join(" ")}
+                    >
+                        «
+                    </button>
+                )}
+                {pages.map((page, idx) => (
+                    <button
+                        className={
+                            page === activePage
+                                ? [styles.button, styles.active].join(" ")
+                                : styles.button
+                        }
+                        onClick={() => onClick(page)}
+                        key={idx}
+                    >
+                        {Number.isInteger(page) ? page + 1 : page}
+                    </button>
+                ))}
+                {activePage < countOfPages && (
+                    <button
+                        onClick={increasePage}
+                        className={[styles.button, styles.increase].join(" ")}
+                    >
+                        »
+                    </button>
+                )}
+                {showSearchDropdown && (
+                    <form
+                        onSubmit={goToTypedPage}
+                        ref={searchDropdown}
+                        className={styles.dropdown}
+                    >
+                        <input
+                            id="searchPage"
+                            className={styles.search}
+                            value={searchingPage}
+                            onChange={onTypingInSearch}
+                            type="number"
+                            min="0"
+                            max={countOfPages + 1}
+                            placeholder={`Макс. ${countOfPages + 1}`}
+                        />
+                        <Button
+                            type="submit"
+                            text="Перейти"
+                            disabled={!searchingPage}
+                            action={goToTypedPage}
+                        />
+                    </form>
+                )}
+            </div>
+        );
+    }
+
+    return null;
 };

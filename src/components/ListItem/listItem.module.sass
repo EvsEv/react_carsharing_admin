@@ -1,25 +1,25 @@
 @import ../../styles/variables
+@import ../../styles/media
 
 .item
   min-height: $cell * 12
   padding: $cell * 4 $cell * 2
   margin: -1px 0
   border: 1px solid transparent
-  border-radius: $borderRadiusBig
   display: flex
   align-items: center
   gap: $cell * 10
-  transition: all $short ease
   &:first-of-type
     margin-top: 0
 
 .changing
-  padding-left: $cell * 4
-  border-color: $confirmed
+  border-radius: $borderRadiusBig
+  // padding-left: $cell * 4
+  border-color: $brightBlue
   .changingField
     font-weight: bold
     text-decoration: underline
-    text-decoration-color: $confirmed
+    text-decoration-color: $brightBlue
     height: auto
 
 .parameters
@@ -59,8 +59,44 @@
   line-height: 1
   background: none
   border: none
-  transition: all $short ease
   &:focus
     outline: none
 
+@include desktopMinDevice
+  .item
+    min-height: 0
+    margin: 0
+    border: none
+    border-left: 5px solid transparent
+    &:last-of-type
+      border-bottom: none
+  .changing
+    border-radius: 0
+    border-left-color: $brightBlue
+  .parameters
+    flex-direction: column
+    gap: 0
+  .large
+    .changingField
+      padding-top: 0
+      position: relative
+      top: 8px
 
+@include mobileDevice
+  .item
+    border: 1px solid $ultraLightGrey
+    flex-direction: column
+    grid-gap: 0
+    margin: -1px 0
+    &:last-of-type
+      border-bottom: 1px solid $ultraLightGrey
+  .changing
+    border-left: 1px solid $brightBlue
+  .parameters
+    width: 100%
+  .parameter
+    span
+      font-size: 13px
+  .changingField
+    font-size: 13px
+    line-height: 1

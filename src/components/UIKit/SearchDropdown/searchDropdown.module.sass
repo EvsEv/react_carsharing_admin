@@ -11,10 +11,11 @@
     font-size: 16px
     background: none
     border: none
+    transition: none
     &.edited
       font-weight: bold
       text-decoration: underline
-      text-decoration-color: $confirmed
+      text-decoration-color: $brightBlue
   .item
     font-size: 16px
     line-height: 1
@@ -126,6 +127,11 @@
   .searchDropdown
     width: auto
     max-width: 94.5px
+  .auto
+    max-width: 100%
+    .input
+      padding-top: 0
+      padding-bottom: 0
 
 @include mobileDevice
   .searchDropdown
@@ -133,6 +139,16 @@
     width: calc(50% - 5px)
   .errorType
     bottom: -12px
+  .auto
+    max-width: 100%
+    width: 100%
+    .inputField
+      height: 22px
+    .input
+      font-size: 13px
+    .item
+      font-size: 13px
+      line-height: 13px
 
 
 

@@ -205,6 +205,7 @@ export const ListItem = ({ item, isChanged }) => {
                 )}
             </div>
             <ControlEdit
+                type="edit"
                 onCancelled={onReset}
                 onChanged={onChanged}
                 onConfirmed={onSubmit}
