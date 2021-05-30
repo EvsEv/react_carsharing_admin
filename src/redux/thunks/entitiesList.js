@@ -22,7 +22,7 @@ export const addOtherEntities = () => async (dispatch, getState) => {
     const allEntities = await getAllEntities();
     const otherEntities = [];
 
-    allEntities.filter((item) => {
+    allEntities?.filter((item) => {
         if (
             item.name !== "car" &&
             item.name !== "order" &&

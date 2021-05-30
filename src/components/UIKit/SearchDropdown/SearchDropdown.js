@@ -31,6 +31,10 @@ export const SearchDropdown = ({
         searchDropdownClasses.push(styles.opened);
     }
 
+    if (!disabled) {
+        inputClasses.push(styles.edited);
+    }
+
     if (error) {
         inputClasses.push(styles.error);
     }

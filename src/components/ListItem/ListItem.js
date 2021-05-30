@@ -22,8 +22,13 @@ export const ListItem = ({ item, isChanged }) => {
     const { cityList } = useSelector((state) => state.listsOfEntities);
     const [listOfCities, setListOfCities] = useState([]);
     const [listOfRateTypes, setListOfRateTpes] = useState([]);
-
     const dispatch = useDispatch();
+
+    const classesForItem = [styles.item];
+
+    if (isEdited) {
+        classesForItem.push(styles.changing);
+    }
 
     useEffect(() => {
         const correctCityList = cityList.slice(1, cityList.length);
@@ -42,6 +47,7 @@ export const ListItem = ({ item, isChanged }) => {
     const editCity = (city) => setCity({ name: city?.name, id: city?.id });
     const editAddress = (event) => setAddress(event.target.value);
     const editDescription = (event) => setDescription(event.target.value);
+
     const editPrice = (event) => setPrice(event.target.value);
     const editTariff = (event) => setTariff(event);
     const editUnit = (event) => setUnit(event.target.value);
@@ -112,87 +118,97 @@ export const ListItem = ({ item, isChanged }) => {
     };
 
     return (
-        <div style={{ border: "1px solid black" }}>
-            {item?.cityId?.name && (
-                <div>
-                    Город:{" "}
-                    <SearchDropdown
-                        variants={listOfCities}
-                        selectedValue={city?.name}
-                        changeValue={editCity}
-                        parameter={item.id}
-                        type="small"
-                        disabled={!isEdited}
-                    />
-                </div>
-            )}
-            {item?.address && (
-                <p>
-                    Адрес:{" "}
-                    <input
-                        onChange={editAddress}
-                        disabled={!isEdited}
-                        value={address}
-                    />
-                </p>
-            )}
-            {item?.name && (
-                <p>
-                    Название{" "}
-                    <input
-                        disabled={!isEdited}
-                        value={name}
-                        onChange={editName}
-                    />
-                </p>
-            )}
-            {item?.description && (
-                <p>
-                    Описание:{" "}
-                    <input
-                        onChange={editDescription}
-                        disabled={!isEdited}
-                        value={description}
-                    />
-                </p>
-            )}
-            {item?.price && (
-                <p>
-                    Цена:{" "}
-                    <input
-                        onChange={editPrice}
-                        disabled={!isEdited}
-                        value={price}
-                    />
-                </p>
-            )}
-            {item?.rateTypeId && (
-                <div>
-                    Тип тарифа:{" "}
-                    <SearchDropdown
-                        variants={listOfRateTypes}
-                        selectedValue={tariff?.name}
-                        changeValue={editTariff}
-                        parameter={item.id}
-                        type="small"
-                        disabled={!isEdited}
-                    />
-                </div>
-            )}
-            {item?.unit && (
-                <p>
-                    Единица времени:{" "}
-                    <input
-                        onChange={editUnit}
-                        disabled={!isEdited}
-                        value={unit}
-                    />
-                </p>
-            )}
+        <div className={classesForItem.join(" ")}>
+            <div className={styles.parameters}>
+                {item?.cityId && (
+                    <div className={[styles.parameter, styles.fixed].join(" ")}>
+                        <span>Город: </span>
+                        <SearchDropdown
+                            variants={listOfCities}
+                            selectedValue={city?.name}
+                            changeValue={editCity}
+                            parameter={item.id}
+                            disabled={!isEdited}
+                            type="auto"
+                        />
+                    </div>
+                )}
+                {item?.address && (
+                    <p className={styles.parameter}>
+                        <span>Адрес:</span>
+                        <input
+                            className={styles.changingField}
+                            onChange={editAddress}
+                            disabled={!isEdited}
+                            value={address}
+                        />
+                    </p>
+                )}
+                {item?.name && (
+                    <p className={styles.parameter}>
+                        <span>Название:</span>
+                        <input
+                            className={styles.changingField}
+                            disabled={!isEdited}
+                            value={name}
+                            onChange={editName}
+                        />
+                    </p>
+                )}
+                {item?.description && (
+                    <p className={[styles.parameter, styles.large].join(" ")}>
+                        <span>Описание:</span>
+                        <textarea
+                            row={3}
+                            className={styles.changingField}
+                            onChange={editDescription}
+                            disabled={!isEdited}
+                            value={description}
+                        />
+                    </p>
+                )}
+                {item?.price && (
+                    <p className={[styles.parameter, styles.fixed].join(" ")}>
+                        <span>Цена в ₽ ({item?.rateTypeId.unit}):</span>
+                        <input
+                            className={styles.changingField}
+                            onChange={editPrice}
+                            disabled={!isEdited}
+                            value={price}
+                            type="number"
+                        />
+                    </p>
+                )}
+                {item?.rateTypeId && (
+                    <div className={styles.parameter}>
+                        <span>Тип:</span>
+                        <SearchDropdown
+                            variants={listOfRateTypes}
+                            selectedValue={tariff?.name}
+                            changeValue={editTariff}
+                            parameter={item.id}
+                            disabled={!isEdited}
+                            type="auto"
+                        />
+                    </div>
+                )}
+                {item?.unit && (
+                    <p className={styles.parameter}>
+                        <span>Единица времени:</span>
+                        <input
+                            className={styles.changingField}
+                            onChange={editUnit}
+                            disabled={!isEdited}
+                            value={unit}
+                        />
+                    </p>
+                )}
+            </div>
             <ControlEdit
                 onCancelled={onReset}
                 onChanged={onChanged}
                 onConfirmed={onSubmit}
+                isEdited={isEdited}
             />
         </div>
     );

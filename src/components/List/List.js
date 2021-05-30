@@ -7,17 +7,16 @@ import styles from "./list.module.sass";
 
 export const List = ({ current, elements, isChanged }) => {
     return (
-        <div>
+        <div className={styles.wrapper}>
             {/* <h2>{current?.name}</h2> */}
-            <div>
-                {elements?.map((element) => (
-                    <ListItem
-                        key={element.id}
-                        isChanged={isChanged}
-                        item={element}
-                    />
-                ))}
-            </div>
+
+            {elements?.map((element) => (
+                <ListItem
+                    key={element.id}
+                    isChanged={isChanged}
+                    item={element}
+                />
+            ))}
         </div>
     );
 };
