@@ -5,7 +5,7 @@ import ListItem from "../ListItem";
 
 import styles from "./list.module.sass";
 
-export const List = ({ current, elements, isChanged }) => {
+export const List = ({ current, elements, isChanged, isDeleted }) => {
     return (
         <div className={styles.wrapper}>
             {/* <h2>{current?.name}</h2> */}
@@ -14,6 +14,7 @@ export const List = ({ current, elements, isChanged }) => {
                 <ListItem
                     key={element.id}
                     isChanged={isChanged}
+                    isDeleted={isDeleted}
                     item={element}
                 />
             ))}

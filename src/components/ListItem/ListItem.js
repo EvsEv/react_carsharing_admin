@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteData } from "../../api/deleteData";
 import { fetchDataWithComplexParamters, putData } from "../../api/fetch";
 import { getCityList } from "../../redux/thunks/listsOfEntities";
 import ControlEdit from "../UIKit/ControlEdit";
@@ -7,7 +8,7 @@ import { SearchDropdown } from "../UIKit/SearchDropdown/SearchDropdown";
 
 import styles from "./listItem.module.sass";
 
-export const ListItem = ({ item, isChanged }) => {
+export const ListItem = ({ item, isChanged, isDeleted }) => {
     const [name, setName] = useState(item?.name);
     const [city, setCity] = useState(item?.cityId);
     const [address, setAddress] = useState(item?.address);
@@ -117,6 +118,11 @@ export const ListItem = ({ item, isChanged }) => {
         }
     };
 
+    const deleteItem = () => {
+        deleteData(selectedEntity.name, item.id);
+        isDeleted(true);
+    };
+
     return (
         <div className={classesForItem.join(" ")}>
             <div className={styles.parameters}>
@@ -194,7 +200,7 @@ export const ListItem = ({ item, isChanged }) => {
                 )}
                 {item?.unit && (
                     <p className={styles.parameter}>
-                        <span>Единица времени:</span>
+                        <span>Время:</span>
                         <input
                             className={styles.changingField}
                             onChange={editUnit}
@@ -211,6 +217,7 @@ export const ListItem = ({ item, isChanged }) => {
                 onConfirmed={onSubmit}
                 isEdited={isEdited}
             />
+            <button onClick={deleteItem}>Удалить</button>
         </div>
     );
 };

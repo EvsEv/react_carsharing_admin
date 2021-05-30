@@ -25,6 +25,7 @@ export const EntitiesList = () => {
     const dispatch = useDispatch();
 
     const [isChanged, setIsChanged] = useState(false);
+    const [isDeleted, setIsDeleted] = useState(false);
 
     useEffect(() => {
         dispatch(addOtherEntities());
@@ -36,7 +37,11 @@ export const EntitiesList = () => {
 
     useEffect(() => {
         dispatch(getFilteredEntityList());
-    }, [isChanged]);
+    }, [isChanged, isDeleted]);
+
+    useEffect(() => {
+        setIsDeleted(false);
+    }, [filteredListBySelected]);
 
     const onSelectTab = (tab) => {
         dispatch(setSelectedEntity(tab));
@@ -56,6 +61,7 @@ export const EntitiesList = () => {
                     current={selectedEntity}
                     elements={filteredListBySelected}
                     isChanged={setIsChanged}
+                    isDeleted={setIsDeleted}
                 />
                 <Paginate
                     activePage={lastViewedPage}
