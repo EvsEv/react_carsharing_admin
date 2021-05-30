@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import Table from "../../components/UIKit/Table";
 import Filters from "../../components/UIKit/Filters";
@@ -44,6 +44,12 @@ export const CarsTable = () => {
         priceMin,
         priceMax,
     } = useSelector((state) => state.carsTable);
+    const [carModel, setCarModel] = useState(selectedCarModel);
+    const [category, setCategory] = useState(selectedCategory);
+    const [minPriceValue, setMinPriceValue] = useState(priceMin || "");
+    const [maxPriceValue, setMaxPriceValue] = useState(priceMax || "");
+    const [correct, setCorrect] = useState(true);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -51,53 +57,91 @@ export const CarsTable = () => {
         dispatch(getCategoryList());
         dispatch(getFilteredCarsTable());
     }, []);
-    const changeSelectedCarModel = (selectedCarModel) =>
-        dispatch(setSelectedCarModel(selectedCarModel));
+    useEffect(() => {
+        if (carModel && category) {
+            setCorrect(true);
+        } else {
+            setCorrect(false);
+        }
+    }, [carModel, category]);
 
-    const changeSelectedCategory = (selectedCategory) =>
-        dispatch(setSelectedCategory(selectedCategory));
+    useEffect(() => {
+        setCarModel(selectedCarModel);
+    }, [selectedCarModel]);
 
-    const changePriceMin = (price) => dispatch(setMinPrice(price));
-    const changePriceMax = (price) => dispatch(setMaxPrice(price));
+    useEffect(() => {
+        setCategory(selectedCategory);
+    }, [selectedCategory]);
 
-    const submitFilters = () => changeLastViewedPage(0);
+    useEffect(() => {
+        setMinPriceValue(priceMin || "");
+    }, [priceMin]);
+
+    useEffect(() => {
+        setMaxPriceValue(priceMax || "");
+    }, [priceMax]);
+
+    const typeCarModel = (carModel) => setCarModel(carModel);
+
+    const typeCategory = (category) => setCategory(category);
+
+    const typePriceMin = (price) => setMinPriceValue(price);
+    const typePriceMax = (price) => setMaxPriceValue(price);
+
+    const submitFilters = () => {
+        dispatch(setSelectedCarModel(carModel));
+        dispatch(setSelectedCategory(category));
+        dispatch(setMaxPrice(maxPriceValue));
+        dispatch(setMinPrice(minPriceValue));
+        dispatch(changeLastViewedPage(0));
+    };
+
+    const resetFilters = () => {
+        dispatch(resetAndUpdateFilteredCarsTable());
+        setCarModel(selectedCarModel);
+        setCategory(selectedCategory);
+        setMinPriceValue(priceMin || "");
+        setMaxPriceValue(priceMax || "");
+    };
 
     const printFilters = useMemo(() => {
         return (
             <Filters
+                correctCondition={correct}
                 submitFilters={submitFilters}
-                resetAndUpdate={resetAndUpdateFilteredCarsTable}
+                resetAndUpdate={resetFilters}
                 filters={[
                     {
                         variants: carsList,
-                        selectedValue: selectedCarModel?.name,
-                        changeValue: changeSelectedCarModel,
+                        selectedValue: carModel?.name,
+                        changeValue: typeCarModel,
                         placeholder: "Модель",
                     },
                     {
                         variants: categoryList,
-                        selectedValue: selectedCategory?.name,
-                        changeValue: changeSelectedCategory,
+                        selectedValue: category?.name,
+                        changeValue: typeCategory,
                         placeholder: "Категория",
                     },
                 ]}
                 rangeFilters={{
-                    minValue: priceMin,
-                    maxValue: priceMax,
+                    minValue: minPriceValue,
+                    maxValue: maxPriceValue,
                     minName: "минимальная цена",
                     maxName: "максимальная цена",
-                    changeMinValue: changePriceMin,
-                    changeMaxValue: changePriceMax,
+                    changeMinValue: typePriceMin,
+                    changeMaxValue: typePriceMax,
                 }}
             />
         );
     }, [
         carsList,
-        selectedCarModel,
-        selectedCategory,
+        carModel,
+        category,
         categoryList,
-        priceMin,
-        priceMax,
+        minPriceValue,
+        maxPriceValue,
+        correct,
     ]);
 
     const bodyTable = useMemo(() => {

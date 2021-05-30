@@ -75,6 +75,22 @@ export const OrderList = () => {
         setisChangedStatusOrder(false);
     }, [isChangedStatusOrder]);
 
+    useEffect(() => {
+        setCity(selectedCity);
+    }, [selectedCity]);
+
+    useEffect(() => {
+        setCar(selectedCar);
+    }, [selectedCar]);
+
+    useEffect(() => {
+        setPeriod(selectedPeriod);
+    }, [selectedPeriod]);
+
+    useEffect(() => {
+        setStatus(selectedOrderStatus);
+    }, [selectedOrderStatus]);
+
     const typePeriod = (period) => setPeriod(period);
 
     const typeCar = (car) => setCar(car);
@@ -93,8 +109,8 @@ export const OrderList = () => {
 
     const ResetFilters = () => {
         dispatch(resetAndUpdateFilteredOrderList());
-        setCar(selectedCar);
         setCity(selectedCity);
+        setCar(selectedCar);
         setPeriod(selectedPeriod);
         setStatus(selectedOrderStatus);
     };
