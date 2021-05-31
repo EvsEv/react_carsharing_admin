@@ -3,21 +3,10 @@
 @import ../../styles/media
 
 .title
-  font-size: 29px
-  font-weight: normal
-  line-height: 33px
-  color: $darkBlue
-  letter-spacing: -0.725px
-  margin-bottom: 30px
+  @include title()
 
 .content
-  min-height: 324px
-  background: $white
-  border-radius: $borderRadiusBig
-  box-shadow: $defaultBoxShadow
-  display: flex
-  flex-direction: column
-  overflow-y: auto
+  @include content()
 
 .list
   padding: 0 21.5px
@@ -30,11 +19,3 @@
   display: block
   padding: 20px
   text-align: center
-
-@include desktopMinDevice
-  .title
-    margin-bottom: 15px
-
-@include mobileDevice
-  .title
-    font-size: 23px

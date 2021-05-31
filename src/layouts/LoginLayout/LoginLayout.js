@@ -44,31 +44,31 @@ export const LoginLayout = () => {
 
     return (
         <div className={styles.wrapper}>
+            {showNotification && (
+                <div className={styles.notification}>
+                    <span>Не удаётся войти.</span> Пожалуйста, проверьте
+                    правильность написания <span>логина</span> и{" "}
+                    <span>пароля</span>.
+                    <ul>
+                        <li>Возможно, нажата клавиша Caps Lock?</li>
+                        <li>
+                            Может быть, у Вас включена неправильная раскладка?
+                            (русская или английская)
+                        </li>
+                        <li>
+                            Попробуйте набрать свой пароль в текстовом редакторе
+                            и скопировать в графу «Пароль»
+                        </li>
+                    </ul>
+                    <button onClick={hideNotification}>Скрыть</button>
+                </div>
+            )}
             <div className={styles.logo}>
                 <Logo />
                 <p className={styles.name}>Need for drive</p>
             </div>
             <form className={styles.form} onSubmit={onSubmit}>
                 <h1 className={styles.title}>Вход</h1>
-                {showNotification && (
-                    <div className={styles.notification}>
-                        <span>Не удаётся войти.</span> Пожалуйста, проверьте
-                        правильность написания <span>логина</span> и{" "}
-                        <span>пароля</span>.
-                        <ul>
-                            <li>Возможно, нажата клавиша Caps Lock?</li>
-                            <li>
-                                Может быть, у Вас включена неправильная
-                                раскладка? (русская или английская)
-                            </li>
-                            <li>
-                                Попробуйте набрать свой пароль в текстовом
-                                редакторе и скопировать в графу «Пароль»
-                            </li>
-                        </ul>
-                        <button onClick={hideNotification}>Скрыть</button>
-                    </div>
-                )}
                 <div className={styles.field}>
                     <label htmlFor="mail" className={styles.label}>
                         Имя пользователя

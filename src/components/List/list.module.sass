@@ -1,0 +1,25 @@
+@import ../../styles/variables
+@import ../../styles/media
+
+.wrapper
+  margin-top: $cell * 4
+  flex-grow: 1
+  overflow-y: auto
+
+.add
+  font-weight: bold
+  border-bottom: 4px solid $brightBlue
+  color: $brightBlue
+  display: inline-block
+  padding: $cell
+  cursor: pointer
+  border-radius: $borderRadiusSmall
+  transition: all $short ease
+  &:hover
+    background: $brightBlue
+    color: $white
+
+@include mobileDevice
+  .add
+    font-size: 13px
+    display: block

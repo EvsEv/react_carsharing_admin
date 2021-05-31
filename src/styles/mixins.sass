@@ -47,3 +47,43 @@
 
 @mixin adaptedForMobile($property, $minValue, $maxValue, $unit)
   #{$property}: calc((100vw - 320px) * #{$maxValue - $minValue} / (812 - 320) + #{$minValue}#{$unit})
+
+@mixin title()
+  font-size: 29px
+  font-weight: normal
+  line-height: 33px
+  color: $darkBlue
+  letter-spacing: -0.725px
+  margin-bottom: 30px
+  @include desktopMinDevice
+    margin-bottom: 15px
+  @include mobileDevice
+    font-size: 23px
+
+@mixin content()
+  min-height: 324px
+  background: $white
+  border-radius: $borderRadiusBig
+  box-shadow: $defaultBoxShadow
+  display: flex
+  flex-direction: column
+  overflow-y: auto
+
+@mixin editEntity()
+  margin-left: auto
+  button
+    font-size: 11px
+    line-height: 13px
+    color: $control
+    min-width:  71.5px
+    padding: 5.5px 7.5px 6px 15.5px
+    box-sizing: border-box
+    background: $white
+    border: 0.5px solid $softhGrey
+    cursor: pointer
+    position: relative
+    transition: all $short ease
+    &:hover
+      color: $mainBlack
+      border-color: $darkBlue
+      z-index: 3

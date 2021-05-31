@@ -13,7 +13,7 @@ export const Footer = ({ aside }) => {
     return (
         <footer className={footerClasses.join(" ")}>
             <div className={styles.linksBlock}>
-                <Link to="/" className={styles.link}>
+                <Link to="/admin" className={styles.link}>
                     Главная страница
                 </Link>
                 <a

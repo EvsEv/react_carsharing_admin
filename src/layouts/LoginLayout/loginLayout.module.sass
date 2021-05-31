@@ -88,16 +88,25 @@ $margin: 15px
   font-size: 11px
   line-height: 12px
   padding: 20px
-  margin: 10px 0
+  margin: 0
   background: $crimson
   color: $white
   border-radius: 4px
+  position: absolute
+  top: 0
+  left: 50%
+  transform: translateX(-50%)
   span
     font-weight: bold
   ul
     margin-bottom: 0
   button
-    display: none
+    display: block
+    width: 100%
+    margin-top: 10px
+    border-radius: 4px
+    border: none
+
 
 .request
   @include basicLink(10.5px, 12px, -0.18px)
@@ -119,14 +128,10 @@ $margin: 15px
     position: absolute
     top: 0
     left: 0
+    transform: none
     width: 100%
     box-sizing: border-box
-    button
-      display: block
-      width: 100%
-      margin-top: 10px
-      border-radius: 4px
-      border: none
+
 @include mobileMinDevice
   .label
     display: none

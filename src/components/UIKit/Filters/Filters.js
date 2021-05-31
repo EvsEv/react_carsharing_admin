@@ -10,11 +10,9 @@ export const Filters = ({
     submitFilters,
     resetAndUpdate,
     rangeFilters,
+    correctCondition,
 }) => {
     const [showForm, setShowForm] = useState(true);
-    const [minValue, setMinValue] = useState(rangeFilters?.minValue || "");
-    const [maxValue, setMaxValue] = useState(rangeFilters?.maxValue || "");
-    const [isCorrect, setIsCorrect] = useState(true);
     const dispatch = useDispatch();
     const form = useRef();
 
@@ -28,38 +26,24 @@ export const Filters = ({
 
     const onSubmit = (event) => {
         event.preventDefault();
-        if (rangeFilters) {
-            rangeFilters.changeMinValue(minValue);
-            rangeFilters.changeMaxValue(maxValue);
-        }
-        dispatch(submitFilters());
+        // if (rangeFilters) {
+        //     rangeFilters.changeMinValue(minValue);
+        //     rangeFilters.changeMaxValue(maxValue);
+        // }
+        submitFilters();
     };
     const onReset = (event) => {
         event.preventDefault();
-        if (rangeFilters) {
-            setMinValue("");
-            setMaxValue("");
-        }
-        dispatch(resetAndUpdate());
+        resetAndUpdate();
     };
 
-    const toggleForm = (event) => setShowForm(!showForm);
+    const toggleForm = () => setShowForm(!showForm);
 
-    const setMinPrice = (event) => setMinValue(event.target.value);
+    const setMinPrice = (event) =>
+        rangeFilters.changeMinValue(event.target.value);
 
-    const setMaxPrice = (event) => setMaxValue(event.target.value);
-
-    const disabledToSubmit = () => {
-        setIsCorrect(
-            Boolean(
-                filters.find((filter) => filter.selectedValue === undefined)
-            )
-        );
-    };
-
-    useEffect(() => {
-        disabledToSubmit();
-    }, [filters]);
+    const setMaxPrice = (event) =>
+        rangeFilters.changeMaxValue(event.target.value);
 
     return (
         <>
@@ -92,9 +76,9 @@ export const Filters = ({
                                     type="number"
                                     onChange={setMinPrice}
                                     min={0}
-                                    max={maxValue}
+                                    max={rangeFilters.maxValue}
                                     step={1000}
-                                    value={minValue}
+                                    value={rangeFilters.minValue}
                                     placeholder="Неважно"
                                 />
                             </div>
@@ -105,10 +89,10 @@ export const Filters = ({
                                 <input
                                     className={styles.input}
                                     type="number"
-                                    min={minValue || 0}
+                                    min={rangeFilters.minValue || 0}
                                     step={1000}
                                     onChange={setMaxPrice}
-                                    value={maxValue}
+                                    value={rangeFilters.maxValue}
                                     placeholder="Неважно"
                                 />
                             </div>{" "}
@@ -119,7 +103,7 @@ export const Filters = ({
                     <Button text="Сбросить" type="reset" />
                     <Button
                         text="Применить"
-                        disabled={isCorrect}
+                        disabled={!correctCondition}
                         type="submit"
                     />
                 </div>
