@@ -5,6 +5,7 @@ import { fetchDataWithComplexParamters, putData } from "../../api/fetch";
 import { getCityList } from "../../redux/thunks/listsOfEntities";
 import ControlEdit from "../UIKit/ControlEdit";
 import { SearchDropdown } from "../UIKit/SearchDropdown/SearchDropdown";
+import { ReactComponent as TrashBinIcon } from "../../assets/icons/trashBin.svg";
 
 import styles from "./listItem.module.sass";
 
@@ -217,7 +218,9 @@ export const ListItem = ({ item, isChanged, isDeleted }) => {
                 onConfirmed={onSubmit}
                 isEdited={isEdited}
             />
-            <button onClick={deleteItem}>Удалить</button>
+            <button className={styles.delete} onClick={deleteItem}>
+                <TrashBinIcon /> <span>Удалить</span>
+            </button>
         </div>
     );
 };
