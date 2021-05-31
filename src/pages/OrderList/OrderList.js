@@ -24,6 +24,7 @@ export const OrderList = () => {
     const [confirmedStatus, setConfirmedStatus] = useState({});
     const [isChangedStatusOrder, setisChangedStatusOrder] = useState(false);
     const [cancelledStatus, setCancelledStatus] = useState({});
+
     const {
         selectedPeriod,
         selectedCar,
@@ -36,6 +37,11 @@ export const OrderList = () => {
     const { periodList, carsList, cityList, orderStatusList } = useSelector(
         (state) => state.listsOfEntities
     );
+    const [car, setCar] = useState(selectedCar);
+    const [period, setPeriod] = useState(selectedPeriod);
+    const [city, setCity] = useState(selectedCity);
+    const [status, setStatus] = useState(selectedOrderStatus);
+    const [correct, setCorrect] = useState(true);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -57,52 +63,87 @@ export const OrderList = () => {
     }, [orderStatusList]);
 
     useEffect(() => {
+        if (city && period && status && car) {
+            setCorrect(true);
+        } else {
+            setCorrect(false);
+        }
+    }, [city, period, status, car]);
+
+    useEffect(() => {
         isChangedStatusOrder && dispatch(getFilteredOrderList());
         setisChangedStatusOrder(false);
     }, [isChangedStatusOrder]);
 
-    const changeSelectedPeriod = (selectedPeriod) =>
-        dispatch(setSelectedPeriod(selectedPeriod));
+    useEffect(() => {
+        setCity(selectedCity);
+    }, [selectedCity]);
 
-    const changeSelectedCar = (selectedCar) =>
-        dispatch(setSelectedCar(selectedCar));
+    useEffect(() => {
+        setCar(selectedCar);
+    }, [selectedCar]);
 
-    const changeSelectedCity = (selectedCity) =>
-        dispatch(setSelectedCity(selectedCity));
+    useEffect(() => {
+        setPeriod(selectedPeriod);
+    }, [selectedPeriod]);
 
-    const changeSelectedStatus = (selectedStatus) =>
-        dispatch(setSelectedOrderStatus(selectedStatus));
+    useEffect(() => {
+        setStatus(selectedOrderStatus);
+    }, [selectedOrderStatus]);
 
-    const submitFilters = () => changeLastViewedPage(0);
+    const typePeriod = (period) => setPeriod(period);
+
+    const typeCar = (car) => setCar(car);
+
+    const typeCity = (city) => setCity(city);
+
+    const typeStatus = (status) => setStatus(status);
+
+    const submitFilters = () => {
+        dispatch(setSelectedCar(car));
+        dispatch(setSelectedCity(city));
+        dispatch(setSelectedPeriod(period));
+        dispatch(setSelectedOrderStatus(status));
+        dispatch(changeLastViewedPage(0));
+    };
+
+    const ResetFilters = () => {
+        dispatch(resetAndUpdateFilteredOrderList());
+        setCity(selectedCity);
+        setCar(selectedCar);
+        setPeriod(selectedPeriod);
+        setStatus(selectedOrderStatus);
+    };
 
     const printFilters = useMemo(() => {
         return (
             <Filters
+                correctCondition={correct}
                 submitFilters={submitFilters}
-                resetAndUpdate={resetAndUpdateFilteredOrderList}
+                resetAndUpdate={ResetFilters}
                 filters={[
                     {
                         variants: periodList,
-                        selectedValue: selectedPeriod?.name,
-                        changeValue: changeSelectedPeriod,
+                        selectedValue: period?.name,
+                        changeValue: typePeriod,
                         placeholder: "Период",
                     },
                     {
                         variants: carsList,
-                        selectedValue: selectedCar?.name,
-                        changeValue: changeSelectedCar,
+                        selectedValue: car?.name,
+                        changeValue: typeCar,
                         placeholder: "Модель",
                     },
                     {
                         variants: cityList,
-                        selectedValue: selectedCity?.name,
-                        changeValue: changeSelectedCity,
+                        selectedValue: city?.name,
+                        changeValue: typeCity,
                         placeholder: "Город",
                     },
                     {
                         variants: orderStatusList,
-                        selectedValue: selectedOrderStatus?.name,
-                        changeValue: changeSelectedStatus,
+                        selectedValue: status?.name,
+                        changeValue: typeStatus,
                         placeholder: "Статус",
                     },
                 ]}
@@ -110,12 +151,13 @@ export const OrderList = () => {
         );
     }, [
         periodList,
-        selectedPeriod,
+        period,
         carsList,
-        selectedCar,
-        selectedCity,
+        car,
+        city,
         orderStatusList,
-        selectedOrderStatus,
+        status,
+        correct,
     ]);
 
     const printList = useMemo(() => {

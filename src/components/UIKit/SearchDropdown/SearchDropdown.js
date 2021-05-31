@@ -11,6 +11,7 @@ export const SearchDropdown = ({
     changeValue,
     parameter,
     type,
+    disabled,
 }) => {
     const [value, setValue] = useState(selectedValue);
     const [error, setError] = useState(false);
@@ -28,6 +29,10 @@ export const SearchDropdown = ({
 
     if (showDropdown) {
         searchDropdownClasses.push(styles.opened);
+    }
+
+    if (!disabled) {
+        inputClasses.push(styles.edited);
     }
 
     if (error) {
@@ -91,7 +96,9 @@ export const SearchDropdown = ({
         if (selectedValue) {
             setSuggestions(variants);
         }
-        setShowDropdown(true);
+        if (!disabled) {
+            setShowDropdown(true);
+        }
     };
 
     const onSuggestionClick = (suggestion) => {
@@ -114,8 +121,8 @@ export const SearchDropdown = ({
                 </label>
             )}
             <div className={styles.inputField}>
-                {!label && (
-                    <p className={styles.name}>{placeholder.toLowerCase()}</p>
+                {!label && placeholder && (
+                    <p className={styles.name}>{placeholder}</p>
                 )}
                 <input
                     className={inputClasses.join(" ")}
@@ -126,8 +133,11 @@ export const SearchDropdown = ({
                     name={parameter}
                     title={title}
                     onBlur={resetFilterToNoMatter}
+                    disabled={disabled}
                 />
-                {error && <span className={styles.errorType}>{error}</span>}
+                {error && type !== "auto" && (
+                    <span className={styles.errorType}>{error}</span>
+                )}
                 {showDropdown && (
                     <ul className={styles.suggestion} ref={dropdown}>
                         {suggestions.map((suggestion, idx) => (

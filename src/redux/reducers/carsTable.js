@@ -47,8 +47,8 @@ export const carsTable = (state = initialState, action) => {
                 ...state,
                 selectedCarModel: initialState.selectedCarModel,
                 selectedCategory: initialState.selectedCategory,
-                priceMin: null,
-                priceMax: null,
+                priceMin: initialState.priceMin,
+                priceMax: initialState.priceMax,
                 lastViewedPage: 0,
             };
         default:

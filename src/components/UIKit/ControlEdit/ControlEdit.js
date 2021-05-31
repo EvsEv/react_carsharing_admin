@@ -1,42 +1,52 @@
 import React from "react";
-import { putData } from "../../../api/fetch";
 
 import styles from "./controlEdit.module.sass";
 
 export const ControlEdit = ({
-    id,
-    table,
-    confirmedStatus,
-    cancelledStatus,
-    changeStatus,
+    onConfirmed,
+    onCancelled,
+    onChanged,
+    isEdited,
+    type,
+    order,
 }) => {
-    const onConfirmed = async () => {
-        await putData(table, { orderStatusId: confirmedStatus }, id);
-        changeStatus(true);
-    };
+    const classes = [styles.form];
 
-    const onCancelled = async () => {
-        await putData(table, { orderStatusId: cancelledStatus }, id);
-        changeStatus(true);
-    };
+    if (type) {
+        classes.push(styles[type]);
+    }
 
     return (
-        <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-            <button
-                className={[styles.button, styles.confirmed].join(" ")}
-                onClick={onConfirmed}
-            >
-                Готово
-            </button>
-            <button
-                className={[styles.button, styles.cancelled].join(" ")}
-                onClick={onCancelled}
-            >
-                Отменить
-            </button>
-            <button className={[styles.button, styles.changed].join(" ")}>
-                Изменить
-            </button>
+        <form
+            className={classes.join(" ")}
+            onSubmit={(e) => e.preventDefault()}
+        >
+            {(isEdited || order) && (
+                <button
+                    type="submit"
+                    className={[styles.button, styles.confirmed].join(" ")}
+                    onClick={onConfirmed}
+                >
+                    Готово
+                </button>
+            )}
+            {(isEdited || order) && (
+                <button
+                    className={[styles.button, styles.cancelled].join(" ")}
+                    onClick={onCancelled}
+                >
+                    Отменить
+                </button>
+            )}
+            {(!isEdited || order) && (
+                <button
+                    disabled={isEdited}
+                    onClick={() => onChanged()}
+                    className={[styles.button, styles.changed].join(" ")}
+                >
+                    Изменить
+                </button>
+            )}
         </form>
     );
 };

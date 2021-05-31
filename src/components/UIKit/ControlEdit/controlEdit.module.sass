@@ -35,7 +35,7 @@
     left: 8px
     transform: rotate(-45deg) translateY(-50%)
     transition: all $short ease
-  &:active
+  &:hover
     background: $confirmed
     color: $white
     &::before
@@ -55,7 +55,7 @@
     transition: all $short ease
   &::after
     transform: rotate(-45deg)
-  &:active
+  &:hover
     background: $crimson
     color: $white
     &::before, &::after
@@ -75,6 +75,10 @@
     background: $greyBlue
     box-shadow: 0 -3px 0 $greyBlue, 0 3px 0 $greyBlue
 
+.edit
+  .changed
+    border-color: $confirmed
+
 @include desktopMinDevice
   .form
     height: 100%
@@ -86,6 +90,23 @@
     border-radius: 0px 0px 4px 4px
   .changed
     border-radius: 4px 4px 0px 0px
+  .edit
+    height: 40px
+    flex-direction: row
+    button
+      height: 100%
+      border-radius: 0
+      margin: 0
+    .confirmed
+      &::before
+        top: 43%
+    .cancelled
+      margin: 0 -1px
+      &::before, &::after
+        top: 37%
+    .changed
+      &::before
+        top: 47%
 
 @include mobileDevice
   .form
@@ -98,3 +119,9 @@
   .cancelled
     margin: 0 -1px
     border-radius: none
+  .edit
+    margin-top: $cell * 5
+    height: $cell * 6
+    .cancelled
+      &::before, &::after
+        top: 32%

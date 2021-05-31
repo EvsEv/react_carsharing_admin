@@ -1,0 +1,154 @@
+@import ../../styles/variables
+@import ../../styles/media
+
+.item
+  min-height: $cell * 12
+  padding: $cell * 4 $cell * 2
+  margin: -1px 0
+  border: 1px solid transparent
+  display: flex
+  align-items: center
+  gap: $cell * 10
+  &:first-of-type
+    margin-top: 0
+
+.changing
+  border-radius: $borderRadiusBig
+  // padding-left: $cell * 4
+  border-color: $brightBlue
+  .changingField
+    font-weight: bold
+    text-decoration: underline
+    text-decoration-color: $brightBlue
+    height: auto
+
+.parameters
+  display: flex
+  gap: $cell * 5
+  flex-grow: 1
+
+.parameter
+  color: $darkBlue
+  flex-shrink: 0
+  display: flex
+  align-items: center
+  span
+    font-weight: bold
+
+.fixed
+  width: 200px
+  span
+    flex-shrink: 0
+  > input
+      width: 100%
+
+.large
+  flex-grow: 1
+  .changingField
+    width: 100%
+    padding-top: $cell * 4
+    resize: none
+
+.changingField
+  font-family: "RobotoReg"
+  color: $mainBlack
+  margin: 0
+  margin-left: $cell * 2
+  padding: 0
+  font-size: 16px
+  line-height: 1
+  background: none
+  border: none
+  &:focus
+    outline: none
+
+.delete
+  font-size: 11px
+  line-height: 13px
+  color: $control
+  width: 70px
+  padding: 5.5px 7.5px 5.5px 20px
+  box-sizing: border-box
+  background: $white
+  border: 0.5px solid $crimson
+  cursor: pointer
+  position: relative
+  transition: all $short ease
+  position: relative
+  svg
+    position: absolute
+    top: -2px
+    left: 0px
+    opacity: 0.3
+    transform: scale(0.5)
+    path
+      transition: all $short ease
+  &:hover
+    color: $mainBlack
+    border-color: $darkBlue
+    z-index: 3
+    svg
+      opacity: 1
+      path
+        fill: $crimson
+
+@include desktopMinDevice
+  .item
+    min-height: 0
+    margin: 0
+    border: none
+    border-left: 5px solid transparent
+    &:last-of-type
+      border-bottom: none
+  .changing
+    border-radius: 0
+    border-left-color: $brightBlue
+  .parameters
+    flex-direction: column
+    gap: 0
+  .large
+    .changingField
+      padding-top: 0
+      position: relative
+      top: 8px
+  .delete
+    height: 40px
+    svg
+      top: 6px
+
+@include mobileDevice
+  .item
+    border: 1px solid $ultraLightGrey
+    flex-direction: column
+    grid-gap: 0
+    margin: -1px 0
+    position: relative
+    &:last-of-type
+      border-bottom: 1px solid $ultraLightGrey
+  .changing
+    border-left: 1px solid $brightBlue
+  .parameters
+    width: 100%
+  .parameter
+    span
+      font-size: 13px
+  .changingField
+    font-size: 13px
+    line-height: 1
+  .delete
+    position: absolute
+    right: $cell * 2
+    top: $cell * 2
+    height: 25px
+    width: 25px
+    font-size: 0
+    line-height: 0
+    border: none
+    span
+      display: none
+    svg
+      opacity: 1
+      top: 0
+      path
+        fill: $crimson
+    

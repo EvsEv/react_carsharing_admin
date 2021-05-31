@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
 import Menu from "../../components/Menu";
 import Header from "../../components/Header";
@@ -10,6 +10,8 @@ import { OrderList } from "../../pages/OrderList/OrderList";
 import { CarSetting } from "../../pages/CarSetting/CarSetting";
 import CarsTable from "../../pages/CarsTable";
 import Error from "../../pages/Error";
+import { fetchData } from "../../api/fetch";
+import EntitiesList from "../../pages/EntitiesList";
 
 export const AdminLayout = () => {
     const menu = useRef();
@@ -19,6 +21,7 @@ export const AdminLayout = () => {
     if (history.location.pathname === "/") {
         history.push("/admin");
     }
+
     return (
         <div className={styles.body}>
             <Menu
@@ -33,6 +36,10 @@ export const AdminLayout = () => {
                         <Route
                             path="/admin"
                             exact
+                            render={() => <EntitiesList />}
+                        />
+                        <Route
+                            path="/admin/orderList"
                             render={() => <OrderList />}
                         />
                         <Route
@@ -43,10 +50,6 @@ export const AdminLayout = () => {
                             path="/admin/carsTable"
                             render={() => <CarsTable />}
                         />
-                        {/* <Route
-                            path="/500"
-                            component={() => <Error number={500} />}
-                        /> */}
                         <Route component={() => <Error />} />
                     </Switch>
                 </main>
