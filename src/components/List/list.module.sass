@@ -1,19 +1,19 @@
 @import ../../styles/variables
 @import ../../styles/media
+@import ../../styles/mixins
 
 .wrapper
-  margin-top: $cell * 4
   flex-grow: 1
   overflow-y: auto
+  @include customScroll()
 
 .add
   font-weight: bold
-  border-bottom: 4px solid $brightBlue
   color: $brightBlue
+  margin-top: $cell * 6
   display: inline-block
   padding: $cell
   cursor: pointer
-  border-radius: $borderRadiusSmall
   transition: all $short ease
   &:hover
     background: $brightBlue
@@ -22,4 +22,3 @@
 @include mobileDevice
   .add
     font-size: 13px
-    display: block

@@ -74,7 +74,7 @@ export const Menu = React.forwardRef((props, ref) => {
                             onClick={onClickLink}
                         >
                             <ShapeIcon />
-                            Все сущности
+                            Параметры
                         </NavLink>
                     </li>
                     <li className={styles.item}>
