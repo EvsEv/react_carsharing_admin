@@ -50,7 +50,7 @@ export const EntitiesList = () => {
 
     return (
         <>
-            <h1 className={styles.title}>Все сущности</h1>
+            <h1 className={styles.title}>Параметры</h1>
             <section className={styles.content}>
                 <Tabs
                     list={otherEntities}
