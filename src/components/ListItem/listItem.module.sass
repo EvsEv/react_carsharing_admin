@@ -6,16 +6,21 @@
   padding: $cell * 4 $cell * 2
   margin: -1px 0
   border: 1px solid transparent
+  background: transparent
   display: flex
   align-items: center
   gap: $cell * 10
+  box-sizing: border-box
+  transition: all $short ease
+  position: relative
   &:first-of-type
     margin-top: 0
+  &:last-of-type
+    margin-bottom: 0
 
 .changing
-  border-radius: $borderRadiusBig
   // padding-left: $cell * 4
-  border-color: $brightBlue
+  background: rgba($confirmed, 0.05)
   .changingField
     font-weight: bold
     text-decoration: underline
@@ -71,6 +76,7 @@
   box-sizing: border-box
   background: $white
   border: 0.5px solid $crimson
+  border-radius: $borderRadiusSmall
   cursor: pointer
   position: relative
   transition: all $short ease
@@ -80,17 +86,18 @@
     top: -2px
     left: 0px
     opacity: 0.3
-    transform: scale(0.5)
+    transform: scale(0.4)
     path
+      fill: $crimson
       transition: all $short ease
   &:hover
-    color: $mainBlack
-    border-color: $darkBlue
+    background: $crimson
+    color: $white
     z-index: 3
     svg
       opacity: 1
       path
-        fill: $crimson
+        fill: $white
 
 @include desktopMinDevice
   .item
@@ -123,12 +130,18 @@
     grid-gap: 0
     margin: -1px 0
     position: relative
+    &:first-of-type
+      margin-top: 0
     &:last-of-type
+      margin-bottom: 0
       border-bottom: 1px solid $ultraLightGrey
   .changing
     border-left: 1px solid $brightBlue
   .parameters
     width: 100%
+  .large
+    .changingField
+      height: 32px
   .parameter
     span
       font-size: 13px
@@ -140,12 +153,13 @@
     right: $cell * 2
     top: $cell * 2
     height: 25px
-    width: 25px
-    font-size: 0
-    line-height: 0
+    background: transparent
+    // width: 25px
+    // font-size: 0
+    // line-height: 0
     border: none
     span
-      display: none
+      // display: none
     svg
       opacity: 1
       top: 0

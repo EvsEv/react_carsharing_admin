@@ -78,6 +78,21 @@
 .edit
   .changed
     border-color: $confirmed
+    border-radius: $borderRadiusSmall
+    &:hover
+      background-color: $confirmed
+      color: $white
+    &::before
+      background: $white
+      box-shadow: 0 -3px 0 $white, 0 3px 0 $white
+  .confirmed
+    border-radius: $borderRadiusSmall 0 0 $borderRadiusSmall
+    &:hover
+      border-color: $confirmed
+  .cancelled
+    border-radius: 0 $borderRadiusSmall $borderRadiusSmall 0
+    &:hover
+      border-color: $crimson
 
 @include desktopMinDevice
   .form
