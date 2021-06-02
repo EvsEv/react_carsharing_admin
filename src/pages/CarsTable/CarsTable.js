@@ -66,26 +66,6 @@ export const CarsTable = () => {
         }
     }, [carModel, category]);
 
-    // useEffect(() => {
-    //     const updatedSelectedCategory = categoryList.find((category) => {
-    //         if (category.id === selectedCategory.id) {
-    //             return category;
-    //         }
-    //     });
-
-    //     dispatch(setSelectedCategory(updatedSelectedCategory));
-    // }, [categoryList]);
-
-    // useEffect(() => {
-    //     const updatedSelectedCarModel = carsList.find((carModel) => {
-    //         if (carModel.id === selectedCarModel.id) {
-    //             return carModel;
-    //         }
-    //     });
-
-    //     dispatch(setSelectedCategory(updatedSelectedCarModel));
-    // }, [carsList]);
-
     useEffect(() => {
         setCarModel(selectedCarModel);
     }, [selectedCarModel]);

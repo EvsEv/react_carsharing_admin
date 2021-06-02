@@ -33,11 +33,7 @@ export const EntitiesList = () => {
 
     useEffect(() => {
         dispatch(getFilteredEntityList());
-    }, [otherEntities]);
-
-    useEffect(() => {
-        dispatch(getFilteredEntityList());
-    }, [isChanged, isDeleted]);
+    }, [otherEntities, isChanged, isDeleted]);
 
     useEffect(() => {
         setIsDeleted(false);
