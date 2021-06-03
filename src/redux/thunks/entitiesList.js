@@ -13,7 +13,7 @@ export const setSelectedEntity = (entity) => (dispatch) =>
     dispatch(addSelectedEntityToStore(entity));
 
 const calculateCountOfPages = (count) => {
-    const pages = count % 5 ? Math.floor(count / 5) : count / 5 - 1;
+    const pages = count % 8 ? Math.floor(count / 8) : count / 8 - 1;
     return setAllPagesEntitiesListToStore(pages);
 };
 
@@ -45,7 +45,7 @@ export const getFilteredEntityList = () => async (dispatch, getState) => {
     if (selectedEntity) {
         const parameters = [
             "sort[createdAt]=-1",
-            "&limit=5",
+            "&limit=8",
             `&page=${lastViewedPage}`,
         ];
         const filteredList = await fetchDataWithComplexParamters(

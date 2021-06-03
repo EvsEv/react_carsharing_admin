@@ -166,7 +166,7 @@ export const ListItem = ({ item, isChanged, isDeleted }) => {
                     <p className={[styles.parameter, styles.large].join(" ")}>
                         <span>Описание:</span>
                         <textarea
-                            row={3}
+                            row={1}
                             className={styles.changingField}
                             onChange={editDescription}
                             disabled={!isEdited}

@@ -24,7 +24,7 @@ export const setSelectedOrderStatus = (selectedStatus) => (dispatch) =>
     dispatch(addSelectedOrderStatusToStore(selectedStatus));
 
 export const calculateCountOfPages = (count) => {
-    const pages = count % 5 ? Math.floor(count / 5) : count / 5 - 1;
+    const pages = count % 6 ? Math.floor(count / 6) : count / 6 - 1;
     return changeCountOfPagesInStore(pages);
 };
 
@@ -42,7 +42,7 @@ export const getFilteredOrderList = () => {
 
         const parameters = [
             "sort[createdAt]=-1",
-            "&limit=5",
+            "&limit=6",
             `&page=${lastViewedPage}`,
         ];
         if (selectedCar?.id !== "noMatter") {

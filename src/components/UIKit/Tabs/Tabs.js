@@ -1,4 +1,5 @@
 import React from "react";
+import { rusification } from "../../../constants/rusification";
 
 import styles from "./tabs.module.sass";
 
@@ -16,8 +17,7 @@ export const Tabs = ({ list, setActive, active }) => {
                     onClick={() => setActive(tab)}
                 >
                     <button className={styles.button}>
-                        {tab?.name.toUpperCase()[0] +
-                            tab?.name.slice(1, tab?.name.length)}
+                        {rusification[tab.name] || tab.name}
                     </button>
                 </li>
             ))}

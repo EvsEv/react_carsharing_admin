@@ -1,22 +1,13 @@
 @import ../../styles/variables
 @import ../../styles/media
+@import ../../styles/mixins
 
 .title
-  font-size: 29px
-  font-weight: normal
-  line-height: 33px
-  color: $darkBlue
-  letter-spacing: -0.725px
-  margin-bottom: 30px
+  @include title()
 
 .content
-  min-height: 324px
-  background: $white
-  border-radius: $borderRadiusBig
-  box-shadow: $defaultBoxShadow
-  display: flex
-  flex-direction: column
-  overflow-y: auto
+  @include content()
+  max-height: 975px
 
 @include desktopMinDevice
   .title
