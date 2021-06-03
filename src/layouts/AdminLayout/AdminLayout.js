@@ -12,10 +12,13 @@ import CarsTable from "../../pages/CarsTable";
 import Error from "../../pages/Error";
 import { fetchData } from "../../api/fetch";
 import EntitiesList from "../../pages/EntitiesList";
+import { useSelector } from "react-redux";
+import Popup from "../../components/Popup";
 
 export const AdminLayout = () => {
     const menu = useRef();
     const [showElement, setShowElement] = useClickNotOnElement(menu);
+    const { popup } = useSelector((state) => state.auth);
     const history = useHistory();
 
     if (history.location.pathname === "/") {
@@ -55,6 +58,7 @@ export const AdminLayout = () => {
                 </main>
                 <Footer />
             </div>
+            {popup && <Popup />}
         </div>
     );
 };

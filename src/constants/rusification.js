@@ -5,4 +5,5 @@ export const rusification = {
     rate: "Цены",
     rateType: "Тарифы",
     orderStatus: "Статусы",
+    delete: "Удалить",
 };
