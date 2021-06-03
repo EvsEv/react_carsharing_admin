@@ -90,8 +90,15 @@ export const NewEntity = () => {
             formToServer[parameter[0]] = parameter[1];
         }
 
-        if (city) {
+        if (Object.keys(city).length) {
             formToServer.cityId = { name: city.name, id: city.id };
+        }
+
+        if (Object.keys(rateTypeId).length) {
+            formToServer.rateTypeId = {
+                name: rateTypeId.name,
+                id: rateTypeId.id,
+            };
         }
 
         try {
