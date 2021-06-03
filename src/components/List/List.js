@@ -1,6 +1,6 @@
 import React from "react";
 import Basic from "../ListItem/Basic";
-import { BasicWithDescription } from "../ListItem/BasicWithDescription/BasicWithDescription";
+import BasicWithDescription from "../ListItem/BasicWithDescription";
 import Point from "../ListItem/Point";
 import Button from "../UIKit/Button";
 import Rate from "../ListItem/Rate";
