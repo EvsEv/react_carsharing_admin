@@ -8,16 +8,17 @@
 .auto
   width: 100%
   .input
-    font-size: 16px
-    background: none
+    font-size: 13px
+    padding: $cell * 2 $cell
+    margin-left: $cell * 2
+    background: $white
     border: none
     transition: none
     &.edited
       font-weight: bold
-      text-decoration: underline
-      text-decoration-color: $brightBlue
+      border: 1px solid $brightBlue
   .item
-    font-size: 16px
+    font-size: 13px
     line-height: 1
 
 .label
@@ -129,9 +130,6 @@
     max-width: 94.5px
   .auto
     max-width: 100%
-    .input
-      padding-top: 0
-      padding-bottom: 0
 
 @include mobileDevice
   .searchDropdown
@@ -142,8 +140,6 @@
   .auto
     max-width: 100%
     width: 100%
-    .inputField
-      height: 22px
     .input
       font-size: 13px
     .item

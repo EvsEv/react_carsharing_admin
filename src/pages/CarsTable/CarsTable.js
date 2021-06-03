@@ -24,6 +24,7 @@ import CarInfo from "../../components/CarInfo";
 const head = [
     "Модель",
     "Описание",
+    "Фото",
     "Мин. цена",
     "Макс. цена",
     "Топливо",
