@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Checkbox from "../UIKit/Checkbox";
 import ControlEdit from "../UIKit/ControlEdit";
+import { putData } from "../../api/fetch";
 
 import styles from "./orderCard.module.sass";
-import { putData } from "../../api/fetch";
+
+import basicCarImage from "../../assets/images/basicCar.png";
 
 export const OrderCard = ({
     order,
@@ -16,13 +18,23 @@ export const OrderCard = ({
     const [isNeedChildChair, setIsNeedChildChair] = useState();
     const [isRightWheel, setIsRightWheel] = useState();
     const [imageSrc, setImageSrc] = useState();
+
     useEffect(() => {
-        if (order.carId?.thumbnail.path.indexOf("base64") != -1) {
-            setImageSrc(order.carId?.thumbnail.path);
+        if (order.carId?.thumbnail?.path) {
+            const path = order.carId.thumbnail.path;
+            if (path.indexOf("base64") != -1) {
+                setImageSrc(path);
+            } else if (path.indexOf("blob") != -1) {
+                setImageSrc(basicCarImage);
+            } else if (path.indexOf("http") != -1) {
+                setImageSrc(path);
+            } else {
+                setImageSrc(
+                    `https://api-factory.simbirsoft1.com/${order.carId?.thumbnail.path}`
+                );
+            }
         } else {
-            setImageSrc(
-                `https://api-factory.simbirsoft1.com/${order.carId?.thumbnail.path}`
-            );
+            setImageSrc(basicCarImage);
         }
     }, []);
 

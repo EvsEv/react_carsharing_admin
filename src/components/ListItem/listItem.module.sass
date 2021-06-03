@@ -19,13 +19,14 @@
     margin-bottom: 0
 
 .changing
-  // padding-left: $cell * 4
-  background: rgba($confirmed, 0.05)
+  padding-left: $cell * 4
+  background: rgba($brightBlue, 0.04)
+  border-left-color: $brightBlue
   .changingField
     font-weight: bold
-    text-decoration: underline
-    text-decoration-color: $brightBlue
     height: auto
+    background: $white
+    border: 1px solid $brightBlue
 
 .parameters
   display: flex
@@ -33,12 +34,16 @@
   flex-grow: 1
 
 .parameter
+  font-size: 13px
   color: $darkBlue
+  margin-bottom: $cell
   flex-shrink: 0
   display: flex
   align-items: center
   span
     font-weight: bold
+  &:last-of-type
+    margin-bottom: 0
 
 .fixed
   width: 200px
@@ -48,22 +53,24 @@
       width: 100%
 
 .large
-  flex-grow: 1
+  width: 400px
   .changingField
     width: 100%
-    padding-top: $cell * 4
+    padding-top: $cell * 3
+    padding-bottom: 0
     resize: none
 
 .changingField
   font-family: "RobotoReg"
+  font-size: 13px
   color: $mainBlack
+  padding: $cell * 2 $cell
   margin: 0
   margin-left: $cell * 2
-  padding: 0
-  font-size: 16px
   line-height: 1
   background: none
-  border: none
+  border-radius: 4px
+  border: 1px solid transparent
   &:focus
     outline: none
 
@@ -113,11 +120,6 @@
   .parameters
     flex-direction: column
     gap: 0
-  .large
-    .changingField
-      padding-top: 0
-      position: relative
-      top: 8px
   .delete
     height: 40px
     svg
@@ -140,6 +142,7 @@
   .parameters
     width: 100%
   .large
+    width: 100%
     .changingField
       height: 32px
   .parameter

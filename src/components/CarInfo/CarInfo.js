@@ -1,12 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import styles from "./carInfo.module.sass";
 
+import basicCarImage from "../../assets/images/basicCar.png";
+
 export const CarInfo = ({ information }) => {
+    const [imageSrc, setImageSrc] = useState();
+
+    useEffect(() => {
+        if (information.thumbnail?.path) {
+            const path = information.thumbnail.path;
+            if (path.indexOf("base64") != -1) {
+                setImageSrc(path);
+            } else if (path.indexOf("blob") != -1) {
+                setImageSrc(basicCarImage);
+            } else if (path.indexOf("http") != -1) {
+                setImageSrc(path);
+            } else {
+                setImageSrc(
+                    `https://api-factory.simbirsoft1.com/${information.thumbnail.path}`
+                );
+            }
+        } else {
+            setImageSrc(basicCarImage);
+        }
+    }, []);
     return (
         <tr>
             <td>{information?.name}</td>
             <td>{information?.description || "Отсутсвует"}</td>
+            <td>
+                <picture className={styles.photo}>
+                    <img src={imageSrc} />
+                </picture>
+            </td>
             <td>{information?.priceMin?.toLocaleString() || "Не указано"}</td>
             <td>{information?.priceMax?.toLocaleString() || "Не указано"}</td>
             <td>

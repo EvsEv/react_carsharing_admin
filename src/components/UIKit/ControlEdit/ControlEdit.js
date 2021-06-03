@@ -1,4 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { deleteData } from "../../../api/deleteData";
+import { ReactComponent as TrashBinIcon } from "../../../assets/icons/trashBin.svg";
 
 import styles from "./controlEdit.module.sass";
 
@@ -9,12 +12,18 @@ export const ControlEdit = ({
     isEdited,
     type,
     order,
+    itemId,
 }) => {
+    const { selectedEntity } = useSelector((state) => state.entitiesList);
     const classes = [styles.form];
 
     if (type) {
         classes.push(styles[type]);
     }
+
+    const deleteItem = () => {
+        deleteData(selectedEntity.name, itemId);
+    };
 
     return (
         <form
@@ -45,6 +54,16 @@ export const ControlEdit = ({
                     className={[styles.button, styles.changed].join(" ")}
                 >
                     Изменить
+                </button>
+            )}
+            {!isEdited && itemId && (
+                <button
+                    onClick={deleteItem}
+                    className={[styles.button, styles.delete].join(" ")}
+                >
+                    {" "}
+                    <TrashBinIcon />
+                    Удалить
                 </button>
             )}
         </form>

@@ -3,6 +3,7 @@ import { SET_USER_TOKENS, SET_ERROR_OF_LOGGED_AUTH } from "../types";
 const initialState = {
     tokens: null,
     error: null,
+    notification: null,
 };
 
 export const auth = (state = initialState, action) => {

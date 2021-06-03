@@ -77,24 +77,6 @@ export const Menu = React.forwardRef((props, ref) => {
                             Параметры
                         </NavLink>
                     </li>
-                    <li className={styles.item}>
-                        <p className={styles.link} title="В разработке">
-                            <FormIcon />
-                            Menu 5
-                        </p>
-                    </li>
-                    <li className={styles.item}>
-                        <p className={styles.link} title="В разработке">
-                            <PersonIcon />
-                            Menu 6
-                        </p>
-                    </li>
-                    <li className={styles.item}>
-                        <p className={styles.link} title="В разработке">
-                            <AlarmIcon />
-                            Menu 7
-                        </p>
-                    </li>
                 </ul>
             </nav>
             <Footer aside={true} />
