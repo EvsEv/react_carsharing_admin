@@ -60,7 +60,7 @@ export const SearchDropdown = ({
             setError(false);
         } else {
             setTitle("Выберите значение");
-            setError("Нет совпадений");
+            setError("Некорректно");
         }
     }, [selectedValue]);
 
@@ -82,12 +82,12 @@ export const SearchDropdown = ({
             setSuggestions(variants);
             setShowDropdown(false);
         } else {
-            setError("нет  совпадений");
+            setError("Некорректно");
         }
 
         if (!event.target.value) {
             changeValue(null);
-            setError("Выберите значение");
+            setError("Некорректно");
         }
         setSuggestions(updatedSuggestions);
     };

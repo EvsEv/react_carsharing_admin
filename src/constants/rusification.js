@@ -6,4 +6,9 @@ export const rusification = {
     rateType: "Тарифы",
     orderStatus: "Статусы",
     delete: "Удалить",
+    name: "Наименование",
+    description: "Описание",
+    address: "Адрес",
+    price: "Цена",
+    unit: "Единица времени",
 };

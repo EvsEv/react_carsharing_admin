@@ -1,5 +1,9 @@
 @import ../../styles/variables
 @import ../../styles/media
+@import ../../styles/mixins
+
+$margin: 15px
+
 
 .popup
   width: 100%
@@ -25,3 +29,62 @@
   box-sizing: border-box
   box-shadow: 0px 1px 0px rgba(90, 97, 105, 0.11), 0px 2px 4px rgba(90, 97, 105, 0.12), 0px 5px 5px rgba(90, 97, 105, 0.06), 0px 3.5px 35px rgba(90, 97, 105, 0.1)
   border-radius: 9px
+
+.title
+  font-family: "RobotoReg"
+  font-weight: normal
+  font-size: $cell * 4
+  text-align: center
+  margin-bottom: $cell * 4
+
+.control
+  display: flex
+  justify-content: center
+  button:first-of-type
+    margin-right: $cell * 2
+
+.field
+  margin-top: $margin
+  display: flex
+  flex-direction: column
+  position: relative
+  &:first-of-type
+    margin-top: 0
+
+.label
+  font-size: 10.5px
+  line-height: 12px
+  letter-spacing: -0.18421px
+
+.input
+  font-size: 11px
+  line-height: 12.65px
+  letter-spacing: -0.19px
+  margin-top: $margin / 2
+  padding: 8px 11.5px 8.5px
+  border: 1px solid $softhGrey
+  border-radius: 3px
+  transition: all $short ease
+  + span
+    font-size: 10px
+    line-height: 11px
+    position: absolute
+    bottom: -12px
+    left: 11.5px
+    display: none
+  &:focus
+    outline: none
+    border-color: $darkBlue
+  &:not(:placeholder-shown)
+    &:invalid
+      border: 0.5px solid $crimson
+      box-shadow: 0px 2.5px 5.5px rgba(196, 24, 60, 0.1)
+      + span
+        display: block
+
+.parameters
+  margin-bottom: $cell * 5
+
+@include mobileDevice
+  .form
+    width: calc(100% - 5 * #{$cell})

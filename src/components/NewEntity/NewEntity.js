@@ -42,41 +42,41 @@ export const NewEntity = () => {
                 type: selectedEntity.options.fields[parameter].type,
             });
         }
-        return printedParameters.map((parameter, index) => {
-            if (parameter.name === "cityId") {
-                return (
+        return printedParameters.map((parameter, index) => (
+            <div className={styles.field} key={index}>
+                {parameter.name === "cityId" ? (
                     <SearchDropdown
                         variants={cityList.slice(1, cityList.length)}
                         selectedValue={city?.name}
                         changeValue={setCity}
-                        type="auto"
-                        key={index}
+                        type="likeInput"
+                        label="Город"
                     />
-                );
-            }
-
-            if (parameter.name === "rateTypeId") {
-                return (
+                ) : parameter.name === "rateTypeId" ? (
                     <SearchDropdown
                         variants={rateTypeIdList}
                         selectedValue={rateTypeId?.name}
                         changeValue={setRateTypeId}
-                        type="auto"
-                        key={index}
+                        type="likeInput"
+                        label="Тариф"
                     />
-                );
-            }
-            return (
-                <input
-                    required
-                    type={parameter.type}
-                    key={index}
-                    min={1}
-                    placeholder={parameter.name}
-                    name={parameter.name}
-                />
-            );
-        });
+                ) : (
+                    <>
+                        <label htmlFor="mail" className={styles.label}>
+                            {rusification[parameter.name]}
+                        </label>
+                        <input
+                            className={styles.input}
+                            required
+                            type={parameter.type}
+                            min={1}
+                            placeholder="Заполните поле"
+                            name={parameter.name}
+                        />
+                    </>
+                )}
+            </div>
+        ));
     };
 
     const onClosePopup = () => dispatch(openNewEntity(false));
@@ -119,7 +119,7 @@ export const NewEntity = () => {
                         Добавить новый элемент в "
                         {rusification[selectedEntity.name]}"
                     </h2>
-                    <div>{printParameters()}</div>
+                    <div className={styles.parameters}>{printParameters()}</div>
                     <div className={styles.control}>
                         <Button
                             type="submit"
