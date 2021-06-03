@@ -1,2 +1,2 @@
-import { BasicDescription } from "./BasicWithDescription";
-export default BasicDescription;
+import { BasicWithDescription } from "./BasicWithDescription";
+export default BasicWithDescription;
