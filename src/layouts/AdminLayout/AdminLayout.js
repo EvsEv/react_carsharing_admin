@@ -14,11 +14,12 @@ import { fetchData } from "../../api/fetch";
 import EntitiesList from "../../pages/EntitiesList";
 import { useSelector } from "react-redux";
 import Popup from "../../components/Popup";
+import { NewEntity } from "../../components/NewEntity/NewEntity";
 
 export const AdminLayout = () => {
     const menu = useRef();
     const [showElement, setShowElement] = useClickNotOnElement(menu);
-    const { popup } = useSelector((state) => state.auth);
+    const { popup, openNewEntity } = useSelector((state) => state.auth);
     const history = useHistory();
 
     if (history.location.pathname === "/") {
@@ -59,6 +60,7 @@ export const AdminLayout = () => {
                 <Footer />
             </div>
             {popup && <Popup />}
+            {openNewEntity && <NewEntity />}
         </div>
     );
 };

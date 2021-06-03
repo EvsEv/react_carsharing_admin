@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteData } from "../../api/deleteData";
 import { rusification } from "../../constants/rusification";
 import { setPopup } from "../../redux/thunks/auth";
+import { getFilteredEntityList } from "../../redux/thunks/entitiesList";
 import Button from "../UIKit/Button";
 
 import styles from "./popup.module.sass";
@@ -13,10 +14,13 @@ export const Popup = () => {
     );
     const dispatch = useDispatch();
 
-    const onSubmitPopup = () => {
+    const onSubmitPopup = async (event) => {
+        event.preventDefault();
         if (type === "delete") {
-            deleteData(entity.name, idOfItem);
+            await deleteData(entity, idOfItem);
         }
+        dispatch(getFilteredEntityList());
+        dispatch(setPopup(null));
     };
 
     const onClosePopup = () => {
@@ -25,15 +29,11 @@ export const Popup = () => {
 
     return (
         <section className={styles.popup}>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={onSubmitPopup}>
                 <div className={styles.wrapper}>
                     <h2 className={styles.title}>{title}</h2>
                     <div className={styles.control}>
-                        <Button
-                            type="submit"
-                            text={rusification[type]}
-                            action={onSubmitPopup}
-                        />
+                        <Button type="submit" text={rusification[type]} />
                         <Button
                             type="reset"
                             text="Отмена"

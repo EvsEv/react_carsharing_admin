@@ -7,8 +7,11 @@ import Rate from "../ListItem/Rate";
 import RateType from "../ListItem/RateType";
 
 import styles from "./list.module.sass";
+import { useDispatch } from "react-redux";
+import { openNewEntity } from "../../redux/thunks/auth";
 
 export const List = ({ current, elements, isChanged, isDeleted }) => {
+    const dispatch = useDispatch();
     const printList = () => {
         switch (current?.name) {
             case "point":
@@ -40,20 +43,17 @@ export const List = ({ current, elements, isChanged, isDeleted }) => {
         }
     };
 
+    const onAddNewEntity = () => dispatch(openNewEntity(true));
+
     return (
         <>
-            <Button text="Добавить" type="submit" mod="fullWidth" />
-            <div className={styles.wrapper}>
-                {/* {elements?.map((element) => (
-                    <ListItem
-                        key={element.id}
-                        isChanged={isChanged}
-                        isDeleted={isDeleted}
-                        item={element}
-                    />
-                ))} */}
-                {printList()}
-            </div>
+            <Button
+                text="Добавить"
+                type="submit"
+                mod="fullWidth"
+                action={onAddNewEntity}
+            />
+            <div className={styles.wrapper}>{printList()}</div>
         </>
     );
 };

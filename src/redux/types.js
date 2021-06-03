@@ -1,6 +1,7 @@
 export const SET_USER_TOKENS = "SET_USER_TOKENS";
 export const SET_ERROR_OF_LOGGED_AUTH = "SET_ERROR_OF_LOGGED_AUTH";
 export const SET_POPUP = "SET_POPUP";
+export const OPEN_NEW_ENTITY = "OPEN_NEW_ENTITY";
 
 export const GET_CARS_LIST = " GET_CARS_LIST";
 export const GET_CITY_LIST = "GET_CITY_LIST";

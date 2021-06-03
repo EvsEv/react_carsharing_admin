@@ -1,4 +1,9 @@
-import { SET_ERROR_OF_LOGGED_AUTH, SET_POPUP, SET_USER_TOKENS } from "../types";
+import {
+    SET_ERROR_OF_LOGGED_AUTH,
+    OPEN_NEW_ENTITY,
+    SET_POPUP,
+    SET_USER_TOKENS,
+} from "../types";
 
 export const setUserTokensToStore = (tokens) => {
     return {
@@ -13,3 +18,8 @@ export const setErrorOfLoggedAuthToStore = (error) => ({
 });
 
 export const setPopupToStore = (popup) => ({ type: SET_POPUP, payload: popup });
+
+export const setIsOpenNewEntityToStore = (isOpened) => ({
+    type: OPEN_NEW_ENTITY,
+    payload: isOpened,
+});

@@ -48,6 +48,7 @@ export const getFilteredEntityList = () => async (dispatch, getState) => {
             "&limit=8",
             `&page=${lastViewedPage}`,
         ];
+
         const filteredList = await fetchDataWithComplexParamters(
             selectedEntity?.name,
             parameters.join(" ")
