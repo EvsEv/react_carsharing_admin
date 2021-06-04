@@ -1,0 +1,57 @@
+@import ../../../styles/variables
+@import ../../../styles/media
+
+.notification
+  position: absolute
+  top: 0
+  left: 0
+  z-index: 10
+  width: 100%
+  background: $softGreen
+  padding: $cell * 3 $cell * 13
+  color: $white
+  font-size: $cell * 4
+  line-height: $cell * 6
+  box-sizing: border-box
+  &::before
+    content: ""
+    position: absolute
+    width: 10px
+    height: 5px
+    border: 2px solid transparent
+    border-bottom-color: $white
+    border-left-color: $white
+    top: 40%
+    left: 35px
+    transform: rotate(-45deg) translateY(-50%)
+
+.close
+  position: absolute
+  right: 35px
+  top: 50%
+  background: none
+  border: none
+  width: 20px
+  height: 20px
+  display: block
+  transform: translateY(-50%)
+  &::before, &::after
+    content: ""
+    height: 2px
+    width: 13px
+    background: $white
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%) rotate(45deg)
+  &::after
+    transform: translate(-50%, -50%) rotate(-45deg)
+
+.delete
+  background: $crimson
+
+@include mobileDevice
+  .notification
+    font-size: $cell * 3
+    line-height: 1
+    text-align: center

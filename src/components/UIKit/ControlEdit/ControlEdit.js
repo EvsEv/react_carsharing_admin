@@ -1,7 +1,8 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteData } from "../../../api/deleteData";
 import { ReactComponent as TrashBinIcon } from "../../../assets/icons/trashBin.svg";
+import { setPopup } from "../../../redux/thunks/auth";
 
 import styles from "./controlEdit.module.sass";
 
@@ -15,6 +16,7 @@ export const ControlEdit = ({
     itemId,
 }) => {
     const { selectedEntity } = useSelector((state) => state.entitiesList);
+    const dispatch = useDispatch();
     const classes = [styles.form];
 
     if (type) {
@@ -22,7 +24,14 @@ export const ControlEdit = ({
     }
 
     const deleteItem = () => {
-        deleteData(selectedEntity.name, itemId);
+        dispatch(
+            setPopup({
+                type: "delete",
+                title: "Вы действительно хотите удалить выбранный элемент?",
+                entity: selectedEntity.name,
+                idOfItem: itemId,
+            })
+        );
     };
 
     return (

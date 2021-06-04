@@ -12,10 +12,14 @@ import CarsTable from "../../pages/CarsTable";
 import Error from "../../pages/Error";
 import { fetchData } from "../../api/fetch";
 import EntitiesList from "../../pages/EntitiesList";
-
+import { useSelector } from "react-redux";
+import Popup from "../../components/Popup";
+import NewEntity from "../../components/NewEntity";
+import Notification from "../../components/UIKit/Notification";
 export const AdminLayout = () => {
     const menu = useRef();
     const [showElement, setShowElement] = useClickNotOnElement(menu);
+    const { popup, openNewEntity } = useSelector((state) => state.auth);
     const history = useHistory();
 
     if (history.location.pathname === "/") {
@@ -32,6 +36,7 @@ export const AdminLayout = () => {
             <div className={styles.wrapper}>
                 <Header setShowMenu={setShowElement} />
                 <main className={styles.main}>
+                    <Notification />
                     <Switch>
                         <Route
                             path="/admin"
@@ -55,6 +60,8 @@ export const AdminLayout = () => {
                 </main>
                 <Footer />
             </div>
+            {popup && <Popup />}
+            {openNewEntity && <NewEntity />}
         </div>
     );
 };

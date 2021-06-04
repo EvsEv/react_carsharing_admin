@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { putData } from "../../../api/fetch";
+import { rusification } from "../../../constants/rusification";
+import { setNotification } from "../../../redux/thunks/auth";
 import { getCityList } from "../../../redux/thunks/listsOfEntities";
 import ControlEdit from "../../UIKit/ControlEdit";
 import { SearchDropdown } from "../../UIKit/SearchDropdown/SearchDropdown";
@@ -67,7 +69,17 @@ export const Point = ({ point }) => {
             changedData.cityId = city;
         }
 
-        await putData(selectedEntity.name, { ...changedData }, point?.id);
+        if (Object.keys(changedData).length) {
+            await putData(selectedEntity.name, { ...changedData }, point?.id);
+            dispatch(
+                setNotification({
+                    type: "correct",
+                    text: `Элемент cущности "${
+                        rusification[selectedEntity.name]
+                    }" успешно изменен`,
+                })
+            );
+        }
 
         setIsEdited(false);
     };
