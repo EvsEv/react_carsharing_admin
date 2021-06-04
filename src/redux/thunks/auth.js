@@ -1,6 +1,9 @@
 import { getUpdatedTokens } from "../../api/fetch";
 import {
     setErrorOfLoggedAuthToStore,
+    setIsOpenNewEntityToStore,
+    setNotificationToStore,
+    setPopupToStore,
     setUserTokensToStore,
 } from "../actionCreators/auth";
 
@@ -18,3 +21,13 @@ export const refreshTokens = () => async (dispatch, getState) => {
 
 export const setErrorOfLoggedAuth = (error) => (dispatch) =>
     dispatch(setErrorOfLoggedAuthToStore(error));
+
+export const setPopup = (popup) => (dispatch) =>
+    dispatch(setPopupToStore(popup));
+
+export const openNewEntity = (isOpen) => (dispatch) =>
+    dispatch(setIsOpenNewEntityToStore(isOpen));
+
+export const setNotification = (notification) => (dispatch) => {
+    dispatch(setNotificationToStore(notification));
+};

@@ -12,7 +12,7 @@
     padding: $cell * 2 $cell
     margin-left: $cell * 2
     background: $white
-    border: none
+    border: 1px solid transparent
     transition: none
     &.edited
       font-weight: bold
@@ -20,6 +20,12 @@
   .item
     font-size: 13px
     line-height: 1
+
+.likeInput
+  width: 100%
+  max-width: 100%
+  .errorType
+    bottom: -12px
 
 .label
   font-size: 10.5px
@@ -130,6 +136,9 @@
     max-width: 94.5px
   .auto
     max-width: 100%
+  .likeInput
+    width: 100%
+    max-width: 100%
 
 @include mobileDevice
   .searchDropdown
@@ -145,6 +154,9 @@
     .item
       font-size: 13px
       line-height: 13px
+  .likeInput
+    width: 100%
+    max-width: 100%
 
 
 

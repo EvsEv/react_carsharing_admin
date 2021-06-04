@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { putData } from "../../../api/fetch";
+import { setNotification } from "../../../redux/thunks/auth";
 import ControlEdit from "../../UIKit/ControlEdit";
+import { rusification } from "../../../constants/rusification";
 
 import styles from "../listItem.module.sass";
 
@@ -9,6 +11,7 @@ export const Basic = ({ element }) => {
     const [name, setName] = useState(element?.name);
     const [isEdited, setIsEdited] = useState(false);
     const { selectedEntity } = useSelector((state) => state.entitiesList);
+    const dispatch = useDispatch();
     const classesForItem = [styles.item];
 
     if (isEdited) {
@@ -25,6 +28,14 @@ export const Basic = ({ element }) => {
     const onSubmit = async () => {
         if (name && name !== element.name) {
             await putData(selectedEntity.name, { name }, element?.id);
+            dispatch(
+                setNotification({
+                    type: "correct",
+                    text: `Элемент cущности "${
+                        rusification[selectedEntity.name]
+                    }" успешно изменен`,
+                })
+            );
         }
         setIsEdited(false);
     };
