@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchDataWithComplexParamters, putData } from "../../../api/fetch";
+import { rusification } from "../../../constants/rusification";
+import { setNotification } from "../../../redux/thunks/auth";
 import ControlEdit from "../../UIKit/ControlEdit";
 import { SearchDropdown } from "../../UIKit/SearchDropdown/SearchDropdown";
 
@@ -12,6 +14,7 @@ export const Rate = ({ rate }) => {
     const [listOfRateTypes, setListOfRateTpes] = useState([]);
     const [isEdited, setIsEdited] = useState(false);
     const { selectedEntity } = useSelector((state) => state.entitiesList);
+    const dispatch = useDispatch();
 
     const classesForItem = [styles.item];
 
@@ -33,7 +36,18 @@ export const Rate = ({ rate }) => {
             changedData.rateTypeId = tariff;
         }
 
-        await putData(selectedEntity.name, { ...changedData }, rate?.id);
+        if (Object.keys(changedData).length) {
+            await putData(selectedEntity.name, { ...changedData }, rate?.id);
+
+            dispatch(
+                setNotification({
+                    type: "correct",
+                    text: `Элемент cущности "${
+                        rusification[selectedEntity.name]
+                    }" успешно изменен`,
+                })
+            );
+        }
 
         setIsEdited(false);
     };

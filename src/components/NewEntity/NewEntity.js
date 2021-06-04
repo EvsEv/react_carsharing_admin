@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDataWithComplexParamters } from "../../api/fetch";
 import { postData } from "../../api/postData";
 import { rusification } from "../../constants/rusification";
-import { openNewEntity } from "../../redux/thunks/auth";
+import { openNewEntity, setNotification } from "../../redux/thunks/auth";
 import { getFilteredEntityList } from "../../redux/thunks/entitiesList";
 import { getCityList } from "../../redux/thunks/listsOfEntities";
 import Button from "../UIKit/Button";
@@ -109,6 +109,14 @@ export const NewEntity = () => {
 
         dispatch(openNewEntity(false));
         dispatch(getFilteredEntityList());
+        dispatch(
+            setNotification({
+                text: `Элемент для сущности "${
+                    rusification[selectedEntity.name]
+                }" успешно добавлен`,
+                type: "correct",
+            })
+        );
     };
 
     return (

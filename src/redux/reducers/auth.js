@@ -3,6 +3,7 @@ import {
     SET_ERROR_OF_LOGGED_AUTH,
     SET_POPUP,
     OPEN_NEW_ENTITY,
+    SET_NOTIFICATION,
 } from "../types";
 
 const initialState = {
@@ -23,6 +24,8 @@ export const auth = (state = initialState, action) => {
             return { ...state, popup: action.payload };
         case OPEN_NEW_ENTITY:
             return { ...state, openNewEntity: action.payload };
+        case SET_NOTIFICATION:
+            return { ...state, notification: action.payload };
         default:
             return state;
     }

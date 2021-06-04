@@ -2,6 +2,7 @@ import { getUpdatedTokens } from "../../api/fetch";
 import {
     setErrorOfLoggedAuthToStore,
     setIsOpenNewEntityToStore,
+    setNotificationToStore,
     setPopupToStore,
     setUserTokensToStore,
 } from "../actionCreators/auth";
@@ -26,3 +27,7 @@ export const setPopup = (popup) => (dispatch) =>
 
 export const openNewEntity = (isOpen) => (dispatch) =>
     dispatch(setIsOpenNewEntityToStore(isOpen));
+
+export const setNotification = (notification) => (dispatch) => {
+    dispatch(setNotificationToStore(notification));
+};

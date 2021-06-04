@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteData } from "../../api/deleteData";
 import { rusification } from "../../constants/rusification";
-import { setPopup } from "../../redux/thunks/auth";
+import { setNotification, setPopup } from "../../redux/thunks/auth";
 import { getFilteredEntityList } from "../../redux/thunks/entitiesList";
 import Button from "../UIKit/Button";
 
@@ -21,6 +21,9 @@ export const Popup = () => {
         }
         dispatch(getFilteredEntityList());
         dispatch(setPopup(null));
+        dispatch(
+            setNotification({ type: "delete", text: "Элемент успешно удален" })
+        );
     };
 
     const onClosePopup = () => {

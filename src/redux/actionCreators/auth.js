@@ -3,6 +3,7 @@ import {
     OPEN_NEW_ENTITY,
     SET_POPUP,
     SET_USER_TOKENS,
+    SET_NOTIFICATION,
 } from "../types";
 
 export const setUserTokensToStore = (tokens) => {
@@ -22,4 +23,9 @@ export const setPopupToStore = (popup) => ({ type: SET_POPUP, payload: popup });
 export const setIsOpenNewEntityToStore = (isOpened) => ({
     type: OPEN_NEW_ENTITY,
     payload: isOpened,
+});
+
+export const setNotificationToStore = (notification) => ({
+    type: SET_NOTIFICATION,
+    payload: notification,
 });

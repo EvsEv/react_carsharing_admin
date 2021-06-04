@@ -6,6 +6,8 @@ import { putData } from "../../api/fetch";
 import styles from "./orderCard.module.sass";
 
 import basicCarImage from "../../assets/images/basicCar.png";
+import { setNotification, setPopup } from "../../redux/thunks/auth";
+import { useDispatch } from "react-redux";
 
 export const OrderCard = ({
     order,
@@ -18,6 +20,7 @@ export const OrderCard = ({
     const [isNeedChildChair, setIsNeedChildChair] = useState();
     const [isRightWheel, setIsRightWheel] = useState();
     const [imageSrc, setImageSrc] = useState();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (order.carId?.thumbnail?.path) {
@@ -56,13 +59,39 @@ export const OrderCard = ({
     }, [order]);
 
     const onConfirmed = async () => {
-        await putData("order", { orderStatusId: confirmedStatus }, order?.id);
-        changeStatus(true);
+        if (confirmedStatus.id !== order.orderStatusId.id) {
+            const response = await putData(
+                "order",
+                { orderStatusId: confirmedStatus },
+                order?.id
+            );
+            changeStatus(true);
+            response &&
+                dispatch(
+                    setNotification({
+                        type: "correct",
+                        text: `Статус заказа ${order.id} успешно изменен на подтвержденный`,
+                    })
+                );
+        }
     };
 
     const onCancelled = async () => {
-        await putData("order", { orderStatusId: cancelledStatus }, order?.id);
-        changeStatus(true);
+        if (cancelledStatus.id !== order.orderStatusId.id) {
+            const response = await putData(
+                "order",
+                { orderStatusId: cancelledStatus },
+                order?.id
+            );
+            changeStatus(true);
+            response &&
+                dispatch(
+                    setNotification({
+                        type: "delete",
+                        text: `Статус заказа ${order.id} успешно изменен на отменённый`,
+                    })
+                );
+        }
     };
 
     return (
