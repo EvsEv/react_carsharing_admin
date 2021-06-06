@@ -53,11 +53,11 @@ export const getFilteredCarsTable = () => {
         }
 
         if (priceMin) {
-            parameters.push(`&priceMin[$gt]=${priceMin}`);
+            parameters.push(`&priceMin[$gt]=${priceMin - 1}`);
         }
 
         if (priceMax) {
-            parameters.push(`&priceMax[$lt]=${priceMax}`);
+            parameters.push(`&priceMax[$lt]=${priceMax + 1}`);
         }
 
         const carsTableFromServer = await fetchDataWithComplexParamters(

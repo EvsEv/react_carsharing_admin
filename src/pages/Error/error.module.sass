@@ -1,0 +1,58 @@
+@import ../../styles/variables
+@import ../../styles/media
+
+.page
+  padding: $cell * 5
+  margin-top: $cell * (-10)
+  flex-grow: 1
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+
+.number
+  font-size: 75px
+  line-height: 88px
+  color: $lightBlue
+  margin-bottom: $cell * 3
+
+.reason
+  font-size: 50px
+  line-height: 57px
+  margin-bottom: $cell * 4
+
+.recommendation
+  font-size: 20px
+  line-height: 23px
+  color: $greyBlue
+
+.wrapper
+  .recommendation
+    margin-bottom: $cell * 9
+
+.list
+  padding: 0
+  margin: 0
+  list-style-type: none
+  display: flex
+  flex-direction: column
+  align-items: center
+
+.item
+  margin-bottom: $cell * 2
+  &:last-of-type
+    margin-bottom: 0
+
+@include mobileDevice
+  .page
+    margin-top: 0
+  .number
+    font-size: $cell * 10
+    line-height: 1
+  .reason, .recommendation
+    font-size: $cell * 5
+    line-height: 1
+    text-align: center
+  .wrapper
+    .recommendation
+      margin-bottom: $cell * 5

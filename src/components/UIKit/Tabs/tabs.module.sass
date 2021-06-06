@@ -14,6 +14,7 @@
   width: calc(100% / 6)
   box-sizing: border-box
   position: relative
+  transition: all $short ease
   &::after
     content: ""
     position: absolute
@@ -22,6 +23,7 @@
     width: 100%
     height: 4px
     background-color: rgba($brightBlue, 0.1)
+    transition: all $short ease
   &:hover
     &::after
       background-color: rgba($brightBlue, 0.4)
