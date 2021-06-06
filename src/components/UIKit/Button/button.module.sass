@@ -24,9 +24,18 @@
 .reset
   background-color: $crimson
 
+.link
+  background-color: $brightBlue
+  display: block
+  text-decoration: none
+  text-align: center
+  width: $cell * 50
+
 @include desktopMinDevice
   .button
     width: 90px
+  .link
+    width: $cell * 50
 
 @include mobileDevice
   .button
@@ -34,3 +43,5 @@
     width: calc(50% - 5px)
   .fullWidth
     width: 100%
+  .link
+    width: 200px

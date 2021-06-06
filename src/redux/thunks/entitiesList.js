@@ -20,6 +20,10 @@ const calculateCountOfPages = (count) => {
 export const addOtherEntities = () => async (dispatch, getState) => {
     const { selectedEntity } = getState().entitiesList;
     const allEntities = await getAllEntities();
+    if (allEntities.code) {
+        return dispatch(setErrorOfLoggedAuth(allEntities.code));
+    }
+
     const otherEntities = [];
 
     allEntities?.filter((item) => {
@@ -32,7 +36,7 @@ export const addOtherEntities = () => async (dispatch, getState) => {
             otherEntities.push(item);
         }
     });
-
+    dispatch(setErrorOfLoggedAuth(null));
     dispatch(addOtherEntitiesToStore(otherEntities));
 
     if (!selectedEntity) {
