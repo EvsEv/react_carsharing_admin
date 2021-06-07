@@ -28,7 +28,7 @@ export const Popup = () => {
                     text: "Элемент успешно удален",
                 })
             );
-            action();
+            action && action();
             return;
         }
         action();

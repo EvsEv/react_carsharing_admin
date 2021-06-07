@@ -28,23 +28,24 @@ export const ArrayInput = ({ setArray, array, title }) => {
                     +
                 </button>
             </div>
-            {!array.length && (
+            {!array.length ? (
                 <div className={styles.notification}>
                     <p>Минимум 1 элемент</p>
                 </div>
+            ) : (
+                <ul className={styles.wrapper}>
+                    {array.map((item, index) => (
+                        <li className={styles.item} key={index}>
+                            <Checkbox
+                                value={item}
+                                label={item}
+                                onChange={() => deleteItem(index)}
+                                checked={true}
+                            />
+                        </li>
+                    ))}
+                </ul>
             )}
-            <ul className={styles.wrapper}>
-                {array.map((item, index) => (
-                    <li className={styles.item} key={index}>
-                        <Checkbox
-                            value={item}
-                            label={item}
-                            onChange={() => deleteItem(index)}
-                            checked={true}
-                        />
-                    </li>
-                ))}
-            </ul>
         </>
     );
 };

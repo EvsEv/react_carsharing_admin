@@ -11,10 +11,11 @@ import { getCarEntity } from "../../redux/thunks/mainEntities";
 
 import styles from "./carSetting.module.sass";
 
-import defaultPhoto from "../../assets/images/basicCar.png";
+import basicCarImage from "../../assets/images/basicCar.png";
 import {
     setBasicError,
     setErrorOfLoggedAuth,
+    setNotification,
     setPopup,
 } from "../../redux/thunks/auth";
 import { useHistory, useParams } from "react-router";
@@ -26,6 +27,7 @@ import { getFilteredCarsTable } from "../../redux/thunks/carsTable";
 export const CarSetting = () => {
     const [name, setName] = useState("");
     const [image, setImage] = useState({});
+    const [imageSrc, setImageSrc] = useState("");
     const [description, setDescription] = useState("");
     const [carInfo, setCarInfo] = useState(null);
     const [percentValue, setPercentValue] = useState(0);
@@ -48,8 +50,31 @@ export const CarSetting = () => {
             if (car.code) {
                 return dispatch(setBasicError(car.code));
             }
+        } else {
+            setCarInfo(null);
         }
     }, [id]);
+
+    useEffect(() => {
+        if (carInfo?.thumbnail?.path && !image) {
+            const path = carInfo.thumbnail.path;
+            if (path.indexOf("base64") !== -1) {
+                setImageSrc(path);
+            } else if (path.indexOf("blob") !== -1) {
+                setImageSrc(basicCarImage);
+            } else if (path.indexOf("http") !== -1) {
+                setImageSrc(path);
+            } else {
+                setImageSrc(
+                    `https://api-factory.simbirsoft1.com/${carInfo.thumbnail.path}`
+                );
+            }
+        } else if (carInfo && !image) {
+            setImageSrc(basicCarImage);
+        } else if (image) {
+            setImageSrc(image.path || basicCarImage);
+        }
+    }, [carInfo, image]);
 
     useEffect(() => {
         if (carInfo) {
@@ -65,6 +90,17 @@ export const CarSetting = () => {
             setMaxPrice(carInfo.priceMax);
             setTank(carInfo.tank);
             setNumber(carInfo.number);
+        } else {
+            setName("");
+            setDescription("");
+            setPercentValue(0);
+            setImage({});
+            setSelectedCategory("");
+            setColors([]);
+            setMinPrice("");
+            setMaxPrice("");
+            setTank("");
+            setNumber("");
         }
     }, [carInfo]);
 
@@ -250,6 +286,12 @@ export const CarSetting = () => {
 
             Object.keys(formToServer).length &&
                 (await putData("car", formToServer, carInfo.id));
+            dispatch(
+                setNotification({
+                    type: "correct",
+                    text: `Автомобиль ${carInfo.id} успешно изменен`,
+                })
+            );
             history.push("/admin/carsTable");
         } else {
             formToServer.name = name;
@@ -296,7 +338,7 @@ export const CarSetting = () => {
                 <div className={styles.asideInfo}>
                     <div className={styles.asideTop}>
                         <picture className={styles.preview}>
-                            <img src={image.path || defaultPhoto} />
+                            <img src={imageSrc} />
                         </picture>
                         <p className={styles.model}>{name || "Не указано"}</p>
                         <p className={styles.category}>

@@ -25,11 +25,11 @@ export const OrderCard = ({
     useEffect(() => {
         if (order.carId?.thumbnail?.path) {
             const path = order.carId.thumbnail.path;
-            if (path.indexOf("base64") != -1) {
+            if (path.indexOf("base64") !== -1) {
                 setImageSrc(path);
-            } else if (path.indexOf("blob") != -1) {
+            } else if (path.indexOf("blob") !== -1) {
                 setImageSrc(basicCarImage);
-            } else if (path.indexOf("http") != -1) {
+            } else if (path.indexOf("http") !== -1) {
                 setImageSrc(path);
             } else {
                 setImageSrc(
