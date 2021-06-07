@@ -4,6 +4,7 @@ import {
     SET_POPUP,
     SET_USER_TOKENS,
     SET_NOTIFICATION,
+    SET_BASIC_ERROR,
 } from "../types";
 
 export const setUserTokensToStore = (tokens) => {
@@ -28,4 +29,9 @@ export const setIsOpenNewEntityToStore = (isOpened) => ({
 export const setNotificationToStore = (notification) => ({
     type: SET_NOTIFICATION,
     payload: notification,
+});
+
+export const setBasicErrorToStore = (error) => ({
+    type: SET_BASIC_ERROR,
+    payload: error,
 });

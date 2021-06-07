@@ -1,0 +1,50 @@
+@import ../../../styles/variables
+
+
+.inputField
+  display: flex
+  position: relative
+  flex-grow: 1
+
+
+.error
+  position: absolute
+  top: 100%
+  left: 10px
+
+.button
+  color: $softhGrey
+  font-size: 27px
+  line-height: 1
+  display: block
+  width: $cell * 8
+  height: $cell * 8
+  margin-left: $cell * 2
+  align-self: flex-end
+  box-sizing: border-box
+  background: none
+  border: 1px solid $softhGrey
+  border-radius: $borderRadiusSmall
+
+.wrapper
+  height: $cell * 15
+  overflow-y: auto
+  list-style-type: none
+  padding: 0
+  margin: $cell * 4 0 0
+
+.notification
+  height: $cell * 15
+  margin-top: $cell * 4
+  border-radius: $borderRadiusSmall
+  display: flex
+  justify-content: center
+  align-items: center
+  border: 1px solid $crimson
+  p
+    font-size: 10.5px
+
+.item
+  margin-bottom: $cell * 2
+  &:last-of-type
+    margin-bottom: 0

@@ -12,6 +12,7 @@ export const SearchDropdown = ({
     parameter,
     type,
     disabled,
+    required,
 }) => {
     const [value, setValue] = useState(selectedValue);
     const [error, setError] = useState(false);
@@ -47,20 +48,17 @@ export const SearchDropdown = ({
         setSuggestions(variants);
     }, [variants]);
 
-    useEffect(() => {
-        if (!selectedValue) {
-            changeValue(variants[0]);
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (!selectedValue) {
+    //         changeValue(variants[0]);
+    //     }
+    // }, []);
 
     useEffect(() => {
         if (selectedValue) {
             setValue(selectedValue);
             setTitle(selectedValue);
             setError(false);
-        } else {
-            setTitle("Выберите значение");
-            setError("Некорректно");
         }
     }, [selectedValue]);
 
@@ -134,6 +132,7 @@ export const SearchDropdown = ({
                     title={title}
                     onBlur={resetFilterToNoMatter}
                     disabled={disabled}
+                    required={required}
                 />
                 {error && type !== "auto" && (
                     <span className={styles.errorType}>{error}</span>

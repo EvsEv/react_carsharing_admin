@@ -26,11 +26,11 @@
   max-width: 100%
   .errorType
     bottom: -12px
-
 .label
   font-size: 10.5px
   line-height: 12px
-  margin-bottom: 5px
+  margin-bottom: $cell * 2
+  display: block
 
 .inputField
   position: relative
@@ -63,9 +63,6 @@
   &.error
     border-color: $crimson
     box-shadow: 0px 2.5px 5.5px rgba(196, 24, 60, 0.1)
-  &::placeholder
-    color: $lightBlue
-    font-style: italic
 
 .small
   max-width: 110.5px

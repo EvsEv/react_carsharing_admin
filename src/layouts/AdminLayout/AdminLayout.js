@@ -19,7 +19,9 @@ import Notification from "../../components/UIKit/Notification";
 export const AdminLayout = () => {
     const menu = useRef();
     const [showElement, setShowElement] = useClickNotOnElement(menu);
-    const { popup, openNewEntity } = useSelector((state) => state.auth);
+    const { popup, openNewEntity, basicError } = useSelector(
+        (state) => state.auth
+    );
     const history = useHistory();
 
     if (history.location.pathname === "/") {
@@ -49,13 +51,26 @@ export const AdminLayout = () => {
                         />
                         <Route
                             path="/admin/carSetting"
+                            exact
                             render={() => <CarSetting />}
                         />
+                        {!basicError && (
+                            <Route
+                                path="/admin/carSetting/:id"
+                                render={() => <CarSetting />}
+                            />
+                        )}
                         <Route
                             path="/admin/carsTable"
                             render={() => <CarsTable />}
                         />
                         <Route component={() => <Error />} />
+                        {basicError && (
+                            <Route
+                                path="/admin/carSetting/:id"
+                                component={() => <Error error={basicError} />}
+                            />
+                        )}
                     </Switch>
                 </main>
                 <Footer />

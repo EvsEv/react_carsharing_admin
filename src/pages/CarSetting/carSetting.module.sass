@@ -1,0 +1,201 @@
+@import ../../styles/mixins
+@import ../../styles/variables
+
+.title
+  @include title()
+
+.subtitle
+  font-size: 18px
+  font-weight: normal
+  line-height: 21px
+  padding: $cell * 5 $cell * 4
+
+.content
+  display: flex
+  flex-grow: 1
+
+.asideInfo
+  width: calc(334 * 100% / 1100)
+  padding: $cell * 10 $cell * 5
+  margin-right: $cell * 7
+  background: $white
+  box-sizing: border-box
+  flex-shrink: 0
+  align-self: baseline
+  box-shadow: $boxShadowInfo
+  border-radius: $borderRadiusBig
+
+.asideTop
+  padding: 0 $cell * 6 $cell * 5
+
+.model
+  font-size: $cell * 6
+  line-height: $cell * 7
+  text-align: center
+  margin-top: $cell * 2.5
+
+.category
+  font-size: $cell * 3
+  line-height: $cell * 4
+  color: $greyBlue
+  text-align: center
+
+.file
+  margin-top: $cell * 3
+  position: relative
+  input
+    position: absolute
+    top: 0
+    left: 0
+    opacity: 0
+    z-index: -10
+  label
+    font-size: 10px
+    display: block
+    padding: $cell * 2 $cell * 3
+    border: 1px solid $softhGrey
+    border-radius: $borderRadiusSmall
+    position: relative
+    &::after
+      content: "Обзор"
+      position: absolute
+      top: 0
+      right: 0
+      width: $cell * 16
+      height: 100%
+      display: flex
+      align-items: center
+      justify-content: center
+      border-left: 1px solid $softhGrey
+      background-color: $ultraGrey
+
+.preview
+  display: block
+  height: 0
+  padding-bottom: calc(110 * 100% / 246)
+  position: relative
+  img
+    display: block
+    width: 100%
+    height: 100%
+    object-fit: contain
+    position: absolute
+    top: 0
+    left: 0
+
+
+.percentage
+  padding: $cell * 4 $cell * 5
+  margin: 0 $cell * (-5)
+  border-top: 1px solid $softhGrey
+  border-bottom: 1px solid $softhGrey
+
+.percentageInfo
+  margin-bottom: $cell * 2.5
+  display: flex
+  justify-content: space-between
+  span
+    font-size: $cell * 3
+    line-height: $cell * 4
+    color: $greyBlue
+
+.scale
+  height: 5px
+  background: $white
+  box-shadow: inset 0px 0.5px 4px rgba(0, 0, 0, 0.25)
+  border-radius: $borderRadiusSmall
+
+.filled
+  display: block
+  width: 100%
+  height: 100%
+  background-color: $brightBlue
+  border-radius: $borderRadiusSmall
+
+
+.editInfo
+  width: 100%
+  align-self: stretch
+  background: $white
+  box-shadow: $boxShadowInfo
+  border-radius: $borderRadiusBig
+  display: flex
+  flex-direction: column
+
+.description
+  margin-top: $cell * 5
+  label
+    font-size: $cell * 3
+    line-height: $cell * 4
+    color: $greyBlue
+  textarea
+    font-size: $cell * 3
+    line-height: $cell * 4
+    color: $darkBlue
+    margin-top: $cell * 3
+    border: none
+    resize: none
+    transition: all $short ease
+    &:focus
+      outline: none
+      border-color: $darkBlue
+
+.wrapper
+  padding: $cell * 5 $cell * 4
+  margin-right: $cell * (-5)
+  display: flex
+  flex-wrap: wrap
+  flex-shrink: 0
+
+
+.parameter
+  width: calc(50% - #{$cell} * 5)
+  margin-right: $cell * 5
+  margin-bottom: $cell * 5
+  order: 0
+
+.file, .description
+  width: 100%
+
+.description
+  height: 100px
+  textarea
+    width: 100%
+    min-height: 100%
+    max-width: 100%
+    height: 100%
+    max-height: 100%
+    box-sizing: border-box
+
+
+.name
+  order: -4
+
+.categoryId
+  order: -3
+
+.priceMin
+  order: -2
+
+.priceMax
+  order: -1
+
+.colors
+  order: 1
+
+.control
+  width: 100%
+  padding: $cell * 5 $cell * 4
+  display: flex
+  align-items: flex-end
+  flex-grow: 1
+  button
+    &:first-of-type
+      margin-right: $cell * 3
+    &:last-of-type
+      margin-left: auto
+      margin-right: $cell * 9
+
+
+
+

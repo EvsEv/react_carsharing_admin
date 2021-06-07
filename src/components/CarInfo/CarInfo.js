@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import styles from "./carInfo.module.sass";
 
 import basicCarImage from "../../assets/images/basicCar.png";
+import { useHistory } from "react-router";
 
 export const CarInfo = ({ information }) => {
     const [imageSrc, setImageSrc] = useState();
+    const history = useHistory();
 
     useEffect(() => {
         if (information.thumbnail?.path) {
@@ -24,9 +26,12 @@ export const CarInfo = ({ information }) => {
         } else {
             setImageSrc(basicCarImage);
         }
-    }, []);
+    }, [information]);
+
+    const onClick = () => history.push(`/admin/carSetting/${information.id}`);
+
     return (
-        <tr>
+        <tr onClick={onClick}>
             <td>{information?.name}</td>
             <td>{information?.description || "Отсутсвует"}</td>
             <td>

@@ -51,6 +51,8 @@ export const NewEntity = () => {
                         changeValue={setCity}
                         type="likeInput"
                         label="Город"
+                        placeholder="Выберите город"
+                        required={true}
                     />
                 ) : parameter.name === "rateTypeId" ? (
                     <SearchDropdown
@@ -59,6 +61,8 @@ export const NewEntity = () => {
                         changeValue={setRateTypeId}
                         type="likeInput"
                         label="Тариф"
+                        placeholder="Выберите тариф"
+                        required={true}
                     />
                 ) : (
                     <>
