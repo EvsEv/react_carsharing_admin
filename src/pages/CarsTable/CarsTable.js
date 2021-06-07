@@ -20,6 +20,7 @@ import {
 } from "../../redux/thunks/carsTable";
 import Paginate from "../../components/UIKit/Paginate";
 import CarInfo from "../../components/CarInfo";
+import { useParams } from "react-router";
 
 const head = [
     "Модель",
@@ -159,7 +160,7 @@ export const CarsTable = () => {
     return (
         <>
             <h1 className={styles.title}>Автомобили</h1>
-            <div className={styles.content}>
+            <section className={styles.content}>
                 {printFilters}
                 <Table head={head} body={bodyTable} />
                 <Paginate
@@ -167,7 +168,7 @@ export const CarsTable = () => {
                     countOfPages={countOfPages}
                     changePage={changeLastViewedPage}
                 />
-            </div>
+            </section>
         </>
     );
 };

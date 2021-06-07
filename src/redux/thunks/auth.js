@@ -1,5 +1,6 @@
 import { getUpdatedTokens } from "../../api/fetch";
 import {
+    setBasicErrorToStore,
     setErrorOfLoggedAuthToStore,
     setIsOpenNewEntityToStore,
     setNotificationToStore,
@@ -8,7 +9,6 @@ import {
 } from "../actionCreators/auth";
 
 export const setUserTokens = (tokens) => (dispatch) => {
-    console.log("tok", tokens);
     dispatch(setUserTokensToStore(tokens));
 };
 
@@ -31,3 +31,6 @@ export const openNewEntity = (isOpen) => (dispatch) =>
 export const setNotification = (notification) => (dispatch) => {
     dispatch(setNotificationToStore(notification));
 };
+
+export const setBasicError = (error) => (dispatch) =>
+    dispatch(setBasicErrorToStore(error));

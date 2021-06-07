@@ -9,21 +9,30 @@ import Button from "../UIKit/Button";
 import styles from "./popup.module.sass";
 
 export const Popup = () => {
-    const { type, entity, idOfItem, title } = useSelector(
+    const { type, entity, idOfItem, title, action } = useSelector(
         (state) => state.auth.popup
     );
     const dispatch = useDispatch();
 
     const onSubmitPopup = async (event) => {
-        event.preventDefault();
-        if (type === "delete") {
-            await deleteData(entity, idOfItem);
+        if (entity) {
+            event.preventDefault();
+            if (type === "delete") {
+                await deleteData(entity, idOfItem);
+            }
+            dispatch(getFilteredEntityList());
+            dispatch(setPopup(null));
+            dispatch(
+                setNotification({
+                    type: "delete",
+                    text: "Элемент успешно удален",
+                })
+            );
+            action && action();
+            return;
         }
-        dispatch(getFilteredEntityList());
+        action();
         dispatch(setPopup(null));
-        dispatch(
-            setNotification({ type: "delete", text: "Элемент успешно удален" })
-        );
     };
 
     const onClosePopup = () => {

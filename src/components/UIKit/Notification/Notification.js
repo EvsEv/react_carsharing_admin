@@ -30,7 +30,7 @@ export const Notification = () => {
         notification && (
             <div className={classes.join(" ")}>
                 <p>{notification?.text}</p>
-                <button onClick={close} className={styles.close}></button>
+                {/* <button onClick={close} className={styles.close}></button> */}
             </div>
         )
     );

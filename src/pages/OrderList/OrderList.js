@@ -185,7 +185,7 @@ export const OrderList = () => {
     return (
         <>
             <h1 className={styles.title}>Заказы</h1>
-            <div className={styles.content}>
+            <section className={styles.content}>
                 {printFilters}
                 {printList}
                 <Paginate
@@ -193,7 +193,7 @@ export const OrderList = () => {
                     countOfPages={countOfPages}
                     changePage={changeLastViewedPage}
                 />
-            </div>
+            </section>
         </>
     );
 };
